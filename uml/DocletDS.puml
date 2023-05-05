@@ -1,0 +1,20 @@
+@startuml
+skinparam style strictuml
+hide footbox
+
+participant Java2Puml
+participant main
+participant doclet
+
+Java2Puml -> main ++ : main(args)
+main -->> doclet ** : <<Create>> doclet()
+main -> doclet : init(locale, reporter)
+main -> doclet ++ : getSupportedOptions()
+return doclet.Option = getSupportedOptions()
+main -> doclet ++ : getSupportedVersion()
+return
+main -> doclet ++ : run(...)
+return
+return
+
+@enduml
