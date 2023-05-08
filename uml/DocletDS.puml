@@ -5,7 +5,6 @@ hide footbox
 participant Java2Puml
 participant main
 participant "toolprovider : Toolprovider" as toolprovider
-
 participant Objects
 participant "systemClassLoader : ClassLoader" as systemClassLoader
 participant System.out as sout

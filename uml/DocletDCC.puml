@@ -7,23 +7,30 @@ skinparam classFontStyle Bold
 hide empty members
 
 class Java2Puml{
-
+    + main(args : String[]) {static}
 }
 
 class ToolProvider{
-
+    + name : String
+    findFirst(name : String) : Optional<ToolProvider> {static}
+    run(out : PrintStream, err : PrintStream, args : String...) : Integer
+    name() : String
 }
 
-class ClassLoader{
-
+abstract class ClassLoader{
+    + <<Create>> ClassLoader(unused, name : String, parent : ClassLoader)
+    getSystemClassLoader() : ClassLoader {static}
 }
 
 class Objects{
-
+    - <<create>> Objects()
+    + requireNonNull(obj : T) : <T> T {static}
 }
 
 class PrintWriter{
-
+    - autoFlush : Boolean
+    + <<Create>> PrintWriter(out : Writer)
+    + flush()
 }
 
 @enduml

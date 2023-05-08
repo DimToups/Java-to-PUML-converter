@@ -12,16 +12,20 @@ class Java2Puml{
 
 class ToolProvider{
     name
+    run
 }
 
-class ClassLoader{
-
-}
+class ClassLoader
 
 class Objects
 
 class PrintWriter{
-
+    autoFlush
 }
+
+Java2Puml - ToolProvider
+ToolProvider -- Objects
+ToolProvider -- ClassLoader
+ToolProvider -- PrintWriter
 
 @enduml
