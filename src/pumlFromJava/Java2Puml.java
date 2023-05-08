@@ -8,7 +8,7 @@ public class Java2Puml
         ToolProvider toolProvider = ToolProvider.findFirst("javadoc").get();
         System.out.println(toolProvider.name());
 
-        //D:\Programmes\JDK\bin\javadoc.exe -private -sourcepath src/western/src -doclet FirstDoclet -docletpath out/production/p21_projet western
+        //D:\Programmes\JDK\bin\javadoc.exe -private -sourcepath src/western/src -doclet pumlFromJava.FirstDoclet -docletpath out/production/p21_projet western
 
         toolProvider.run(System.out, System.err, args);
     }

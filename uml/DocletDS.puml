@@ -4,17 +4,67 @@ hide footbox
 
 participant Java2Puml
 participant main
-participant doclet
+participant "toolprovider : Toolprovider" as toolprovider
+participant "systemClassLoader : ClassLoader" as systemClassLoader
+participant System.out as sout
+participant Objects
+participant "outWriter : PrintWriter" as outwriter
+participant "errWriter : PrintWriter" as errWriter
 
 Java2Puml -> main ++ : main(args)
-main -->> doclet ** : <<Create>> doclet()
-main -> doclet : init(locale, reporter)
-main -> doclet ++ : getSupportedOptions()
-return doclet.Option = getSupportedOptions()
-main -> doclet ++ : getSupportedVersion()
-return
-main -> doclet ++ : run(...)
-return
+main -->> toolprovider ** : <<Create>> findFirst(name : String)
+toolprovider ++
+toolprovider -->> systemClassLoader ** : <<Create>> getSystemClassLoader()
+systemClassLoader ++
+return getSystemClassLoader()
+return findFirst()
+
+main -> sout : toolprovider.name()
+
+main -> toolprovider ++ : run(System.ou, System.err, args)
+toolprovider -> Objects ++ : requireNonNull(out)
+alt obj == null
+    Objects -> Objects : NullPointerException()
+else
+    return obj
+end
+toolprovider -> Objects ++ : requireNonNull(err)
+alt obj == null
+    Objects -> Objects : NullPointerException()
+else
+    return obj
+end
+toolprovider -> Objects ++ : requireNonNull(args)
+alt obj == null
+    Objects -> Objects : NullPointerException()
+else
+    return obj
+end
+
+loop var6 < var5
+    toolprovider -> Objects ++ : requireNonNull(arg)
+    alt obj == null
+        Objects -> Objects : NullPointerException()
+    else
+        return obj
+    end
+end
+toolprovider -->> outWriter ++ : <<Create>> PrintWriter(out)
+return PrintWriter()
+toolprovider -->> errWriter ++ : <<Create>> PrintWriter(err)
+return PrintWriter()
+alt NoException
+    alt NoException
+        toolprovider -> toolprovider : run(outWriter, errWriter, args)
+    end
+    toolprovider -> outWriter ++ : flush()
+    deactivate outWriter
+end
+toolprovider -> errWriter ++ : flush()
+
+deactivate errWriter
+return run()
+
 return
 
 @enduml
