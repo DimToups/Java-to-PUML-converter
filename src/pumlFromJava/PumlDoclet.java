@@ -102,7 +102,7 @@ public class PumlDoclet implements Doclet{
         // Créé une liste de classes qu'on va remplir en parcourant les
         ArrayList<String> classes = new ArrayList<String>();
 
-        for (javax.lang.model.element.Element element : docletEnvironment)
+        for (javax.lang.model.element.Element element : docletEnvironment.getIncludedElements())
         {
             if (element.getKind().isClass())
             {
