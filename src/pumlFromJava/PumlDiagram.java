@@ -17,17 +17,25 @@ public class PumlDiagram {
         this.name = name;
         this.directory = directory;
     }
-    public void setClasses(ArrayList<String> classesName, ArrayList<String> classesType, String packagename){
+    public void setClasses(ArrayList<String> classesName, ArrayList<String> classesType, String packageName){
         this.classesName = classesName;
         this.classesType = classesType;
         this.packageName = packageName;
     }
     public void makeDiagram(){
         initFile();
+        //Ajout du package dans classContent
+        classesContent += "\npackage " + packageName + "{\n";
         //Traitement de chaque classe
         for(int i = 0; i < classesName.size(); i++){
             //Création de la chaîne de caractères à placer dans le fichier
-            String classe = "class " + classesName.get(i) + "{\n\n}";
+            String classe;
+            if (classesType.get(i) == "interface") {
+                classe = "class " + classesName.get(i) + " <<interface>>{\n\n}";
+            }
+            else {
+                classe = "class " + classesName.get(i) + "{\n\n}";
+            }
             //Ajout du String dans classContent
             classesContent += "\n" + classe;
         }
