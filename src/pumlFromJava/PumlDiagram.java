@@ -1,9 +1,9 @@
 package pumlFromJava;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,13 +31,21 @@ public class PumlDiagram {
         endFile();
 
         //Création du fichier
-        File file = new File("Path");
+        File file = new File(directory + "/" + name);
         try {
             if (file.createNewFile()){
-                
+                FileOutputStream fos = new FileOutputStream(directory + "/" + name, true);
+                byte[] b = classesContent.getBytes();
+                fos.write(b);
             }
             else{
+                BufferedWriter writer = Files.newBufferedWriter(Paths.get(directory + "/" + name));
+                writer.write("");
+                writer.flush();
 
+                FileOutputStream fos = new FileOutputStream(directory + "/" + name, true);
+                byte[] b = classesContent.getBytes();
+                fos.write(b);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

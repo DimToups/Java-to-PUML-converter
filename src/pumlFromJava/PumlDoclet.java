@@ -105,7 +105,7 @@ public class PumlDoclet implements Doclet{
 
         for (javax.lang.model.element.Element element : docletEnvironment.getIncludedElements())
         {
-            if (element.getKind().isClass())
+            if (element.getKind().isClass() || element.getKind().isInterface())
             {
                 classes.add(element.getSimpleName().toString());
             }
