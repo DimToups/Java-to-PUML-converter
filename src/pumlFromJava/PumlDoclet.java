@@ -101,15 +101,18 @@ public class PumlDoclet implements Doclet{
     public boolean run(DocletEnvironment docletEnvironment) {
         // Créé une liste de classes qu'on va remplir en parcourant les
         ArrayList<String> classes = new ArrayList<String>();
+        PumlDiagram diagram = new PumlDiagram();
 
-        for (javax.lang.model.element.Element element : docletEnvironment)
+        for (javax.lang.model.element.Element element : docletEnvironment.getIncludedElements())
         {
             if (element.getKind().isClass())
             {
-                classes.add(element.toString());
+                classes.add(element.getSimpleName().toString());
             }
         }
+        diagram.setClasses(classes);
+        diagram.makeDiagram();
+
         return true;
     }
 }
-//-out westernClass.puml

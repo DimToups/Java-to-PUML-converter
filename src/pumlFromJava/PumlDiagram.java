@@ -8,4 +8,10 @@ public class PumlDiagram {
     public PumlDiagram(){
 
     }
+    public void setClasses(ArrayList<String> classes){
+        this.classes = classes;
+    }
+    public void makeDiagram(){
+        System.out.println("Enter makeDiagram");
+    }
 }
