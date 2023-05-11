@@ -8,8 +8,10 @@ import javax.lang.model.SourceVersion;
 import java.util.*;
 
 public class PumlDoclet implements Doclet{
-    String name;
-    String directory;
+    private String name;
+    private String directory;
+
+    private static boolean debug = true;
     @Override
     public void init(Locale locale, Reporter reporter) {  }
     @Override
@@ -83,6 +85,7 @@ public class PumlDoclet implements Doclet{
 
                     @Override
                     public boolean process(String s, List<String> list) {
+                        //directory = s.substring(6, 30);
                         return true;
                     }
                 }
@@ -95,6 +98,16 @@ public class PumlDoclet implements Doclet{
     }
     @Override
     public boolean run(DocletEnvironment docletEnvironment) {
+        // Créé une liste de classes qu'on va remplir en parcourant les
+        ArrayList<String> classes = new ArrayList<String>();
+
+        for (javax.lang.model.element.Element element : docletEnvironment)
+        {
+            if (element.getKind().isClass())
+            {
+                classes.add(element.toString());
+            }
+        }
 
         return true;
     }
