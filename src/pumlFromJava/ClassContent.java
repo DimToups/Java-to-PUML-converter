@@ -6,6 +6,6 @@ import java.util.ArrayList;
 public class ClassContent{
     String className;
     ElementKind classType;
-    ArrayList<Attribut> classAttributs;
-    ArrayList<Methode> classMethods;
+    ArrayList<Attribut> classAttributs = new ArrayList<>();
+    ArrayList<Methode> classMethods = new ArrayList<>();
 }

@@ -106,24 +106,30 @@ public class PumlDoclet implements Doclet{
         ArrayList<ClassContent> classes = new ArrayList<>();
         PumlDiagram diagram = new PumlDiagram(name, directory);
 
+        //Index d'ajout de valeurs dans classes[i]
         int i = 0;
+        //Traitement de tous les fichiers
         for (Element element : docletEnvironment.getIncludedElements())
         {
-            classes.add(new ClassContent());
+            //Détermination du type de fichier à traiter
+            //(Classe/Interface/Enumération)
             if (element.getKind() == ElementKind.CLASS)
             {
+                classes.add(new ClassContent());
                 classes.get(i).className = element.getSimpleName().toString();
                 classes.get(i).classType = ElementKind.CLASS;
                 i++;
             }
             else if (element.getKind() == ElementKind.INTERFACE)
             {
+                classes.add(new ClassContent());
                 classes.get(i).className = element.getSimpleName().toString();
                 classes.get(i).classType = ElementKind.INTERFACE;
                 i++;
             }
             else if (element.getKind() == ElementKind.ENUM)
             {
+                classes.add(new ClassContent());
                 classes.get(i).className = element.getSimpleName().toString();
                 classes.get(i).classType = ElementKind.ENUM;
                 i++;

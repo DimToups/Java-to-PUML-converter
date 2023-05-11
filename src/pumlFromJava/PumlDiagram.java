@@ -30,16 +30,24 @@ public class PumlDiagram {
             //Création de la chaîne de caractères à placer dans le fichier
             String classe;
             if (classes.get(i).classType == ElementKind.INTERFACE) {
-                classe = "class " + classes.get(i).className + " <<interface>>{\n\n}";
+                classe = "class " + classes.get(i).className + " <<interface>>{\n";
             }
             else if (classes.get(i).classType == ElementKind.ENUM) {
-                classe = "class " + classes.get(i).className + " <<enum>>{\n\n}";
+                classe = "class " + classes.get(i).className + " <<enum>>{\n";
             }
             else {
-                classe = "class " + classes.get(i).className + "{\n\n}";
+                classe = "class " + classes.get(i).className + "{\n";
+            }
+            //Ajout des attributs de la classe
+            for (Attribut attribut : classes.get(i).classAttributs){
+                classe += "\t" + attribut.nom + " : " + attribut.type.toString() + "\n";
+            }
+            //Ajout des méthodes de la classe
+            for (Methode methode : classes.get(i).classMethods){
+                classe += "\t" + methode.nom + " : " + methode.type.toString() + "\n";
             }
             //Ajout du String dans classContent
-            classesContent += "\n" + classe;
+            classesContent += "\n" + classe + "\n}";
         }
         endFile();
 
