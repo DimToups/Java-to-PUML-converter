@@ -1,13 +1,20 @@
 package pumlFromJava;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PumlDiagram {
     List<String> classesList = new ArrayList<>();
     String classesContent;
-    public PumlDiagram(){
-
+    String name;
+    String directory;
+    public PumlDiagram(String name, String directory){
+        this.name = name;
+        this.directory = directory;
     }
     public void setClasses(ArrayList<String> classes){
         this.classesList = classes;
@@ -23,7 +30,18 @@ public class PumlDiagram {
         }
         endFile();
 
-        System.out.println(classesContent);
+        //Création du fichier
+        File file = new File("Path");
+        try {
+            if (file.createNewFile()){
+                
+            }
+            else{
+
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     private void initFile(){
         classesContent = "@startuml\n" +
