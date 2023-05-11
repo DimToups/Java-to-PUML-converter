@@ -21,38 +21,6 @@ public class PumlDoclet implements Doclet{
     @Override
     public Set<? extends Option> getSupportedOptions() {
         Set<Option> options = new HashSet<>();
-        //-out
-        options.add(
-                new Option() {
-                    @Override
-                    public int getArgumentCount() {
-                        return 1;
-                    }
-                    @Override
-                    public String getDescription() {
-                        return "Fixe le nom du fichier créé.";
-                    }
-                    @Override
-                    public Kind getKind() {
-                        return Kind.OTHER;
-                    }
-                    @Override
-                    public List<String> getNames() {
-                        List<String> names = new ArrayList<>();
-                        names.add("-out");
-                        return names;
-                    }
-                    @Override
-                    public String getParameters() {
-                        return "-out <p1>";
-                    }
-                    @Override
-                    public boolean process(String s, List<String> list) {
-                        
-                        return true;
-                    }
-                }
-        );
         //-d
         options.add(
                 new Option() {
@@ -85,7 +53,40 @@ public class PumlDoclet implements Doclet{
 
                     @Override
                     public boolean process(String s, List<String> list) {
-                        //directory = s.substring(6, 30);
+                        directory = list.get(0);
+                        return true;
+                    }
+                }
+        );
+        //-out
+        options.add(
+                new Option() {
+                    @Override
+                    public int getArgumentCount() {
+                        return 1;
+                    }
+                    @Override
+                    public String getDescription() {
+                        return "Fixe le nom du fichier créé.";
+                    }
+                    @Override
+                    public Kind getKind() {
+                        return Kind.STANDARD;
+                    }
+                    @Override
+                    public List<String> getNames() {
+                        List<String> names = new ArrayList<>();
+                        names.add("-out");
+                        return names;
+                    }
+                    @Override
+                    public String getParameters() {return "-out <p1>";}
+                    @Override
+                    public boolean process(String s, List<String> list) {
+                        if (!list.get(0).endsWith(".puml"))
+                            name = list.get(0) + ".puml";
+                        else
+                            name = list.get(0);
                         return true;
                     }
                 }
@@ -108,7 +109,7 @@ public class PumlDoclet implements Doclet{
                 classes.add(element.toString());
             }
         }
-
         return true;
     }
 }
+//-out westernClass.puml
