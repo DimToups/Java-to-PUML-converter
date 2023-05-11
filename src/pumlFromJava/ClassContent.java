@@ -8,4 +8,5 @@ public class ClassContent{
     ElementKind classType;
     ArrayList<Attribut> classAttributs = new ArrayList<>();
     ArrayList<Methode> classMethods = new ArrayList<>();
+    Visibilite visibilite = null;
 }
