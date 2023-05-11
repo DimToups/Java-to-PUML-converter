@@ -119,7 +119,7 @@ public class PumlDoclet implements Doclet{
                 classesType.add("interface");
             }
         }
-        diagram.setClasses(classesName, classesType, "test");
+        diagram.setClasses(classesName, classesType, "western");
         diagram.makeDiagram();
 
         return true;

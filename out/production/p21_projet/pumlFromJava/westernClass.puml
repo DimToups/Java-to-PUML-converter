@@ -6,6 +6,9 @@ skinparam classFontStyle Bold
 
 hide empty members
 
+
+package western{
+
 class Boisson{
 
 }
@@ -24,13 +27,13 @@ class Genre{
 class Histoire4{
 
 }
-class HorsLaLoi{
+class HorsLaLoi <<interface>>{
 
 }
 class Narrateur{
 
 }
-class Nommable{
+class Nommable <<interface>>{
 
 }
 class Personnage{
