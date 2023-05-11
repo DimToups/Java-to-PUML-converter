@@ -103,29 +103,33 @@ public class PumlDoclet implements Doclet{
     @Override
     public boolean run(DocletEnvironment docletEnvironment) {
         // Créé une liste de classes qu'on va remplir en parcourant les
-        ArrayList<String> classesName = new ArrayList<String>();
-        ArrayList<String> classesType = new ArrayList<String>();
+        ArrayList<ClassContent> classes = new ArrayList<>();
         PumlDiagram diagram = new PumlDiagram(name, directory);
 
+        int i = 0;
         for (Element element : docletEnvironment.getIncludedElements())
         {
+            classes.add(new ClassContent());
             if (element.getKind() == ElementKind.CLASS)
             {
-                classesName.add(element.getSimpleName().toString());
-                classesType.add("class");
+                classes.get(i).className = element.getSimpleName().toString();
+                classes.get(i).classType = ElementKind.CLASS;
+                i++;
             }
             else if (element.getKind() == ElementKind.INTERFACE)
             {
-                classesName.add(element.getSimpleName().toString());
-                classesType.add("interface");
+                classes.get(i).className = element.getSimpleName().toString();
+                classes.get(i).classType = ElementKind.INTERFACE;
+                i++;
             }
             else if (element.getKind() == ElementKind.ENUM)
             {
-                classesName.add(element.getSimpleName().toString());
-                classesType.add("enum");
+                classes.get(i).className = element.getSimpleName().toString();
+                classes.get(i).classType = ElementKind.ENUM;
+                i++;
             }
         }
-        diagram.setClasses(classesName, classesType, "western");
+        diagram.setClasses(classes, "western");
         diagram.makeDiagram();
 
         return true;
