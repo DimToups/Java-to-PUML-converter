@@ -8,6 +8,8 @@ import javax.lang.model.SourceVersion;
 import java.util.*;
 
 public class PumlDoclet implements Doclet{
+    String name;
+    String directory;
     @Override
     public void init(Locale locale, Reporter reporter) {  }
     @Override
@@ -44,6 +46,7 @@ public class PumlDoclet implements Doclet{
                     }
                     @Override
                     public boolean process(String s, List<String> list) {
+                        
                         return true;
                     }
                 }
@@ -92,6 +95,7 @@ public class PumlDoclet implements Doclet{
     }
     @Override
     public boolean run(DocletEnvironment docletEnvironment) {
+
         return true;
     }
 }
