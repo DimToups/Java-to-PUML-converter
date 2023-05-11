@@ -3,8 +3,10 @@ package pumlFromJava;
 import jdk.javadoc.doclet.Doclet;
 import jdk.javadoc.doclet.DocletEnvironment;
 import jdk.javadoc.doclet.Reporter;
+import javax.lang.model.element.Element;
 
 import javax.lang.model.SourceVersion;
+import java.sql.Array;
 import java.util.*;
 
 public class PumlDoclet implements Doclet{
@@ -100,17 +102,24 @@ public class PumlDoclet implements Doclet{
     @Override
     public boolean run(DocletEnvironment docletEnvironment) {
         // Créé une liste de classes qu'on va remplir en parcourant les
-        ArrayList<String> classes = new ArrayList<String>();
+        ArrayList<String> classesName = new ArrayList<String>();
+        ArrayList<String> classesType = new ArrayList<String>();
         PumlDiagram diagram = new PumlDiagram(name, directory);
 
-        for (javax.lang.model.element.Element element : docletEnvironment.getIncludedElements())
+        for (Element element : docletEnvironment.getIncludedElements())
         {
-            if (element.getKind().isClass() || element.getKind().isInterface())
+            if (element.getKind().isClass())
             {
-                classes.add(element.getSimpleName().toString());
+                classesName.add(element.getSimpleName().toString());
+                classesType.add("class");
+            }
+            else if (element.getKind().isInterface())
+            {
+                classesName.add(element.getSimpleName().toString());
+                classesType.add("interface");
             }
         }
-        diagram.setClasses(classes);
+        diagram.setClasses(classesName, classesType, "test");
         diagram.makeDiagram();
 
         return true;
