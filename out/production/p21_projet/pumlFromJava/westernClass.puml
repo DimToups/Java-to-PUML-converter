@@ -21,7 +21,7 @@ class Cowboy{
 class Dame{
 
 }
-class Genre{
+class Genre <<enum>>{
 
 }
 class Histoire4{

@@ -6,6 +6,7 @@ import jdk.javadoc.doclet.Reporter;
 import javax.lang.model.element.Element;
 
 import javax.lang.model.SourceVersion;
+import javax.lang.model.element.ElementKind;
 import java.sql.Array;
 import java.util.*;
 
@@ -108,15 +109,20 @@ public class PumlDoclet implements Doclet{
 
         for (Element element : docletEnvironment.getIncludedElements())
         {
-            if (element.getKind().isClass())
+            if (element.getKind() == ElementKind.CLASS)
             {
                 classesName.add(element.getSimpleName().toString());
                 classesType.add("class");
             }
-            else if (element.getKind().isInterface())
+            else if (element.getKind() == ElementKind.INTERFACE)
             {
                 classesName.add(element.getSimpleName().toString());
                 classesType.add("interface");
+            }
+            else if (element.getKind() == ElementKind.ENUM)
+            {
+                classesName.add(element.getSimpleName().toString());
+                classesType.add("enum");
             }
         }
         diagram.setClasses(classesName, classesType, "western");

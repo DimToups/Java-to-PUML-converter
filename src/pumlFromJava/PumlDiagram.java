@@ -33,6 +33,9 @@ public class PumlDiagram {
             if (classesType.get(i) == "interface") {
                 classe = "class " + classesName.get(i) + " <<interface>>{\n\n}";
             }
+            else if (classesType.get(i) == "enum") {
+                classe = "class " + classesName.get(i) + " <<enum>>{\n\n}";
+            }
             else {
                 classe = "class " + classesName.get(i) + "{\n\n}";
             }
