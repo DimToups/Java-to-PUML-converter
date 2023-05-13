@@ -1,0 +1,36 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam style strictuml
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+
+hide empty members
+
+
+package western{
+
+class Attribut{
+
+}
+class ClassContent{
+
+}
+class FirstDoclet{
+
+}
+class Java2Puml{
+
+}
+class Methode{
+
+}
+class PumlDiagram{
+
+}
+class PumlDoclet{
+
+}
+class Visibilite <<enum>>{
+
+}
+@enduml

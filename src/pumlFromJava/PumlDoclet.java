@@ -6,12 +6,14 @@ import jdk.javadoc.doclet.Reporter;
 import javax.lang.model.element.Element;
 
 import javax.lang.model.SourceVersion;
+import javax.lang.model.element.ElementKind;
 import java.sql.Array;
 import java.util.*;
 
 public class PumlDoclet implements Doclet{
     private String name;
     private String directory;
+    private String packageName;
 
     private static boolean debug = true;
     @Override
@@ -102,24 +104,41 @@ public class PumlDoclet implements Doclet{
     @Override
     public boolean run(DocletEnvironment docletEnvironment) {
         // Créé une liste de classes qu'on va remplir en parcourant les
-        ArrayList<String> classesName = new ArrayList<String>();
-        ArrayList<String> classesType = new ArrayList<String>();
+        ArrayList<ClassContent> classes = new ArrayList<>();
         PumlDiagram diagram = new PumlDiagram(name, directory);
 
+        //Index d'ajout de valeurs dans classes[i]
+        int i = 0;
+        //Traitement de tous les fichiers pour obtenir toutes les informations sur leur contenu
         for (Element element : docletEnvironment.getIncludedElements())
         {
-            if (element.getKind().isClass())
+            //Détermination du type de fichier à traiter
+            //(Classe/Interface/Enumération)
+            if (element.getKind() == ElementKind.CLASS)
             {
-                classesName.add(element.getSimpleName().toString());
-                classesType.add("class");
+                classes.add(new ClassContent());
+                classes.get(i).className = element.getSimpleName().toString();
+                classes.get(i).classType = ElementKind.CLASS;
+                i++;
             }
-            else if (element.getKind().isInterface())
+            else if (element.getKind() == ElementKind.INTERFACE)
             {
-                classesName.add(element.getSimpleName().toString());
-                classesType.add("interface");
+                classes.add(new ClassContent());
+                classes.get(i).className = element.getSimpleName().toString();
+                classes.get(i).classType = ElementKind.INTERFACE;
+                i++;
             }
+            else if (element.getKind() == ElementKind.ENUM)
+            {
+                classes.add(new ClassContent());
+                classes.get(i).className = element.getSimpleName().toString();
+                classes.get(i).classType = ElementKind.ENUM;
+                i++;
+            }
+            else if (element.getKind() == ElementKind.PACKAGE)
+                packageName = element.getSimpleName().toString();
         }
-        diagram.setClasses(classesName, classesType, "western");
+        diagram.setClasses(classes, packageName);
         diagram.makeDiagram();
 
         return true;

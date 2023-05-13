@@ -1,0 +1,27 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam style strictuml
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+
+hide empty members
+
+class Element extends AnnotedConstruct{
+    asType() : TypeMirror
+    getKind() : ElementKind
+    getModifiers() : Modifier[*]
+    getSimpleName() : Name
+    getEnclosingElement() : Element
+    getEnclosingElement() : Element[*]
+    equals(var1 : Object) : Boolean
+    hashCode() : Integer
+    getAnnotationMirrors() : AnnotationMirror[*]
+    getAnnotationsByType(var1 : Class<a>) : Annotation
+    accept(var1 : ElementVisitor<R, P>, var2 : P) : <R, P> R
+}
+
+class AnnotedConstruct{
+
+}
+
+@enduml

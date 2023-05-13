@@ -1,5 +1,6 @@
 package pumlFromJava;
 
+import javax.lang.model.element.ElementKind;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -7,19 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PumlDiagram {
-    List<String> classesName = new ArrayList<>();
-    List<String> classesType = new ArrayList<>();
+    ArrayList<ClassContent> classes = new ArrayList<>();
     String packageName;
-    String classesContent;
+    String classesContent = "";
     String name;
     String directory;
     public PumlDiagram(String name, String directory){
         this.name = name;
         this.directory = directory;
     }
-    public void setClasses(ArrayList<String> classesName, ArrayList<String> classesType, String packageName){
-        this.classesName = classesName;
-        this.classesType = classesType;
+    public void setClasses(ArrayList<ClassContent> classes, String packageName){
+        this.classes = classes;
         this.packageName = packageName;
     }
     public void makeDiagram(){
@@ -27,17 +26,28 @@ public class PumlDiagram {
         //Ajout du package dans classContent
         classesContent += "\npackage " + packageName + "{\n";
         //Traitement de chaque classe
-        for(int i = 0; i < classesName.size(); i++){
+        for(int i = 0; i < classes.size(); i++){
             //Création de la chaîne de caractères à placer dans le fichier
             String classe;
-            if (classesType.get(i) == "interface") {
-                classe = "class " + classesName.get(i) + " <<interface>>{\n\n}";
+            if (classes.get(i).classType == ElementKind.INTERFACE) {
+                classe = "class " + classes.get(i).className + " <<interface>>{\n";
+            }
+            else if (classes.get(i).classType == ElementKind.ENUM) {
+                classe = "class " + classes.get(i).className + " <<enum>>{\n";
             }
             else {
-                classe = "class " + classesName.get(i) + "{\n\n}";
+                classe = "class " + classes.get(i).className + "{\n";
+            }
+            //Ajout des attributs de la classe
+            for (Attribut attribut : classes.get(i).classAttributs){
+                classe += "\t" + attribut.nom + " : " + attribut.type.toString() + "\n";
+            }
+            //Ajout des méthodes de la classe
+            for (Methode methode : classes.get(i).classMethods){
+                classe += "\t" + methode.nom + " : " + methode.type.toString() + "\n";
             }
             //Ajout du String dans classContent
-            classesContent += "\n" + classe;
+            classesContent += "\n" + classe + "\n}";
         }
         endFile();
 
