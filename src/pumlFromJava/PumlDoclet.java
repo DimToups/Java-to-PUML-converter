@@ -1,5 +1,6 @@
 package pumlFromJava;
 
+import com.sun.jdi.ClassType;
 import jdk.javadoc.doclet.Doclet;
 import jdk.javadoc.doclet.DocletEnvironment;
 import jdk.javadoc.doclet.Reporter;
@@ -8,7 +9,9 @@ import javax.lang.model.element.Element;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
+import javax.lang.model.type.PrimitiveType;
 import javax.lang.model.type.TypeMirror;
+import java.lang.reflect.Type;
 import java.sql.Array;
 import java.util.*;
 
@@ -122,11 +125,9 @@ public class PumlDoclet implements Doclet{
                 classes.get(i).className = element.getSimpleName().toString();
                 classes.get(i).classType = ElementKind.CLASS;
                 //Traitement de tous les éléments interne de la classe
-                //System.out.println(element.getSimpleName());
                 for (Element enclosedElement : element.getEnclosedElements()){
-                    if (enclosedElement.getKind().isField()){
+                    if (enclosedElement.getKind().isField() && !enclosedElement.asType().toString().contains(".")){
                         classes.get(i).classAttributs.add(new Attribut(enclosedElement.getSimpleName().toString()));
-                        //System.out.println("\t" + enclosedElement.getSimpleName() + " : " + enclosedElement.asType());
                     }
                 }
                 i++;
