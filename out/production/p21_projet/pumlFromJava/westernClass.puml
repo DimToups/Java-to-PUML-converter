@@ -10,18 +10,36 @@ hide empty members
 package western{
 
 class Boisson{
+	substantif
+	EAU
 
 }
 class Brigand{
+	LOOK_PAR_DEFAUT
+	look
+	recompense
+	estLibre
+	captives
+	gardien
+	boissonParDefaut
 
 }
 class Cowboy{
+	gains
+	captures
+	boissonParDefaut
 
 }
 class Dame{
+	estLibre
+	sauveur
+	ravisseur
+	boissonParDefaut
 
 }
 class Genre <<enum>>{
+	FEMININ
+	MASCULIN
 
 }
 class Histoire4{
@@ -37,12 +55,18 @@ class Nommable <<interface>>{
 
 }
 class Personnage{
+	BOISSON_PAR_DEFAUT
+	nom
+	boisson
 
 }
 class Ripou{
+	brigand
 
 }
 class Substantif{
+	nom
+	genre
 
 }
 @enduml

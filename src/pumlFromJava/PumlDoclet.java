@@ -7,12 +7,15 @@ import javax.lang.model.element.Element;
 
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.Modifier;
+import javax.lang.model.type.TypeMirror;
 import java.sql.Array;
 import java.util.*;
 
 public class PumlDoclet implements Doclet{
     private String name;
     private String directory;
+    private String packageName;
 
     private static boolean debug = true;
     @Override
@@ -108,7 +111,7 @@ public class PumlDoclet implements Doclet{
 
         //Index d'ajout de valeurs dans classes[i]
         int i = 0;
-        //Traitement de tous les fichiers
+        //Traitement de tous les fichiers pour obtenir toutes les informations sur leur contenu
         for (Element element : docletEnvironment.getIncludedElements())
         {
             //Détermination du type de fichier à traiter
@@ -118,6 +121,14 @@ public class PumlDoclet implements Doclet{
                 classes.add(new ClassContent());
                 classes.get(i).className = element.getSimpleName().toString();
                 classes.get(i).classType = ElementKind.CLASS;
+                //Traitement de tous les éléments interne de la classe
+                //System.out.println(element.getSimpleName());
+                for (Element enclosedElement : element.getEnclosedElements()){
+                    if (enclosedElement.getKind().isField()){
+                        classes.get(i).classAttributs.add(new Attribut(enclosedElement.getSimpleName().toString()));
+                        //System.out.println("\t" + enclosedElement.getSimpleName() + " : " + enclosedElement.asType());
+                    }
+                }
                 i++;
             }
             else if (element.getKind() == ElementKind.INTERFACE)
@@ -132,10 +143,18 @@ public class PumlDoclet implements Doclet{
                 classes.add(new ClassContent());
                 classes.get(i).className = element.getSimpleName().toString();
                 classes.get(i).classType = ElementKind.ENUM;
+                //Traitement de tous les éléments interne de l'interface
+                for (Element enclosedElement : element.getEnclosedElements()){
+                    if (enclosedElement.getKind().isField()){
+                        classes.get(i).classAttributs.add(new Attribut(enclosedElement.getSimpleName().toString()));
+                    }
+                }
                 i++;
             }
+            else if (element.getKind() == ElementKind.PACKAGE)
+                packageName = element.getSimpleName().toString();
         }
-        diagram.setClasses(classes, "western");
+        diagram.setClasses(classes, packageName);
         diagram.makeDiagram();
 
         return true;
