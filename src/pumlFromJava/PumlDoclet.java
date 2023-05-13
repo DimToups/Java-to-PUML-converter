@@ -13,6 +13,7 @@ import java.util.*;
 public class PumlDoclet implements Doclet{
     private String name;
     private String directory;
+    private String packageName;
 
     private static boolean debug = true;
     @Override
@@ -108,7 +109,7 @@ public class PumlDoclet implements Doclet{
 
         //Index d'ajout de valeurs dans classes[i]
         int i = 0;
-        //Traitement de tous les fichiers
+        //Traitement de tous les fichiers pour obtenir toutes les informations sur leur contenu
         for (Element element : docletEnvironment.getIncludedElements())
         {
             //Détermination du type de fichier à traiter
@@ -134,8 +135,10 @@ public class PumlDoclet implements Doclet{
                 classes.get(i).classType = ElementKind.ENUM;
                 i++;
             }
+            else if (element.getKind() == ElementKind.PACKAGE)
+                packageName = element.getSimpleName().toString();
         }
-        diagram.setClasses(classes, "western");
+        diagram.setClasses(classes, packageName);
         diagram.makeDiagram();
 
         return true;
