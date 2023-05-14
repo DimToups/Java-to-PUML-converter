@@ -42,5 +42,6 @@ PumlDiagram - ClassContent
 ClassContent -- Attribut
 ClassContent -- Methode
 Attribut -- Visibilite
+Methode -- Visibilite
 
 @enduml

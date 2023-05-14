@@ -21,22 +21,21 @@ class PumlDoclet implements Doclet{
 }
 
 class PumlDiagram {
-    - classes: ArrayList<ClassContent>
     - packageName: String
     - classesContent: String
     - name: String
     - directory: String
 
-    + <<create>> PumlDiagram(String, String)
-    + setClasses(ArrayList<ClassContent>, String)
+    + <<create>> PumlDiagram(String : String)
+    + setClasses(ArrayList<ClassContent> : String)
     + makeDiagram()
     + initFile()
     + endFile()
 }
 
-PumlDoclet -> PumlDiagram
-PumlDoclet -d-> Element : Utilise \n
-PumlDiagram -> ClassContent
+PumlDoclet o-> "1\ndiagram" PumlDiagram : Crée le diagramme\nà partir de \n >
+PumlDoclet o-d-> "1\nelement" Element : Utilise \n >
+PumlDiagram o-> "[*]\nclasses" ClassContent : Stocke \n >
 
 class Element extends AnnotedConstruct {
     asType() : TypeMirror
@@ -60,13 +59,11 @@ class ClassContent {
 class Attribut {
     - nom: String
     - type: PrimitiveType
-    - visible: Visibilite
 }
 
 class Methode {
     - nom: String
     - type: PrimitiveType
-    - visible: Visibilite
 }
 
 enum Visibilite {
@@ -75,10 +72,10 @@ enum Visibilite {
     PRIVATE
 }
 
-Attribut o-d-> "visible\n" Visibilite : A une \n >
-Methode o-d-> "visible\n" Visibilite : A une \n >
-ClassContent o-d-> "classMethods\n" Methode : Contient \t >
-ClassContent o-d-> "classAttributs\n" Attribut : Contient \t >
+Attribut o-d-> "1\nvisible\n" Visibilite : A pour visibilité \n >
+Methode o-d-> "1\nvisible\n" Visibilite : A pour visibilité \n >
+ClassContent o-d-> "[*]\nclassMethods\n" Methode : Contient \t >
+ClassContent o-d-> "[*]\nclassAttributs\n" Attribut : Contient \t >
 
 
 @enduml
