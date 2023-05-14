@@ -1,6 +1,5 @@
 package pumlFromJava;
 
-import com.sun.jdi.ClassType;
 import jdk.javadoc.doclet.Doclet;
 import jdk.javadoc.doclet.DocletEnvironment;
 import jdk.javadoc.doclet.Reporter;
@@ -8,11 +7,6 @@ import javax.lang.model.element.Element;
 
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.ElementKind;
-import javax.lang.model.element.Modifier;
-import javax.lang.model.type.PrimitiveType;
-import javax.lang.model.type.TypeMirror;
-import java.lang.reflect.Type;
-import java.sql.Array;
 import java.util.*;
 
 public class PumlDoclet implements Doclet{

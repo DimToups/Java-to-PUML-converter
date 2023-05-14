@@ -37,7 +37,7 @@ PumlDoclet o-> "1\ndiagram" PumlDiagram : Crée le diagramme\nà partir de \n >
 PumlDoclet o-d-> "1\nelement" Element : Utilise \n >
 PumlDiagram o-> "[*]\nclasses" ClassContent : Stocke \n >
 
-class Element extends AnnotedConstruct {
+class Element {
     asType() : TypeMirror
     getKind() : ElementKind
     getModifiers() : Modifier[*]
