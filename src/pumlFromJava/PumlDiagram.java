@@ -40,11 +40,17 @@ public class PumlDiagram {
             }
             //Ajout des attributs de la classe
             for (Attribut attribut : classes.get(i).classAttributs){
-                classe += "\t" + attribut.nom + " : " + attribut.type.toString() + "\n";
+                classe += "\t" + attribut.nom;
+                if (attribut.type != null)
+                    classe += " : " + attribut.type.toString();
+                classe += "\n";
             }
             //Ajout des méthodes de la classe
             for (Methode methode : classes.get(i).classMethods){
-                classe += "\t" + methode.nom + " : " + methode.type.toString() + "\n";
+                classe += "\t" + methode.nom;
+                if (methode.type != null)
+                    classe += " : " + methode.type.toString();
+                classe += "\n";
             }
             //Ajout du String dans classContent
             classesContent += "\n" + classe + "\n}";

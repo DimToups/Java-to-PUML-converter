@@ -10,7 +10,7 @@ class western.Dame--><rect codeLine="39" fill="#FEFECE" height="45.0879" id="wes
 class western.Boisson--><rect codeLine="44" fill="#FEFECE" height="24.1328" id="western.Boisson" style="stroke:#A80036;stroke-width:1.5;" width="56" x="115.37" y="635"/><text fill="#000000" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="50" x="118.37" y="651.6016">Boisson</text><!--MD5=[ef384b193dccaf23cc07f5ab2f8ee386]
 class western.Narrateur--><rect codeLine="48" fill="#FEFECE" height="24.1328" id="western.Narrateur" style="stroke:#A80036;stroke-width:1.5;" width="64" x="72.37" y="233.5"/><text fill="#000000" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="58" x="75.37" y="250.1016">Narrateur</text><!--MD5=[5a0308fdca10b9337c24793fed9a0e15]
 class western.Personnage--><rect codeLine="52" fill="#FEFECE" height="24.1328" id="western.Personnage" style="stroke:#A80036;stroke-width:1.5;" width="78" x="133.37" y="139"/><text fill="#000000" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="72" x="136.37" y="155.6016">Personnage</text><!--MD5=[f2c82bb1970d0f20660fd2bc99fd30e2]
-class western.Histoire4--><rect codeLine="56" fill="#FEFECE" height="24.1328" id="western.Histoire4" style="stroke:#A80036;stroke-width:1.5;" width="63" x="68.87" y="48"/><text fill="#000000" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="57" x="71.87" y="64.6016">Histoire4</text><!--MD5=[b1e37f595a6651d504cde0246fefb5a9]
+class western.src.western.Histoire4--><rect codeLine="56" fill="#FEFECE" height="24.1328" id="western.src.western.Histoire4" style="stroke:#A80036;stroke-width:1.5;" width="63" x="68.87" y="48"/><text fill="#000000" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="57" x="71.87" y="64.6016">Histoire4</text><!--MD5=[b1e37f595a6651d504cde0246fefb5a9]
 class western.Cowboy--><rect codeLine="60" fill="#FEFECE" height="45.0879" id="western.Cowboy" style="stroke:#A80036;stroke-width:1.5;" width="56" x="142.37" y="328"/><text fill="#000000" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="50" x="145.37" y="344.6016">Cowboy</text><line style="stroke:#A80036;stroke-width:1.5;" x1="143.37" x2="197.37" y1="352.1328" y2="352.1328"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="29" x="148.37" y="366.7676">gains</text><!--MD5=[20c34fe428a1f9b077ae4c9b90ec3145]
 link western.Substantif to western.Genre--><path codeLine="67" d="M143.37,743.34 C143.37,757.44 143.37,782.17 143.37,802.81 " fill="none" id="western.Substantif-western.Genre" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[4075337ce54e457d4e19171adee60d64]
 reverse link western.Cowboy to western.Ripou--><path codeLine="68" d="M198.28,390.04 C209.52,405.54 221.61,422.24 229.32,432.89 " fill="none" id="western.Cowboy-backto-western.Ripou" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="192.31,393.72,186.25,373.42,203.65,385.51,192.31,393.72" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[b5247f39ca1f07207ba42e3da67225d8]
@@ -36,7 +36,7 @@ link western.Cowboy to western.Boisson--><path codeLine="87" d="M168.38,373.16 C
 @startuml
 ' doclet: sae21.s3.PumlDoclet
 ' specified: [western]
-' included: [unnamed module, western, western.Substantif, western.Nommable, western.Genre, western.Ripou, western.HorsLaLoi, western.Brigand, western.Dame, western.Boisson, western.Narrateur, western.Personnage, western.Histoire4, western.Cowboy]
+' included: [unnamed module, western, western.Substantif, western.Nommable, western.Genre, western.Ripou, western.HorsLaLoi, western.Brigand, western.Dame, western.Boisson, western.Narrateur, western.Personnage, western.src.western.Histoire4, western.Cowboy]
 skinparam classAttributeIconSize 0
 skinparam classFontStyle Bold
 skinparam style strictuml
@@ -89,7 +89,7 @@ class western.Personnage
 {
 }
 
-class western.Histoire4 
+class western.src.western.Histoire4
 {
 }
 
@@ -176,7 +176,7 @@ class western.Personnage
 {
 }
 
-class western.Histoire4 
+class western.src.western.Histoire4
 {
 }
 

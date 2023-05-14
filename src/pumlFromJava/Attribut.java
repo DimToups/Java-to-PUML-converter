@@ -6,4 +6,7 @@ public class Attribut {
     String nom;
     PrimitiveType type;
     Visibilite visibilite;
+    public Attribut(String nom){
+        this.nom = nom;
+    }
 }

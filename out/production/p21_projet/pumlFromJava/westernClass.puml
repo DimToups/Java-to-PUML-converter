@@ -13,15 +13,21 @@ class Boisson{
 
 }
 class Brigand{
+	recompense
+	estLibre
 
 }
 class Cowboy{
+	gains
 
 }
 class Dame{
+	estLibre
 
 }
 class Genre <<enum>>{
+	FEMININ
+	MASCULIN
 
 }
 class Histoire4{

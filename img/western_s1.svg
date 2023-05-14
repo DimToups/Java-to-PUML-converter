@@ -25,7 +25,7 @@ link Histoire4 to Cowboy--><!--MD5=[a58b0ddc88f7d8b6f78910ba6a89dce6]
 @startuml
 ' doclet: sae21.s1.PumlDoclet
 ' specified: [western]
-' included: [unnamed module, western, western.Substantif, western.Nommable, western.Genre, western.Ripou, western.HorsLaLoi, western.Brigand, western.Dame, western.Boisson, western.Narrateur, western.Personnage, western.Histoire4, western.Cowboy]
+' included: [unnamed module, western, western.Substantif, western.Nommable, western.Genre, western.Ripou, western.HorsLaLoi, western.Brigand, western.Dame, western.Boisson, western.Narrateur, western.Personnage, western.src.western.Histoire4, western.Cowboy]
 skinparam classAttributeIconSize 0
 skinparam classFontStyle Bold
 skinparam style strictuml
