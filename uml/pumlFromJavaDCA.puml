@@ -1,0 +1,46 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+skinparam style strictuml
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+
+hide empty members
+
+class PumlDoclet implements Doclet{
+
+}
+
+class PumlDiagram {
+
+}
+
+class ClassContent {
+
+}
+
+class Element {
+
+}
+
+
+class Attribut {
+
+}
+
+class Methode {
+
+}
+
+enum Visibilite {
+
+}
+
+PumlDoclet - PumlDiagram
+PumlDoclet -- Element
+PumlDiagram - ClassContent
+ClassContent -- Attribut
+ClassContent -- Methode
+Attribut -- Visibilite
+
+@enduml

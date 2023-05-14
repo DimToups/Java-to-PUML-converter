@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PumlDiagram {
-    ArrayList<ClassContent> classes = new ArrayList<>();
-    String packageName;
-    String classesContent = "";
-    String name;
-    String directory;
+    private ArrayList<ClassContent> classes = new ArrayList<>();
+    private String packageName;
+    private String classesContent = "";
+    private String name;
+    private String directory;
     public PumlDiagram(String name, String directory){
         this.name = name;
         this.directory = directory;

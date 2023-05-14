@@ -1,0 +1,84 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+skinparam style strictuml
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+
+hide empty members
+
+class PumlDoclet implements Doclet{
+    - name: String
+    - directory: String
+    - packageName: String
+    - {static}debug: boolean
+
+    + init(Locale, Reporter)
+    + getName(): String
+    + getSupportedOptions(): Set<? extends Option>
+    + getSupportedSourceVersion(): SourceVersion
+    + run(DocletEnvironment): boolean
+}
+
+class PumlDiagram {
+    - classes: ArrayList<ClassContent>
+    - packageName: String
+    - classesContent: String
+    - name: String
+    - directory: String
+
+    + <<create>> PumlDiagram(String, String)
+    + setClasses(ArrayList<ClassContent>, String)
+    + makeDiagram()
+    + initFile()
+    + endFile()
+}
+
+PumlDoclet -> PumlDiagram
+PumlDoclet -d-> Element : Utilise \n
+PumlDiagram -> ClassContent
+
+class Element extends AnnotedConstruct {
+    asType() : TypeMirror
+    getKind() : ElementKind
+    getModifiers() : Modifier[*]
+    getSimpleName() : Name
+    getEnclosingElement() : Element
+    getEnclosingElement() : Element[*]
+    equals(var1 : Object) : Boolean
+    hashCode() : Integer
+    getAnnotationMirrors() : AnnotationMirror[*]
+    getAnnotationsByType(var1 : Class<a>) : Annotation
+    accept(var1 : ElementVisitor<R, P>, var2 : P) : <R, P> R
+}
+
+class ClassContent {
+    - className: String
+    - classType: ElementKind
+}
+
+class Attribut {
+    - nom: String
+    - type: PrimitiveType
+    - visible: Visibilite
+}
+
+class Methode {
+    - nom: String
+    - type: PrimitiveType
+    - visible: Visibilite
+}
+
+enum Visibilite {
+    PUBLIC
+    PARTIAL
+    PRIVATE
+}
+
+Attribut o-d-> "visible\n" Visibilite : A une \n >
+Methode o-d-> "visible\n" Visibilite : A une \n >
+ClassContent o-d-> "classMethods\n" Methode : Contient \t >
+ClassContent o-d-> "classAttributs\n" Attribut : Contient \t >
+
+
+@enduml
