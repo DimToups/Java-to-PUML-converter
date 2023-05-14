@@ -7,7 +7,7 @@ skinparam classFontStyle Bold
 hide empty members
 
 package "javax lang model" {
-    class Element{
+    class Element <<Interface>>{
         asType() : TypeMirror
         getKind() : ElementKind
         getModifiers() : Modifier[*]
