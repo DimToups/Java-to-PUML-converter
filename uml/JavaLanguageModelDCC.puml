@@ -6,22 +6,80 @@ skinparam classFontStyle Bold
 
 hide empty members
 
-class Element extends AnnotedConstruct{
-    asType() : TypeMirror
-    getKind() : ElementKind
-    getModifiers() : Modifier[*]
-    getSimpleName() : Name
-    getEnclosingElement() : Element
-    getEnclosingElement() : Element[*]
-    equals(var1 : Object) : Boolean
-    hashCode() : Integer
-    getAnnotationMirrors() : AnnotationMirror[*]
-    getAnnotationsByType(var1 : Class<a>) : Annotation
-    accept(var1 : ElementVisitor<R, P>, var2 : P) : <R, P> R
-}
+package "javax lang model" {
+    class Element{
+        asType() : TypeMirror
+        getKind() : ElementKind
+        getModifiers() : Modifier[*]
+        getSimpleName() : Name
+        getEnclosingElement() : Element
+        getEnclosingElement() : Element[*]
+        equals(var1 : Object) : Boolean
+        hashCode() : Integer
+        getAnnotationMirrors() : AnnotationMirror[*]
+        getAnnotationsByType(var1 : Class<a>) : Annotation
+        accept(var1 : ElementVisitor<R, P>, var2 : P) : <R, P> R
+    }
 
-class AnnotedConstruct{
+    class ElementKind <<Enummeration>>{
+            PACKAGE
+            ENUM
+            CLASS
+            ANNOTATION_TYPE
+            INTERFACE
+            ENUM_CONSTANT
+            FIELD
+            PARAMETER
+            LOCAL_VARIABLE
+            EXCEPTION_PARAMETER
+            METHOD
+            CONSTRUCTOR
+            STATIC_INIT
+            INSTANCE_INIT
+            TYPE_PARAMETER
+            OTHER
+            RESOURCE_VARIABLE
+            MODULE
+            RECORD
+            RECORD_COMPONENT
+            BINDING_VARIABLE
+            - <<create>> ElementKind()
+            + isClass() : Boolean
+            + isInterface() : Boolean
+            + isField() : Boolean
+    }
 
+    class ElementVisitor <<Interface>>{
+        visit(var1 : Element, var2 : P) : R
+        visit(e : Element) : R
+        visitType(var1 : TypeElement, P var2) : R
+        visitVariable(var1 : VariableElement, var2 : P) : R
+        visitExecutable(var1 : ExecutableElement, var2 : P) : R
+        visitTypeParameter(var1 : TypeParameterElement, var2 : P) : R
+        visitUnknown(var1 : Element, var2 : P) : R
+        visitModule(e : ModuleElement, p : P) : R
+        visitRecordComponent(e : RecordComponentElement, p : P) : R
+    }
+
+    class Name <<Interface>>{
+        equals(var1 : Object) : Boolean
+        hashCode() : Integer
+        contentEquals(var1 : CharSequence) : Boolean
+    }
+
+    class AnnotationMirror <<Interface>>{
+        getAnnotationType() : DeclaredType
+        getElementValues() : ExecutableElement[*], AnnotationValue[*]
+    }
 }
+class AnnotedConstruct
+class CharSequence
+
+Element o-> ElementKind : Indique le type\n >
+Element o--> Name : > Se nomme
+Element o--> AnnotationMirror : Stocke les annotations\n >
+Element o--> ElementVisitor : > 
+Element -u-|> AnnotedConstruct
+Name --|> CharSequence
 
 @enduml
