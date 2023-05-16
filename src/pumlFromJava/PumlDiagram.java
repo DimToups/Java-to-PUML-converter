@@ -12,12 +12,14 @@ public class PumlDiagram {
     private String classesContent = "";
     private String name;
     private String directory;
+    private ArrayList<Liaison> liaisons = new ArrayList<>();
     public PumlDiagram(String name, String directory){
         this.name = name;
         this.directory = directory;
     }
-    public void setClasses(ArrayList<ClassContent> classes, String packageName){
+    public void setClasses(ArrayList<ClassContent> classes, ArrayList<Liaison> liaisons, String packageName){
         this.classes = classes;
+        this.liaisons = liaisons;
         this.packageName = packageName;
     }
     public void makeDiagram(){

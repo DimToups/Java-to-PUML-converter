@@ -104,6 +104,7 @@ public class PumlDoclet implements Doclet{
     public boolean run(DocletEnvironment docletEnvironment) {
         // Créé une liste de classes qu'on va remplir en parcourant les
         ArrayList<ClassContent> classes = new ArrayList<>();
+        ArrayList<Liaison> liaisons = new ArrayList<>();
         PumlDiagram diagram = new PumlDiagram(name, directory);
 
         //Index d'ajout de valeurs dans classes[i]
@@ -120,8 +121,30 @@ public class PumlDoclet implements Doclet{
                 classes.get(i).classType = ElementKind.CLASS;
                 //Traitement de tous les éléments interne de la classe
                 for (Element enclosedElement : element.getEnclosedElements()){
+                    //Traitement des attributs
                     if (enclosedElement.getKind().isField() && !enclosedElement.asType().toString().contains(".")){
                         classes.get(i).classAttributs.add(new Attribut(enclosedElement.getSimpleName().toString()));
+                    }
+                    //Traitement des liens
+                    if (enclosedElement.getKind().isField()){
+                        for (Element elementCompar : docletEnvironment.getIncludedElements()) {
+                            //Lien simple
+                            if (true) {
+                                Liaison newLiaison = new Liaison(enclosedElement.getSimpleName().toString(), elementCompar.getSimpleName().toString(), TypeLiaison.SIMPLE);
+                                liaisons.add(newLiaison);
+                            }
+                            //Héritage
+                            if (true) {
+                                Liaison newLiaison = new Liaison(enclosedElement.getSimpleName().toString(), elementCompar.getSimpleName().toString(), TypeLiaison.HERITAGE);
+                                liaisons.add(newLiaison);
+                            }
+                            //Implement
+                            if (true) {
+                                Liaison newLiaison = new Liaison(enclosedElement.getSimpleName().toString(), elementCompar.getSimpleName().toString(), TypeLiaison.IMPLEMENT);
+                                liaisons.add(newLiaison);
+                            }
+                        }
+
                     }
                 }
                 i++;
@@ -149,7 +172,7 @@ public class PumlDoclet implements Doclet{
             else if (element.getKind() == ElementKind.PACKAGE)
                 packageName = element.getSimpleName().toString();
         }
-        diagram.setClasses(classes, packageName);
+        diagram.setClasses(classes, liaisons, packageName);
         diagram.makeDiagram();
 
         return true;
