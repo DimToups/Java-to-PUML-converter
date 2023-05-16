@@ -60,6 +60,38 @@ public class PumlDiagram {
             //Ajout du String dans classContent
             classesContent += "\n" + classe + "\n}";
         }
+        //Ajout des liaisons
+        int etage = 1;
+        for(Liaison liaison : liaisons){
+            if(liaison.typeLiaison == TypeLiaison.SIMPLE){
+                String stringEtage = "";
+                for (int i = 0; i < etage; i++){
+                    if (i < 2)
+                        stringEtage += "-";
+                }
+                classesContent += "\n" + liaison.element1 + stringEtage + liaison.element2;
+                etage++;
+            }
+            else if (liaison.typeLiaison == TypeLiaison.HERITAGE){
+                String stringEtage = "";
+                for (int i = 0; i < etage; i++){
+                    if (i < 2)
+                        stringEtage += "-";
+                }
+                classesContent += "\n" + liaison.element1 + stringEtage + "|>" + liaison.element2;
+                etage++;
+            }
+            else if (liaison.typeLiaison == TypeLiaison.IMPLEMENT){
+                String stringEtage = "";
+                for (int i = 0; i < etage; i++){
+                    if (i < 2)
+                        stringEtage += ".";
+                }
+                classesContent += "\n" + liaison.element1 + stringEtage + "|>" + liaison.element2;
+                etage++;
+            }
+        }
+
         endFile();
 
         //Création du fichier
