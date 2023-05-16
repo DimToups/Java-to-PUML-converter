@@ -4,6 +4,8 @@ import jdk.javadoc.doclet.Doclet;
 import jdk.javadoc.doclet.DocletEnvironment;
 import jdk.javadoc.doclet.Reporter;
 import javax.lang.model.element.Element;
+import javax.lang.model.element.TypeElement;
+import javax.lang.model.element.VariableElement;
 
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.ElementKind;
@@ -134,7 +136,8 @@ public class PumlDoclet implements Doclet{
                                 liaisons.add(newLiaison);
                             }
                             //Héritage
-                            else if (false) {
+                            else if (elementCompar.getClass() == element.getClass().getSuperclass()) {
+                                System.out.println("héritage inchallah");
                                 Liaison newLiaison = new Liaison(element.getSimpleName().toString(), elementCompar.getSimpleName().toString(), TypeLiaison.HERITAGE);
                                 liaisons.add(newLiaison);
                             }
