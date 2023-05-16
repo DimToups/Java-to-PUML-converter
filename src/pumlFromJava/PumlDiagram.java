@@ -21,6 +21,10 @@ public class PumlDiagram {
         this.classes = classes;
         this.liaisons = liaisons;
         this.packageName = packageName;
+
+        for (Liaison liaison : liaisons){
+            System.out.println(liaison.element1 + " -> " + liaison.element2 + " : " + liaison.typeLiaison);
+        }
     }
     public void makeDiagram(){
         initFile();

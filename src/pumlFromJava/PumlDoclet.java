@@ -129,18 +129,18 @@ public class PumlDoclet implements Doclet{
                     if (enclosedElement.getKind().isField()){
                         for (Element elementCompar : docletEnvironment.getIncludedElements()) {
                             //Lien simple
-                            if (true) {
-                                Liaison newLiaison = new Liaison(enclosedElement.getSimpleName().toString(), elementCompar.getSimpleName().toString(), TypeLiaison.SIMPLE);
+                            if (elementCompar.asType() == enclosedElement.asType() && elementCompar != element) {
+                                Liaison newLiaison = new Liaison(element.getSimpleName().toString(), elementCompar.getSimpleName().toString(), TypeLiaison.SIMPLE);
                                 liaisons.add(newLiaison);
                             }
                             //Héritage
-                            if (true) {
-                                Liaison newLiaison = new Liaison(enclosedElement.getSimpleName().toString(), elementCompar.getSimpleName().toString(), TypeLiaison.HERITAGE);
+                            else if (false) {
+                                Liaison newLiaison = new Liaison(element.getSimpleName().toString(), elementCompar.getSimpleName().toString(), TypeLiaison.HERITAGE);
                                 liaisons.add(newLiaison);
                             }
                             //Implement
-                            if (true) {
-                                Liaison newLiaison = new Liaison(enclosedElement.getSimpleName().toString(), elementCompar.getSimpleName().toString(), TypeLiaison.IMPLEMENT);
+                            else if (false) {
+                                Liaison newLiaison = new Liaison(element.getSimpleName().toString(), elementCompar.getSimpleName().toString(), TypeLiaison.IMPLEMENT);
                                 liaisons.add(newLiaison);
                             }
                         }
