@@ -52,14 +52,14 @@ class Substantif{
 
 }
 Boisson-Substantif
-Brigand--Cowboy
-Brigand--Boisson
-Cowboy--Boisson
+Brigand-Cowboy
+Brigand-Boisson
+Cowboy-Boisson
 Dame--Cowboy
 Dame--HorsLaLoi
 Dame--Boisson
 Personnage--Boisson
-Personnage--Boisson
-Ripou--Brigand
-Substantif--Genre
+Personnage---Boisson
+Ripou---Brigand
+Substantif---Genre
 @enduml

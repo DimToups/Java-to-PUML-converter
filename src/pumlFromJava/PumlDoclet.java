@@ -3,12 +3,11 @@ package pumlFromJava;
 import jdk.javadoc.doclet.Doclet;
 import jdk.javadoc.doclet.DocletEnvironment;
 import jdk.javadoc.doclet.Reporter;
-import javax.lang.model.element.Element;
-import javax.lang.model.element.TypeElement;
-import javax.lang.model.element.VariableElement;
+import western.Dame;
+
+import javax.lang.model.element.*;
 
 import javax.lang.model.SourceVersion;
-import javax.lang.model.element.ElementKind;
 import java.util.*;
 
 public class PumlDoclet implements Doclet{
@@ -137,7 +136,6 @@ public class PumlDoclet implements Doclet{
                             }
                             //Héritage
                             else if (elementCompar.getClass() == element.getClass().getSuperclass()) {
-                                System.out.println("héritage inchallah");
                                 Liaison newLiaison = new Liaison(element.getSimpleName().toString(), elementCompar.getSimpleName().toString(), TypeLiaison.HERITAGE);
                                 liaisons.add(newLiaison);
                             }
@@ -146,8 +144,9 @@ public class PumlDoclet implements Doclet{
                                 Liaison newLiaison = new Liaison(element.getSimpleName().toString(), elementCompar.getSimpleName().toString(), TypeLiaison.IMPLEMENT);
                                 liaisons.add(newLiaison);
                             }
+                            //Class test = Dame.class;
+                            System.out.println(element.getSimpleName() + " = " + element.asType());
                         }
-
                     }
                 }
                 i++;

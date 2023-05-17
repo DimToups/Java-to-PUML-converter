@@ -66,7 +66,7 @@ public class PumlDiagram {
             if(liaison.typeLiaison == TypeLiaison.SIMPLE){
                 String stringEtage = "";
                 for (int i = 0; i < etage; i++){
-                    if (i < 2)
+                    if (i % 4 == 0)
                         stringEtage += "-";
                 }
                 classesContent += "\n" + liaison.element1 + stringEtage + liaison.element2;
@@ -75,7 +75,7 @@ public class PumlDiagram {
             else if (liaison.typeLiaison == TypeLiaison.HERITAGE){
                 String stringEtage = "";
                 for (int i = 0; i < etage; i++){
-                    if (i < 2)
+                    if (i % 2 == 0)
                         stringEtage += "-";
                 }
                 classesContent += "\n" + liaison.element1 + stringEtage + "|>" + liaison.element2;
@@ -84,7 +84,7 @@ public class PumlDiagram {
             else if (liaison.typeLiaison == TypeLiaison.IMPLEMENT){
                 String stringEtage = "";
                 for (int i = 0; i < etage; i++){
-                    if (i < 2)
+                    if (i % 2 == 0)
                         stringEtage += ".";
                 }
                 classesContent += "\n" + liaison.element1 + stringEtage + "|>" + liaison.element2;
