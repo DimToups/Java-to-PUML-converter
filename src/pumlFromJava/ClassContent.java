@@ -2,6 +2,7 @@ package pumlFromJava;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.TypeElement;
 import java.util.ArrayList;
 
 public class ClassContent{
@@ -46,4 +47,6 @@ public class ClassContent{
         classContent += "}";
         return classContent;
     }
+    public String getNom(){ return this.className; }
+    public ElementKind getType(){ return this.classType; }
 }

@@ -131,7 +131,7 @@ public class PumlDiagram {
                     for (Element elementCompar : docletEnvironment.getIncludedElements()) {
                         //Lien simple
                         if (elementCompar.asType() == enclosedElement.asType() && elementCompar != element) {
-                            Liaison newLiaison = new Liaison(element.getSimpleName().toString(), elementCompar.getSimpleName().toString(), TypeLiaison.SIMPLE);
+                            Liaison newLiaison = new Liaison(findClass(element), findClass(elementCompar), TypeLiaison.SIMPLE);
                             liaisons.add(newLiaison);
                         }
                     }
@@ -140,7 +140,7 @@ public class PumlDiagram {
             //Heritage
             for (Element elementCompar : docletEnvironment.getIncludedElements()){
                 if (elementCompar.toString().equals(typeElement.getSuperclass().toString())) {
-                    Liaison newLiaison = new Liaison(element.getSimpleName().toString(), elementCompar.getSimpleName().toString(), TypeLiaison.HERITAGE);
+                    Liaison newLiaison = new Liaison(findClass(element), findClass(elementCompar), TypeLiaison.HERITAGE);
                     liaisons.add(newLiaison);
                 }
             }
@@ -148,12 +148,24 @@ public class PumlDiagram {
             for (TypeMirror interfaceElement : typeElement.getInterfaces()){
                 for (Element elementCompar : docletEnvironment.getIncludedElements()){
                     if (elementCompar.toString().equals(interfaceElement.toString())){
-                        Liaison newLiaison = new Liaison(element.getSimpleName().toString(), elementCompar.getSimpleName().toString(), TypeLiaison.IMPLEMENT);
+                        Liaison newLiaison = new Liaison(findClass(element), findClass(elementCompar), TypeLiaison.IMPLEMENT);
                         liaisons.add(newLiaison);
                     }
                 }
             }
         }
+    }
+    private ClassContent findClass(Element element){
+        ClassContent rightClass = new ClassContent();
+        boolean found = false;
+        for (ClassContent classContent : classes){
+            if (classContent.getNom() == element.getSimpleName().toString() && classContent.getType() == element.getKind()){
+                rightClass = classContent;
+                found = true;
+            }
+        }
+        if (found = true) {return rightClass;}
+        else{return null;}
     }
     public void genererDiagramme(){
         createFile();
