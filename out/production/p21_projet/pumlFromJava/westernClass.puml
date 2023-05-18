@@ -52,14 +52,19 @@ class Substantif{
 
 }
 Boisson-Substantif
+Brigand-|>Personnage
 Brigand-Cowboy
 Brigand-Boisson
-Cowboy-Boisson
+Cowboy---|>Personnage
+Cowboy--Boisson
+Dame----|>Personnage
 Dame--Cowboy
-Dame--HorsLaLoi
-Dame--Boisson
-Personnage--Boisson
+Dame---HorsLaLoi
+Dame---Boisson
+Narrateur------|>Personnage
 Personnage---Boisson
-Ripou---Brigand
-Substantif---Genre
+Personnage----Boisson
+Ripou-------|>Cowboy
+Ripou----Brigand
+Substantif----Genre
 @enduml

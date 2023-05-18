@@ -8,6 +8,7 @@ import western.Dame;
 import javax.lang.model.element.*;
 
 import javax.lang.model.SourceVersion;
+import javax.lang.model.type.TypeMirror;
 import java.util.*;
 
 public class PumlDoclet implements Doclet{
@@ -120,6 +121,16 @@ public class PumlDoclet implements Doclet{
                 classes.add(new ClassContent());
                 classes.get(i).className = element.getSimpleName().toString();
                 classes.get(i).classType = ElementKind.CLASS;
+
+                //Recherche d'un héritage
+                TypeElement typeElement = (TypeElement) element;
+                for (Element elementCompar : docletEnvironment.getIncludedElements()){
+                    if (elementCompar.toString().equals(typeElement.getSuperclass().toString())) {
+                        Liaison newLiaison = new Liaison(element.getSimpleName().toString(), elementCompar.getSimpleName().toString(), TypeLiaison.HERITAGE);
+                        liaisons.add(newLiaison);
+                    }
+                }
+
                 //Traitement de tous les éléments interne de la classe
                 for (Element enclosedElement : element.getEnclosedElements()){
                     //Traitement des attributs
@@ -134,18 +145,11 @@ public class PumlDoclet implements Doclet{
                                 Liaison newLiaison = new Liaison(element.getSimpleName().toString(), elementCompar.getSimpleName().toString(), TypeLiaison.SIMPLE);
                                 liaisons.add(newLiaison);
                             }
-                            //Héritage
-                            else if (elementCompar.getClass() == element.getClass().getSuperclass()) {
-                                Liaison newLiaison = new Liaison(element.getSimpleName().toString(), elementCompar.getSimpleName().toString(), TypeLiaison.HERITAGE);
-                                liaisons.add(newLiaison);
-                            }
-                            //Implement
+                            //Interface
                             else if (false) {
                                 Liaison newLiaison = new Liaison(element.getSimpleName().toString(), elementCompar.getSimpleName().toString(), TypeLiaison.IMPLEMENT);
                                 liaisons.add(newLiaison);
                             }
-                            //Class test = Dame.class;
-                            System.out.println(element.getSimpleName() + " = " + element.asType());
                         }
                     }
                 }

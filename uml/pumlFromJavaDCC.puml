@@ -35,7 +35,7 @@ class PumlDiagram {
 
 PumlDoclet o-> "1\ndiagram" PumlDiagram : Crée le diagramme\nà partir de \n >
 PumlDoclet o-d-> "1\nelement" Element : Utilise \n >
-PumlDiagram o-> "[*]\nclasses" ClassContent : Stocke \n >
+PumlDiagram o-> "*\nclasses" ClassContent : Stocke \n >
 
 class Element {
     asType() : TypeMirror
@@ -74,8 +74,8 @@ enum Visibilite {
 
 Attribut o-d-> "1\nvisible\n" Visibilite : A pour visibilité \n >
 Methode o-d-> "1\nvisible\n" Visibilite : A pour visibilité \n >
-ClassContent o-d-> "[*]\nclassMethods\n" Methode : Contient \t >
-ClassContent o-d-> "[*]\nclassAttributs\n" Attribut : Contient \t >
+ClassContent o-d-> "*\nclassMethods\n" Methode : Contient \t >
+ClassContent o-d-> "*\nclassAttributs\n" Attribut : Contient \t >
 
 
 @enduml
