@@ -118,6 +118,7 @@ public class PumlDiagram {
             if (element.getKind() == ElementKind.CLASS || element.getKind() == ElementKind.ENUM || element.getKind() == ElementKind.INTERFACE){
                 ClassContent classContent = new ClassContent();
                 classContent.setClass(element);
+                this.classes.add(classContent);
             }
         }
     }
@@ -159,11 +160,27 @@ public class PumlDiagram {
         initFile();
         //Génération de toutes les classes
         for (ClassContent classContent : classes){
-            classContent.genererContenuClasse();
+            try {
+                String classString = classContent.genererContenuClasse();
+                FileOutputStream fos = null;
+                fos = new FileOutputStream(directory + "/" + name, false);
+                byte[] b = classString.getBytes();
+                fos.write(b);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
         //Génération de tous les liens
         for (Liaison liaison : liaisons){
-            liaison.genererLiaison();
+            try {
+                String liaisonString = liaison.genererContenuClasse();
+                FileOutputStream fos = null;
+                fos = new FileOutputStream(directory + "/" + name, false);
+                byte[] b = liaisonString.getBytes();
+                fos.write(b);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
         endFile();
     }
@@ -190,7 +207,7 @@ public class PumlDiagram {
                     "hide empty members\n" +
                     "\n";
             FileOutputStream fos = null;
-            fos = new FileOutputStream(directory + "/" + name, true);
+            fos = new FileOutputStream(directory + "/" + name, false);
             byte[] b = initFile.getBytes();
             fos.write(b);
         }
@@ -202,7 +219,7 @@ public class PumlDiagram {
         try {
             String endFile = "\n@enduml";
             FileOutputStream fos = null;
-            fos = new FileOutputStream(directory + "/" + name, true);
+            fos = new FileOutputStream(directory + "/" + name, false);
             byte[] b = endFile.getBytes();
             fos.write(b);
         }
