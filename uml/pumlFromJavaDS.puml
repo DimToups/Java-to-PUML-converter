@@ -28,17 +28,18 @@ Java2Puml -> PumlDoclet ++ : run(System.out, System.err, args)
 
     PumlDoclet -> PumlDiagram ++ : chercherLiaisons()
         loop element : Element
-            PumlDiagram -> PumlDiagram ++ : findInherited(element : Element)
-                loop elementCompar : Element
-                    alt elementCompar is superclass of element
-                        PumlDiagram -->> Liaison ** : <<create>> Liaison(element1 : ClassContent, element2 : ClassContent, typeLiaison : TypeLiaison)
-                    end
+            loop elementCompar : Element
+                alt elementCompar is superclass of element
+                    PumlDiagram -->> Liaison ** : <<create>> Liaison(element1 : ClassContent, element2 : ClassContent, typeLiaison : TypeLiaison)
                 end
-            return findInherited() : Liaison
+            end
             loop enclosedElement : Element
                 alt enclosedElement is Field
                     PumlDiagram -->> Liaison ** : <<create>> Liaison(element1 : ClassContent, element2 : ClassContent, typeLiaison : TypeLiaison)
-                else enclosedElement is Interface
+                end
+            end
+            loop enclosedElement : Element
+                alt enclosedElement is Interface
                     PumlDiagram -->> Liaison ** : <<create>> Liaison(element1 : ClassContent, element2 : ClassContent, typeLiaison : TypeLiaison)
                 end
             end
