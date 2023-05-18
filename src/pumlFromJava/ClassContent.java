@@ -13,6 +13,8 @@ public class ClassContent{
 
     public ClassContent() {}
     public void setClass(Element element){
+        this.className = element.getSimpleName().toString();
+        this.classType = element.getKind();
         for (Element enclosedElement : element.getEnclosedElements()){
             //Gestion des attributs
             if (enclosedElement.getKind().isField() && !enclosedElement.asType().toString().contains(".")){
@@ -44,7 +46,7 @@ public class ClassContent{
         for(Methode methode : classMethods){
             classContent += "\t" + methode.nom + "() : " + methode.type + "\n";
         }
-        classContent += "}";
+        classContent += "}\n";
         return classContent;
     }
     public String getNom(){ return this.className; }

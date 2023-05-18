@@ -124,44 +124,49 @@ public class PumlDiagram {
     }
     public void chercherLiaisons(){
         for (Element element : docletEnvironment.getIncludedElements()){
-            TypeElement typeElement = (TypeElement) element;
-            //Lien simple
-            for (Element enclosedElement : element.getEnclosedElements()){
-                if (enclosedElement.getKind().isField()){
-                    for (Element elementCompar : docletEnvironment.getIncludedElements()) {
-                        //Lien simple
-                        if (elementCompar.asType() == enclosedElement.asType() && elementCompar != element) {
-                            Liaison newLiaison = new Liaison(findClass(element), findClass(elementCompar), TypeLiaison.SIMPLE);
-                            liaisons.add(newLiaison);
+            if (element.getKind() == ElementKind.CLASS) {
+                TypeElement typeElement = (TypeElement) element;
+                //Lien simple
+                for (Element enclosedElement : element.getEnclosedElements()) {
+                    if (enclosedElement.getKind().isField()) {
+                        for (Element elementCompar : docletEnvironment.getIncludedElements()) {
+                            //Lien simple
+                            if (elementCompar.asType() == enclosedElement.asType() && elementCompar != element) {
+                                Liaison newLiaison = new Liaison(findClass(element), findClass(elementCompar), TypeLiaison.SIMPLE);
+                                liaisons.add(newLiaison);
+                            }
                         }
                     }
                 }
-            }
-            //Heritage
-            for (Element elementCompar : docletEnvironment.getIncludedElements()){
-                if (elementCompar.toString().equals(typeElement.getSuperclass().toString())) {
-                    Liaison newLiaison = new Liaison(findClass(element), findClass(elementCompar), TypeLiaison.HERITAGE);
-                    liaisons.add(newLiaison);
-                }
-            }
-            //Implémentation
-            for (TypeMirror interfaceElement : typeElement.getInterfaces()){
-                for (Element elementCompar : docletEnvironment.getIncludedElements()){
-                    if (elementCompar.toString().equals(interfaceElement.toString())){
-                        Liaison newLiaison = new Liaison(findClass(element), findClass(elementCompar), TypeLiaison.IMPLEMENT);
+                //Heritage
+                for (Element elementCompar : docletEnvironment.getIncludedElements()) {
+                    if (elementCompar.toString().equals(typeElement.getSuperclass().toString())) {
+                        Liaison newLiaison = new Liaison(findClass(element), findClass(elementCompar), TypeLiaison.HERITAGE);
                         liaisons.add(newLiaison);
+                    }
+                }
+                //Implémentation
+                for (TypeMirror interfaceElement : typeElement.getInterfaces()) {
+                    for (Element elementCompar : docletEnvironment.getIncludedElements()) {
+                        if (elementCompar.toString().equals(interfaceElement.toString())) {
+                            Liaison newLiaison = new Liaison(findClass(element), findClass(elementCompar), TypeLiaison.IMPLEMENT);
+                            liaisons.add(newLiaison);
+                        }
                     }
                 }
             }
         }
     }
     private ClassContent findClass(Element element){
+        System.out.println("'" + element.getSimpleName() + "' : " + element.getKind());
         ClassContent rightClass = new ClassContent();
         boolean found = false;
         for (ClassContent classContent : classes){
-            if (classContent.getNom() == element.getSimpleName().toString() && classContent.getType() == element.getKind()){
+            System.out.println("\t'" + classContent.getNom() + "' : " + classContent.getType());
+            if (classContent.getNom().equals(element.getSimpleName().toString()) && classContent.getType() == element.getKind()){
                 rightClass = classContent;
                 found = true;
+                System.out.println("\t\tTrouvé !");
             }
         }
         if (found = true) {return rightClass;}
@@ -175,7 +180,7 @@ public class PumlDiagram {
             try {
                 String classString = classContent.genererContenuClasse();
                 FileOutputStream fos = null;
-                fos = new FileOutputStream(directory + "/" + name, false);
+                fos = new FileOutputStream(directory + "/" + name, true);
                 byte[] b = classString.getBytes();
                 fos.write(b);
             } catch (IOException e) {
@@ -187,7 +192,7 @@ public class PumlDiagram {
             try {
                 String liaisonString = liaison.genererLiaison();
                 FileOutputStream fos = null;
-                fos = new FileOutputStream(directory + "/" + name, false);
+                fos = new FileOutputStream(directory + "/" + name, true);
                 byte[] b = liaisonString.getBytes();
                 fos.write(b);
             } catch (IOException e) {
@@ -219,7 +224,7 @@ public class PumlDiagram {
                     "hide empty members\n" +
                     "\n";
             FileOutputStream fos = null;
-            fos = new FileOutputStream(directory + "/" + name, false);
+            fos = new FileOutputStream(directory + "/" + name, true);
             byte[] b = initFile.getBytes();
             fos.write(b);
         }
@@ -231,7 +236,7 @@ public class PumlDiagram {
         try {
             String endFile = "\n@enduml";
             FileOutputStream fos = null;
-            fos = new FileOutputStream(directory + "/" + name, false);
+            fos = new FileOutputStream(directory + "/" + name, true);
             byte[] b = endFile.getBytes();
             fos.write(b);
         }

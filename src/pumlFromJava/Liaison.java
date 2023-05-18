@@ -17,11 +17,22 @@ public class Liaison {
         this.typeLiaison = typeLiaison;
     }
     public String genererLiaison(){
+        //La méthode entière est à refaire, ce n'est pas permanent
         String liaisonString = element1.getNom() + " ";
         for (int i = 0; i < 2; i++){
-            liaisonString += "-";
+            if ((i & 2) == 0) {
+                if (typeLiaison == TypeLiaison.IMPLEMENT){
+                    liaisonString += ".";
+                }
+                else {
+                    liaisonString += "-";
+                }
+            }
         }
-        liaisonString += " " + element2.getNom();
+        if (typeLiaison == TypeLiaison.HERITAGE || typeLiaison == TypeLiaison.IMPLEMENT){
+            liaisonString += "|>";
+        }
+        liaisonString += " " + element2.getNom() + "\n";
         return liaisonString;
     }
 }
