@@ -23,96 +23,6 @@ public class PumlDiagram {
         this.directory = directory;
         this.docletEnvironment = docletEnvironment;
     }
-    /*public void makeDiagram(){
-        initFile();
-        //Ajout du package dans classContent
-        classesContent += "\npackage " + packageName + "{\n";
-        //Traitement de chaque classe
-        for(int i = 0; i < classes.size(); i++){
-            //Création de la chaîne de caractères à placer dans le fichier
-            String classe;
-            if (classes.get(i).classType == ElementKind.INTERFACE) {
-                classe = "class " + classes.get(i).className + " <<interface>>{\n";
-            }
-            else if (classes.get(i).classType == ElementKind.ENUM) {
-                classe = "class " + classes.get(i).className + " <<enum>>{\n";
-            }
-            else {
-                classe = "class " + classes.get(i).className + "{\n";
-            }
-            //Ajout des attributs de la classe
-            for (Attribut attribut : classes.get(i).classAttributs){
-                classe += "\t" + attribut.nom;
-                if (attribut.type != null)
-                    classe += " : " + attribut.type.toString();
-                classe += "\n";
-            }
-            //Ajout des méthodes de la classe
-            for (Methode methode : classes.get(i).classMethods){
-                classe += "\t" + methode.nom;
-                if (methode.type != null)
-                    classe += " : " + methode.type.toString();
-                classe += "\n";
-            }
-            //Ajout du String dans classContent
-            classesContent += "\n" + classe + "\n}";
-        }
-        //Ajout des liaisons
-        int etage = 1;
-        for(Liaison liaison : liaisons){
-            if(liaison.typeLiaison == TypeLiaison.SIMPLE){
-                String stringEtage = "";
-                for (int i = 0; i < etage; i++){
-                    if (i % 4 == 0)
-                        stringEtage += "-";
-                }
-                classesContent += "\n" + liaison.element1 + stringEtage + liaison.element2;
-                etage++;
-            }
-            else if (liaison.typeLiaison == TypeLiaison.HERITAGE){
-                String stringEtage = "";
-                for (int i = 0; i < etage; i++){
-                    if (i % 2 == 0)
-                        stringEtage += "-";
-                }
-                classesContent += "\n" + liaison.element1 + stringEtage + "|>" + liaison.element2;
-                etage++;
-            }
-            else if (liaison.typeLiaison == TypeLiaison.IMPLEMENT){
-                String stringEtage = "";
-                for (int i = 0; i < etage; i++){
-                    if (i % 2 == 0)
-                        stringEtage += ".";
-                }
-                classesContent += "\n" + liaison.element1 + stringEtage + "|>" + liaison.element2;
-                etage++;
-            }
-        }
-
-        endFile();
-
-        //Création du fichier
-        File file = new File(directory + "/" + name);
-        try {
-            if (file.createNewFile()){
-                FileOutputStream fos = new FileOutputStream(directory + "/" + name, true);
-                byte[] b = classesContent.getBytes();
-                fos.write(b);
-            }
-            else{
-                BufferedWriter writer = Files.newBufferedWriter(Paths.get(directory + "/" + name));
-                writer.write("");
-                writer.flush();
-
-                FileOutputStream fos = new FileOutputStream(directory + "/" + name, true);
-                byte[] b = classesContent.getBytes();
-                fos.write(b);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }*/
-    //private void endFile(){classesContent += "\n@enduml";}
     public void chercherClasses(){
         for (Element element : docletEnvironment.getIncludedElements()){
             if (element.getKind() == ElementKind.CLASS || element.getKind() == ElementKind.ENUM || element.getKind() == ElementKind.INTERFACE){
@@ -120,6 +30,8 @@ public class PumlDiagram {
                 classContent.setClass(element);
                 this.classes.add(classContent);
             }
+            else if (element.getKind() == ElementKind.PACKAGE)
+                packageName = element.getSimpleName().toString();
         }
     }
     public void chercherLiaisons(){
@@ -158,18 +70,15 @@ public class PumlDiagram {
         }
     }
     private ClassContent findClass(Element element){
-        System.out.println("'" + element.getSimpleName() + "' : " + element.getKind());
         ClassContent rightClass = new ClassContent();
         boolean found = false;
         for (ClassContent classContent : classes){
-            System.out.println("\t'" + classContent.getNom() + "' : " + classContent.getType());
             if (classContent.getNom().equals(element.getSimpleName().toString()) && classContent.getType() == element.getKind()){
                 rightClass = classContent;
                 found = true;
-                System.out.println("\t\tTrouvé !");
             }
         }
-        if (found = true) {return rightClass;}
+        if (found) {return rightClass;}
         else{return null;}
     }
     public void genererDiagramme(){
@@ -223,6 +132,7 @@ public class PumlDiagram {
                     "\n" +
                     "hide empty members\n" +
                     "\n";
+            initFile += "package " + packageName + "{\n";
             FileOutputStream fos = null;
             fos = new FileOutputStream(directory + "/" + name, true);
             byte[] b = initFile.getBytes();
@@ -234,7 +144,7 @@ public class PumlDiagram {
     }
     private void endFile(){
         try {
-            String endFile = "\n@enduml";
+            String endFile = "\n}\n@enduml";
             FileOutputStream fos = null;
             fos = new FileOutputStream(directory + "/" + name, true);
             byte[] b = endFile.getBytes();

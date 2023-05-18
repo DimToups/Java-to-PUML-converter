@@ -18,7 +18,7 @@ public class Liaison {
     }
     public String genererLiaison(){
         //La méthode entière est à refaire, ce n'est pas permanent
-        String liaisonString = element1.getNom() + " ";
+        String liaisonString = "\n" + element1.getNom() + " ";
         for (int i = 0; i < 2; i++){
             if ((i & 2) == 0) {
                 if (typeLiaison == TypeLiaison.IMPLEMENT){
@@ -32,7 +32,7 @@ public class Liaison {
         if (typeLiaison == TypeLiaison.HERITAGE || typeLiaison == TypeLiaison.IMPLEMENT){
             liaisonString += "|>";
         }
-        liaisonString += " " + element2.getNom() + "\n";
+        liaisonString += " " + element2.getNom();
         return liaisonString;
     }
 }
