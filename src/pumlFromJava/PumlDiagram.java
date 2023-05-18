@@ -113,19 +113,7 @@ public class PumlDiagram {
             throw new RuntimeException(e);
         }
     }
-    private void initFile(){
-        classesContent = "@startuml\n" +
-                "'https://plantuml.com/class-diagram\n" +
-                "skinparam style strictuml\n" +
-                "skinparam classAttributeIconSize 0\n" +
-                "skinparam classFontStyle Bold\n" +
-                "\n" +
-                "hide empty members\n" +
-                "\n";
-    }
-    private void endFile(){
-        classesContent += "\n@enduml";
-    }
+    //private void endFile(){classesContent += "\n@enduml";}
     public void chercherClasses(){
         for (Element element : docletEnvironment.getIncludedElements()){
             if (element.getKind() == ElementKind.CLASS || element.getKind() == ElementKind.ENUM || element.getKind() == ElementKind.INTERFACE){
@@ -168,6 +156,59 @@ public class PumlDiagram {
         }
     }
     public void genererDiagramme(){
-        
+        createFile();
+        initFile();
+        //Génération de toutes les classes
+        for (ClassContent classContent : classes){
+            classContent.genererContenuClasse();
+        }
+        //Génération de tous les liens
+        for (Liaison liaison : liaisons){
+            liaison.genererLiaison();
+        }
+        endFile();
+    }
+    private void createFile(){
+        File file = new File(directory + "/" + name);
+        try {
+            if (!file.createNewFile()){
+                BufferedWriter writer = Files.newBufferedWriter(Paths.get(directory + "/" + name));
+                writer.write("");
+                writer.flush();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private void initFile(){
+        try {
+            String initFile = "@startuml\n" +
+                    "'https://plantuml.com/class-diagram\n" +
+                    "skinparam style strictuml\n" +
+                    "skinparam classAttributeIconSize 0\n" +
+                    "skinparam classFontStyle Bold\n" +
+                    "\n" +
+                    "hide empty members\n" +
+                    "\n";
+            FileOutputStream fos = null;
+            fos = new FileOutputStream(directory + "/" + name, true);
+            byte[] b = initFile.getBytes();
+            fos.write(b);
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private void endFile(){
+        try {
+            String endFile = "\n@enduml";
+            FileOutputStream fos = null;
+            fos = new FileOutputStream(directory + "/" + name, true);
+            byte[] b = endFile.getBytes();
+            fos.write(b);
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

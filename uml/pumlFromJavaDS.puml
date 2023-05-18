@@ -48,13 +48,14 @@ Java2Puml -> PumlDoclet ++ : run(System.out, System.err, args)
 
     PumlDoclet -> PumlDiagram ++ : genererDiagramme()
         PumlDiagram -> PumlDiagram : createFile()
+        PumlDiagram -> PumlDiagram : initFile()
         loop classContent : ClassContent
             PumlDiagram -> ClassContent ++ : genererContenuClasse(element : Element)
-            return genererContenuClasse() : String
+            return genererContenuClasse()
         end
         loop liaison : Liaison
             PumlDiagram -> Liaison ++ : genererLiaison(liaison)
-            return genererLiaison() : String
+            return genererLiaison()
         end
         PumlDiagram -> PumlDiagram : endFile()
     return genererDiagramme()
