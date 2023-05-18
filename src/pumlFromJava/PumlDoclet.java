@@ -146,10 +146,6 @@ public class PumlDoclet implements Doclet{
                         classes.get(i).classAttributs.add(new Attribut(enclosedElement.getSimpleName().toString()));
                     }
                     //Traitement des liens
-                    if (enclosedElement.getKind() == ElementKind.INTERFACE) {
-                        Liaison newLiaison = new Liaison(element.getSimpleName().toString(), enclosedElement.getSimpleName().toString(), TypeLiaison.IMPLEMENT);
-                        liaisons.add(newLiaison);
-                    }
                     if (enclosedElement.getKind().isField()){
                         for (Element elementCompar : docletEnvironment.getIncludedElements()) {
                             //Lien simple

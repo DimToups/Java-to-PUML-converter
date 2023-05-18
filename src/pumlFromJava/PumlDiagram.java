@@ -1,6 +1,11 @@
 package pumlFromJava;
 
+import jdk.javadoc.doclet.DocletEnvironment;
+
+import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.TypeMirror;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -12,19 +17,12 @@ public class PumlDiagram {
     private String classesContent = "";
     private String name;
     private String directory;
+    private DocletEnvironment docletEnvironment;
     private ArrayList<Liaison> liaisons = new ArrayList<>();
-    public PumlDiagram(String name, String directory){
+    public PumlDiagram(String name, String directory, DocletEnvironment docletEnvironment){
         this.name = name;
         this.directory = directory;
-    }
-    public void setClasses(ArrayList<ClassContent> classes, ArrayList<Liaison> liaisons, String packageName){
-        this.classes = classes;
-        this.liaisons = liaisons;
-        this.packageName = packageName;
-
-        for (Liaison liaison : liaisons){
-            System.out.println(liaison.element1 + " -> " + liaison.element2 + " : " + liaison.typeLiaison);
-        }
+        this.docletEnvironment = docletEnvironment;
     }
     public void makeDiagram(){
         initFile();
@@ -127,5 +125,49 @@ public class PumlDiagram {
     }
     private void endFile(){
         classesContent += "\n@enduml";
+    }
+    public void chercherClasses(){
+        for (Element element : docletEnvironment.getIncludedElements()){
+            if (element.getKind() == ElementKind.CLASS || element.getKind() == ElementKind.ENUM || element.getKind() == ElementKind.INTERFACE){
+                ClassContent classContent = new ClassContent();
+                classContent.setClass(element);
+            }
+        }
+    }
+    public void chercherLiaisons(){
+        for (Element element : docletEnvironment.getIncludedElements()){
+            TypeElement typeElement = (TypeElement) element;
+            //Lien simple
+            for (Element enclosedElement : element.getEnclosedElements()){
+                if (enclosedElement.getKind().isField()){
+                    for (Element elementCompar : docletEnvironment.getIncludedElements()) {
+                        //Lien simple
+                        if (elementCompar.asType() == enclosedElement.asType() && elementCompar != element) {
+                            Liaison newLiaison = new Liaison(element.getSimpleName().toString(), elementCompar.getSimpleName().toString(), TypeLiaison.SIMPLE);
+                            liaisons.add(newLiaison);
+                        }
+                    }
+                }
+            }
+            //Heritage
+            for (Element elementCompar : docletEnvironment.getIncludedElements()){
+                if (elementCompar.toString().equals(typeElement.getSuperclass().toString())) {
+                    Liaison newLiaison = new Liaison(element.getSimpleName().toString(), elementCompar.getSimpleName().toString(), TypeLiaison.HERITAGE);
+                    liaisons.add(newLiaison);
+                }
+            }
+            //Implémentation
+            for (TypeMirror interfaceElement : typeElement.getInterfaces()){
+                for (Element elementCompar : docletEnvironment.getIncludedElements()){
+                    if (elementCompar.toString().equals(interfaceElement.toString())){
+                        Liaison newLiaison = new Liaison(element.getSimpleName().toString(), elementCompar.getSimpleName().toString(), TypeLiaison.IMPLEMENT);
+                        liaisons.add(newLiaison);
+                    }
+                }
+            }
+        }
+    }
+    public void genererDiagramme(){
+        
     }
 }
