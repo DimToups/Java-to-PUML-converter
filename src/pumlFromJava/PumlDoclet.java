@@ -107,8 +107,11 @@ public class PumlDoclet implements Doclet{
         // Créé une liste de classes qu'on va remplir en parcourant les
         ArrayList<ClassContent> classes = new ArrayList<>();
         ArrayList<Liaison> liaisons = new ArrayList<>();
-        PumlDiagram diagram = new PumlDiagram(name, directory);
-
+        PumlDiagram diagram = new PumlDiagram(name, directory, docletEnvironment);
+        diagram.chercherClasses();
+        diagram.chercherLiaisons();
+        diagram.genererDiagramme();
+        /*
         //Index d'ajout de valeurs dans classes[i]
         int i = 0;
         //Traitement de tous les fichiers pour obtenir toutes les informations sur leur contenu
@@ -181,8 +184,7 @@ public class PumlDoclet implements Doclet{
             else if (element.getKind() == ElementKind.PACKAGE)
                 packageName = element.getSimpleName().toString();
         }
-        diagram.setClasses(classes, liaisons, packageName);
-        diagram.makeDiagram();
+        diagram.makeDiagram();*/
 
         return true;
     }

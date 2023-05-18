@@ -14,7 +14,6 @@ import java.util.ArrayList;
 public class PumlDiagram {
     private ArrayList<ClassContent> classes = new ArrayList<>();
     private String packageName;
-    private String classesContent = "";
     private String name;
     private String directory;
     private DocletEnvironment docletEnvironment;
@@ -24,7 +23,7 @@ public class PumlDiagram {
         this.directory = directory;
         this.docletEnvironment = docletEnvironment;
     }
-    public void makeDiagram(){
+    /*public void makeDiagram(){
         initFile();
         //Ajout du package dans classContent
         classesContent += "\npackage " + packageName + "{\n";
@@ -112,7 +111,7 @@ public class PumlDiagram {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
+    }*/
     //private void endFile(){classesContent += "\n@enduml";}
     public void chercherClasses(){
         for (Element element : docletEnvironment.getIncludedElements()){
