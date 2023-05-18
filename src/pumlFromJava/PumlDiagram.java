@@ -173,7 +173,7 @@ public class PumlDiagram {
         //Génération de tous les liens
         for (Liaison liaison : liaisons){
             try {
-                String liaisonString = liaison.genererContenuClasse();
+                String liaisonString = liaison.genererLiaison();
                 FileOutputStream fos = null;
                 fos = new FileOutputStream(directory + "/" + name, false);
                 byte[] b = liaisonString.getBytes();

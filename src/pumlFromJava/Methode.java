@@ -9,4 +9,7 @@ public class Methode {
     public Methode(String nom){
         this.nom = nom;
     }
+    public String getNom(){ return this.nom;}
+    public PrimitiveType getType(){ return this.type;}
+    public Visibilite getVisibilite(){ return this.visibilite;}
 }

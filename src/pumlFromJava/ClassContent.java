@@ -37,7 +37,7 @@ public class ClassContent{
         classContent += "{\n";
         //Affichage des attributs
         for(Attribut attribut : classAttributs){
-            classContent += "\t" + attribut.nom + "\n";
+            classContent += "\t" + attribut.getNom() + "\n";
         }
         //Affichage des méthodes
         for(Methode methode : classMethods){
