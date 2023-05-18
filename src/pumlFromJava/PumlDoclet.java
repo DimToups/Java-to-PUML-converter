@@ -14,9 +14,6 @@ import java.util.*;
 public class PumlDoclet implements Doclet{
     private String name;
     private String directory;
-    private String packageName;
-
-    private static boolean debug = true;
     @Override
     public void init(Locale locale, Reporter reporter) {  }
     @Override

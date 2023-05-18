@@ -30,8 +30,9 @@ public class PumlDiagram {
                 classContent.setClass(element);
                 this.classes.add(classContent);
             }
-            else if (element.getKind() == ElementKind.PACKAGE)
+            else if (element.getKind() == ElementKind.PACKAGE) {
                 packageName = element.getSimpleName().toString();
+            }
         }
     }
     public void chercherLiaisons(){
