@@ -130,6 +130,14 @@ public class PumlDoclet implements Doclet{
                         liaisons.add(newLiaison);
                     }
                 }
+                for (TypeMirror interfaceElement : ((TypeElement) element).getInterfaces()){
+                    for (Element elementCompar : docletEnvironment.getIncludedElements()){
+                        if (elementCompar.toString().equals(interfaceElement.toString())){
+                            Liaison newLiaison = new Liaison(element.getSimpleName().toString(), elementCompar.getSimpleName().toString(), TypeLiaison.IMPLEMENT);
+                            liaisons.add(newLiaison);
+                        }
+                    }
+                }
 
                 //Traitement de tous les éléments interne de la classe
                 for (Element enclosedElement : element.getEnclosedElements()){
@@ -138,16 +146,15 @@ public class PumlDoclet implements Doclet{
                         classes.get(i).classAttributs.add(new Attribut(enclosedElement.getSimpleName().toString()));
                     }
                     //Traitement des liens
+                    if (enclosedElement.getKind() == ElementKind.INTERFACE) {
+                        Liaison newLiaison = new Liaison(element.getSimpleName().toString(), enclosedElement.getSimpleName().toString(), TypeLiaison.IMPLEMENT);
+                        liaisons.add(newLiaison);
+                    }
                     if (enclosedElement.getKind().isField()){
                         for (Element elementCompar : docletEnvironment.getIncludedElements()) {
                             //Lien simple
                             if (elementCompar.asType() == enclosedElement.asType() && elementCompar != element) {
                                 Liaison newLiaison = new Liaison(element.getSimpleName().toString(), elementCompar.getSimpleName().toString(), TypeLiaison.SIMPLE);
-                                liaisons.add(newLiaison);
-                            }
-                            //Interface
-                            else if (false) {
-                                Liaison newLiaison = new Liaison(element.getSimpleName().toString(), elementCompar.getSimpleName().toString(), TypeLiaison.IMPLEMENT);
                                 liaisons.add(newLiaison);
                             }
                         }

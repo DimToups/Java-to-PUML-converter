@@ -28,13 +28,13 @@ Java2Puml -> PumlDoclet ++ : run(System.out, System.err, args)
 
     PumlDoclet -> PumlDiagram ++ : chercherLiaisons()
         loop element : Element
-            PumlDiagram -> PumlDiagram ++ : findInherited()
+            PumlDiagram -> PumlDiagram ++ : findInherited(element : Element)
                 loop elementCompar : Element
                     alt elementCompar is superclass of element
                         PumlDiagram -->> Liaison ** : <<create>> Liaison(element1 : ClassContent, element2 : ClassContent, typeLiaison : TypeLiaison)
                     end
                 end
-            return findInherited()
+            return findInherited() : Liaison
             loop enclosedElement : Element
                 alt enclosedElement is Field
                     PumlDiagram -->> Liaison ** : <<create>> Liaison(element1 : ClassContent, element2 : ClassContent, typeLiaison : TypeLiaison)
@@ -47,7 +47,7 @@ Java2Puml -> PumlDoclet ++ : run(System.out, System.err, args)
 
     PumlDoclet -> PumlDiagram ++ : genererDiagramme()
         PumlDiagram -> PumlDiagram : createFile()
-        loop element : Element
+        loop classContent : ClassContent
             PumlDiagram -> ClassContent ++ : genererContenuClasse(element : Element)
             return genererContenuClasse() : String
         end
