@@ -6,68 +6,54 @@ skinparam classFontStyle Bold
 
 hide empty members
 
-
 package western{
-
 class Boisson{
-
 }
 class Brigand{
 	recompense
 	estLibre
-
 }
 class Cowboy{
 	gains
-
 }
 class Dame{
 	estLibre
-
 }
-class Genre <<enum>>{
-	FEMININ
-	MASCULIN
-
+class Genre <<Interface>>{
 }
 class Histoire4{
-
 }
-class HorsLaLoi <<interface>>{
-
+class HorsLaLoi <<Enum>>{
 }
 class Narrateur{
-
 }
-class Nommable <<interface>>{
-
+class Nommable <<Enum>>{
 }
 class Personnage{
-
 }
 class Ripou{
-
 }
 class Substantif{
-
 }
-Boisson-Substantif
-Brigand-|>Personnage
-Brigand..|>HorsLaLoi
-Brigand-Cowboy
-Brigand--Boisson
-Cowboy---|>Personnage
-Cowboy--Boisson
-Dame----|>Personnage
-Dame---Cowboy
-Dame---HorsLaLoi
-Dame---Boisson
-Narrateur------|>Personnage
-Personnage.......|>Nommable
-Personnage----Boisson
-Personnage----Boisson
-Ripou--------|>Cowboy
-Ripou.........|>HorsLaLoi
-Ripou-----Brigand
-Substantif-----Genre
+
+Boisson -- Substantif
+Brigand -- Cowboy
+Brigand -- Boisson
+Brigand --|> Personnage
+Brigand ..|> HorsLaLoi
+Cowboy -- Boisson
+Cowboy --|> Personnage
+Dame -- Cowboy
+Dame -- HorsLaLoi
+Dame -- Boisson
+Dame --|> Personnage
+Narrateur --|> Personnage
+Personnage -- Boisson
+Personnage -- Boisson
+Personnage ..|> Nommable
+Ripou -- Brigand
+Ripou --|> Cowboy
+Ripou ..|> HorsLaLoi
+Substantif -- Genre
+}
 @enduml
