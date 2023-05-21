@@ -19,15 +19,15 @@ class Cowboy{
 class Dame{
 	estLibre
 }
-class Genre <<Interface>>{
+class Genre <<Enum>>{
 }
 class Histoire4{
 }
-class HorsLaLoi <<Enum>>{
+class HorsLaLoi <<Interface>>{
 }
 class Narrateur{
 }
-class Nommable <<Enum>>{
+class Nommable <<Interface>>{
 }
 class Personnage{
 }

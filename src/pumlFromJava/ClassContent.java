@@ -10,7 +10,6 @@ public class ClassContent{
     private ElementKind classType;
     private ArrayList<Attribut> classAttributs = new ArrayList<>();
     private ArrayList<Methode> classMethods = new ArrayList<>();
-
     public ClassContent() {}
     public void setClass(Element element){
         this.className = element.getSimpleName().toString();
@@ -31,10 +30,10 @@ public class ClassContent{
     public String genererContenuClasse(){
         String classContent = "class " + className;
         //Affichage du stéréotype
-        if (classType == ElementKind.ENUM){
+        if (classType == ElementKind.INTERFACE){
             classContent += " <<Interface>>";
         }
-        else if (classType == ElementKind.INTERFACE) {
+        else if (classType == ElementKind.ENUM) {
             classContent += " <<Enum>>";
         }
         classContent += "{\n";
