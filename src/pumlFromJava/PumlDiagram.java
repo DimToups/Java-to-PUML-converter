@@ -17,7 +17,7 @@ public class PumlDiagram {
     private String name;
     private String directory;
     private DocletEnvironment docletEnvironment;
-    private ArrayList<Liaison> liaisons = new ArrayList<>();
+    private ArrayList<Association> associations = new ArrayList<>();
     public PumlDiagram(String name, String directory, DocletEnvironment docletEnvironment){
         this.name = name;
         this.directory = directory;
@@ -35,7 +35,7 @@ public class PumlDiagram {
             }
         }
     }
-    public void chercherLiaisons(){
+    public void chercherAssociations(){
         for (Element element : docletEnvironment.getIncludedElements()){
             if (element.getKind() == ElementKind.CLASS) {
                 TypeElement typeElement = (TypeElement) element;
@@ -45,8 +45,8 @@ public class PumlDiagram {
                         for (Element elementCompar : docletEnvironment.getIncludedElements()) {
                             //Lien simple
                             if (elementCompar.asType() == enclosedElement.asType() && elementCompar != element) {
-                                Liaison newLiaison = new Liaison(findClass(element), findClass(elementCompar), TypeLiaison.SIMPLE);
-                                liaisons.add(newLiaison);
+                                Association newAssociation = new Association(findClass(element), findClass(elementCompar), TypeAssociation.SIMPLE);
+                                associations.add(newAssociation);
                             }
                         }
                     }
@@ -54,16 +54,16 @@ public class PumlDiagram {
                 //Heritage
                 for (Element elementCompar : docletEnvironment.getIncludedElements()) {
                     if (elementCompar.toString().equals(typeElement.getSuperclass().toString())) {
-                        Liaison newLiaison = new Liaison(findClass(element), findClass(elementCompar), TypeLiaison.HERITAGE);
-                        liaisons.add(newLiaison);
+                        Association newAssociation = new Association(findClass(element), findClass(elementCompar), TypeAssociation.HERITAGE);
+                        associations.add(newAssociation);
                     }
                 }
                 //Implémentation
                 for (TypeMirror interfaceElement : typeElement.getInterfaces()) {
                     for (Element elementCompar : docletEnvironment.getIncludedElements()) {
                         if (elementCompar.toString().equals(interfaceElement.toString())) {
-                            Liaison newLiaison = new Liaison(findClass(element), findClass(elementCompar), TypeLiaison.IMPLEMENT);
-                            liaisons.add(newLiaison);
+                            Association newAssociation = new Association(findClass(element), findClass(elementCompar), TypeAssociation.IMPLEMENT);
+                            associations.add(newAssociation);
                         }
                     }
                 }
@@ -98,12 +98,12 @@ public class PumlDiagram {
             }
         }
         //Génération de tous les liens
-        for (Liaison liaison : liaisons){
+        for (Association Association : associations){
             try {
-                String liaisonString = liaison.genererLiaison();
+                String AssociationString = Association.genererAssociation();
                 FileOutputStream fos = null;
                 fos = new FileOutputStream(directory + "/" + name, true);
-                byte[] b = liaisonString.getBytes();
+                byte[] b = AssociationString.getBytes();
                 fos.write(b);
             } catch (IOException e) {
                 throw new RuntimeException(e);
