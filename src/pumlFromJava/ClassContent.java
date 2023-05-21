@@ -44,7 +44,7 @@ public class ClassContent{
         }
         //Affichage des méthodes
         for(Methode methode : classMethods){
-            classContent += "\t" + methode.nom + "() : " + methode.type + "\n";
+            classContent += "\t" + methode.getNom() + "() : " + methode.getType() + "\n";
         }
         classContent += "}\n";
         return classContent;

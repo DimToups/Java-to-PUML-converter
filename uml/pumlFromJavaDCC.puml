@@ -7,75 +7,72 @@ skinparam classFontStyle Bold
 
 hide empty members
 
-class PumlDoclet implements Doclet{
-    - name: String
-    - directory: String
-    - packageName: String
-    - {static}debug: boolean
-
-    + init(Locale, Reporter)
-    + getName(): String
-    + getSupportedOptions(): Set<? extends Option>
-    + getSupportedSourceVersion(): SourceVersion
-    + run(DocletEnvironment): boolean
+class Java2Puml{
+    + main(args : String[]) {static}
 }
-
-class PumlDiagram {
-    - packageName: String
-    - classesContent: String
-    - name: String
-    - directory: String
-
-    + <<create>> PumlDiagram(String : String)
-    + setClasses(ArrayList<ClassContent> : String)
-    + makeDiagram()
-    + initFile()
-    + endFile()
+class PumlDoclet{
+    - name : String
+    - directory : String
+    + init(locale : Locale, reporter : Reporter)
+    + getName() : String
+    + getSupportedOptions() : Option *
+    + getSupportedVersion() : SourceVersion
+    + run(docletEnvironment : DocletEnvironment) : Boolean
 }
-
-PumlDoclet o-> "1\ndiagram" PumlDiagram : Crée le diagramme\nà partir de \n >
-PumlDoclet o-d-> "1\nelement" Element : Utilise \n >
-PumlDiagram o-> "*\nclasses" ClassContent : Stocke \n >
-
-class Element {
-    asType() : TypeMirror
-    getKind() : ElementKind
-    getModifiers() : Modifier[*]
-    getSimpleName() : Name
-    getEnclosingElement() : Element
-    getEnclosingElement() : Element[*]
-    equals(var1 : Object) : Boolean
-    hashCode() : Integer
-    getAnnotationMirrors() : AnnotationMirror[*]
-    getAnnotationsByType(var1 : Class<a>) : Annotation
-    accept(var1 : ElementVisitor<R, P>, var2 : P) : <R, P> R
+class PumlDiagram{
+    - name : String
+    - directory : String
+    - docletEnvironment : DocletEnvironment
+    + <<create>> PumlDiagram(name: String, directory : String, docletEnvironment : DocletEnvironment)
+    + chercherClasses()
+    + chercherLiaisons()
+    - findClass(element : Element) : ClassContent
+    + genererDiagramme()
+    - createFile()
+    - initFile()
+    - endFile()
 }
-
-class ClassContent {
-    - className: String
-    - classType: ElementKind
+class ClassContent{
+    - className : String
+    - classType : ElementKind
+    + <<create>> ClassContent()
+    + setClass(element : Element)
+    + genererContenuClasse() : String
+    + getNom() : String
+    + getType() : ElementKind
 }
-
-class Attribut {
-    - nom: String
-    - type: PrimitiveType
+class Attribut{
+    - nom : String
+    - type : PrimitiveType
+    + <<create>> Attribut(nom : String)
+    + getNom() : String
+    + getType() : PrimitiveType
+    + getVisibilite() : Visibilite
 }
-
-class Methode {
-    - nom: String
-    - type: PrimitiveType
+class Methode{
+    - nom : String
+    - type : PrimitiveType
+    + <<create>> Attribut(nom : String)
+    + getNom() : String
+    + getType() : PrimitiveType
+    + getVisibilite() : Visibilite
 }
-
-enum Visibilite {
+class Liaison{
+    + <<create>> Liaison(element1 : ClassContent, element2 : ClassContent)
+    + <<create>> Liaison(element1 : ClassContent, element2 : ClassContent, typeLiaison : TypeLiaison)
+    + genererLiaison() : String
+}
+enum TypeLiaison <<enum>>{
+    HERITAGE
+    SIMPLE
+    IMPLEMENT
+    AGREGATION
+    COMPOSITION
+}
+enum Visibilite <<enum>>{
     PUBLIC
     PARTIAL
     PRIVATE
 }
-
-Attribut o-d-> "1\nvisible\n" Visibilite : A pour visibilité \n >
-Methode o-d-> "1\nvisible\n" Visibilite : A pour visibilité \n >
-ClassContent o-d-> "*\nclassMethods\n" Methode : Contient \t >
-ClassContent o-d-> "*\nclassAttributs\n" Attribut : Contient \t >
-
 
 @enduml
