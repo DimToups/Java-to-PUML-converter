@@ -75,4 +75,15 @@ enum Visibilite <<enum>>{
     PRIVATE
 }
 
+Java2Puml *-> PumlDoclet : > exécute le doclet
+PumlDoclet o-> PumlDiagram : > génère le diagramme à l'aide de
+PumlDiagram "1" o-> "*\n- classes" ClassContent : Stocke le contenu des classes\n >
+PumlDiagram "1" o--> "*\n- liaisons" Liaison : Stocke les liaisons entre les classes\n >
+ClassContent "1" *--> "*\n- classAttributs" Attribut : Liste les attributs de\n >
+ClassContent "1" *--> "*\n- classMethods" Methode : Liste les méthodes de\n >
+Attribut "1" *--> "1\n- visibilite" Visibilite : indique la visibilité\n >
+Methode "1" *--> "1\n- visibilite" Visibilite : indique la visibilité\n >
+Liaison "1" o-> "2\n- element1\nelement2" ClassContent : Informe de la liaison entre\n >
+Liaison "1" *--> "1\n- typeLiaison" TypeLiaison : Indique le type de liaison\n >
+
 @enduml
