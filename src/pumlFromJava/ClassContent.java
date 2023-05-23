@@ -43,7 +43,7 @@ public class ClassContent{
         }
         //Affichage des méthodes
         for(Methode methode : classMethods){
-            classContent += "\t" + methode.getNom() + "() : " + methode.getType() + "\n";
+            classContent += "\t" + methode.getNom() + "(" + methode.getParameters() + ") : " + methode.getType() + "\n";
         }
         classContent += "}\n";
         return classContent;
