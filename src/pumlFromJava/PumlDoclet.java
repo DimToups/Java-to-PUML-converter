@@ -14,6 +14,7 @@ import java.util.*;
 public class PumlDoclet implements Doclet{
     private String name;
     private String directory;
+    private boolean isDca = false;
     @Override
     public void init(Locale locale, Reporter reporter) {  }
     @Override
@@ -93,6 +94,36 @@ public class PumlDoclet implements Doclet{
                     }
                 }
         );
+        //-dca
+        options.add(
+                new Option() {
+                    @Override
+                    public int getArgumentCount() {
+                        return 0;
+                    }
+                    @Override
+                    public String getDescription() {
+                        return "Défini le type de diagramme de classe généré à dca.";
+                    }
+                    @Override
+                    public Kind getKind() {
+                        return Kind.STANDARD;
+                    }
+                    @Override
+                    public List<String> getNames() {
+                        List<String> names = new ArrayList<>();
+                        names.add("-dca");
+                        return names;
+                    }
+                    @Override
+                    public String getParameters() {return "-dca";}
+                    @Override
+                    public boolean process(String s, List<String> list) {
+                        isDca = true;
+                        return true;
+                    }
+                }
+        );
         return options;
     }
     @Override
@@ -101,7 +132,7 @@ public class PumlDoclet implements Doclet{
     }
     @Override
     public boolean run(DocletEnvironment docletEnvironment) {
-        PumlDiagram diagram = new PumlDiagram(name, directory, docletEnvironment);
+        PumlDiagram diagram = new PumlDiagram(name, directory, docletEnvironment, isDca);
         diagram.chercherClasses();
         diagram.chercherAssociations();
         diagram.genererDiagramme();

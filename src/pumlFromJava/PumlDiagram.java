@@ -17,11 +17,14 @@ public class PumlDiagram {
     private String name;
     private String directory;
     private DocletEnvironment docletEnvironment;
+    private boolean isDca;
     private ArrayList<Association> associations = new ArrayList<>();
-    public PumlDiagram(String name, String directory, DocletEnvironment docletEnvironment){
+    public PumlDiagram(String name, String directory, DocletEnvironment docletEnvironment, boolean isDCA){
         this.name = name;
         this.directory = directory;
         this.docletEnvironment = docletEnvironment;
+        this.isDca = isDCA;
+        System.out.println("isDca = " + isDCA);
     }
     public void chercherClasses(){
         for (Element element : docletEnvironment.getIncludedElements()){
