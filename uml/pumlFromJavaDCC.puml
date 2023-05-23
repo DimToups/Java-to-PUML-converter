@@ -114,18 +114,20 @@ enum Visibilite <<enum>>{
     PRIVATE
 }
 class GenerateurDiagramme{
+    - name : String
+    - path : String
     + <<create>> GenerateurDiagramme()
     + <<create>> GenerateurDiagramme(name : String, path : String, elements : ElementContent, liaisons : Liaison)
-    + setInfos(name : String, path : String, elements : ElementContent, liaisons : Liaison)
-    + createFile()
+    + createFile(name : String, path : String)
     + initFile()
-    + generateElementForPuml()
-    + generateLinkstForPuml()
+    + generateElementForPuml(elements : ElementContent)
+    + generateLinkstForPuml(liaisons : Liaison)
     + endFile()
 }
 
 Java2Puml *-> PumlDoclet : > exécute le doclet
 PumlDoclet o-> PumlDiagram : > génère le diagramme à l'aide de
+PumlDiagram "1" o-> "1\n -generateur" GenerateurDiagramme : Génère le diagramme\n
 PumlDiagram "1" o-> "*\n- elements" ElementContent : Stocke le contenu des élements\n >
 PumlDiagram "1" o--> "*\n- liaisons" Liaison : Stocke les liaisons entre les classes\n >
 ElementContent --|> ClassContent
