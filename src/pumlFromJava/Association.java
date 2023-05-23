@@ -4,19 +4,23 @@ package pumlFromJava;
 import java.util.List;
 
 public class Association {
-    private ClassContent element1;
-    private ClassContent element2;
+    private ElementContent element1;
+    private ElementContent element2;
     private TypeAssociation typeAssociation = TypeAssociation.SIMPLE;
 
-    public Association(ClassContent element1, ClassContent element2) {
+    public Association(ElementContent element1, ElementContent element2) {
         this.element1 = element1;
         this.element2 = element2;
     }
 
-    public Association(ClassContent element1, ClassContent element2, TypeAssociation typeAssociation) {
+    public Association(ElementContent element1, ElementContent element2, TypeAssociation typeAssociation) {
         this.element1 = element1;
         this.element2 = element2;
         this.typeAssociation = typeAssociation;
+    }
+
+    public TypeAssociation getTypeAssociation() {
+        return typeAssociation;
     }
 
     public String genererAssociation() {

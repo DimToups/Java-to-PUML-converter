@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class PumlDiagram {
-    private ArrayList<ClassContent> classes = new ArrayList<>();
+    private ArrayList<ElementContent> elements = new ArrayList<>();
     private String packageName;
     private String name;
     private String directory;
@@ -30,8 +30,8 @@ public class PumlDiagram {
         for (Element element : docletEnvironment.getIncludedElements()){
             if (element.getKind() == ElementKind.CLASS || element.getKind() == ElementKind.ENUM || element.getKind() == ElementKind.INTERFACE){
                 ClassContent classContent = new ClassContent();
-                classContent.setClass(element, isDca);
-                this.classes.add(classContent);
+                classContent.setElement(element);
+                this.elements.add(classContent);
             }
             else if (element.getKind() == ElementKind.PACKAGE) {
                 packageName = element.getSimpleName().toString();
@@ -73,89 +73,24 @@ public class PumlDiagram {
             }
         }
     }
-    private ClassContent findClass(Element element){
-        ClassContent rightClass = new ClassContent();
+    private ElementContent findClass(Element element){
+        ElementContent rightElement = null;
         boolean found = false;
-        for (ClassContent classContent : classes){
-            if (classContent.getNom().equals(element.getSimpleName().toString()) && classContent.getType() == element.getKind()){
-                rightClass = classContent;
+        for (ElementContent elementContent : elements){
+            if (elementContent.getNom().equals(element.getSimpleName().toString()) && elementContent.getType() == element.getKind()){
+                rightElement = elementContent;
                 found = true;
             }
         }
-        if (found) {return rightClass;}
+        if (found) {return rightElement;}
         else{return null;}
     }
     public void genererDiagramme(){
-        createFile();
-        initFile();
-        //Génération de toutes les classes
-        for (ClassContent classContent : classes){
-            try {
-                String classString = classContent.genererContenuClasse();
-                FileOutputStream fos = null;
-                fos = new FileOutputStream(directory + "/" + name, true);
-                byte[] b = classString.getBytes();
-                fos.write(b);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        //Génération de tous les liens
-        for (Association Association : associations){
-            try {
-                String AssociationString = Association.genererAssociation();
-                FileOutputStream fos = null;
-                fos = new FileOutputStream(directory + "/" + name, true);
-                byte[] b = AssociationString.getBytes();
-                fos.write(b);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        endFile();
-    }
-    private void createFile(){
-        File file = new File(directory + "/" + name);
-        try {
-            if (!file.createNewFile()){
-                BufferedWriter writer = Files.newBufferedWriter(Paths.get(directory + "/" + name));
-                writer.write("");
-                writer.flush();
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    private void initFile(){
-        try {
-            String initFile = "@startuml\n" +
-                    "'https://plantuml.com/class-diagram\n" +
-                    "skinparam style strictuml\n" +
-                    "skinparam classAttributeIconSize 0\n" +
-                    "skinparam classFontStyle Bold\n" +
-                    "\n" +
-                    "hide empty members\n" +
-                    "\n";
-            initFile += "package " + packageName + "{\n";
-            FileOutputStream fos = null;
-            fos = new FileOutputStream(directory + "/" + name, true);
-            byte[] b = initFile.getBytes();
-            fos.write(b);
-        }
-        catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    private void endFile(){
-        try {
-            String endFile = "\n}\n@enduml";
-            FileOutputStream fos = null;
-            fos = new FileOutputStream(directory + "/" + name, true);
-            byte[] b = endFile.getBytes();
-            fos.write(b);
-        }
-        catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        GenerateurDiagramme generateurDiagramme = new GenerateurDiagramme(name, directory, packageName, isDca);
+        generateurDiagramme.createFile();
+        generateurDiagramme.initFile();
+        generateurDiagramme.generateElementsForPuml(elements);
+        generateurDiagramme.generateLinksForPuml(associations);
+        generateurDiagramme.endFile();
     }
 }
