@@ -28,39 +28,78 @@ class PumlDiagram{
     + chercherLiaisons()
     - findClass(element : Element) : ClassContent
     + genererDiagramme()
-    - createFile()
-    - initFile()
-    - endFile()
 }
-class ClassContent{
+abstract class ElementContent{
     - className : String
     - classType : ElementKind
-    + <<create>> ClassContent()
-    + setClass(element : Element)
-    + genererContenuClasse() : String
+    + <<create>> ElementContent()
+    + setElement(element : Element) {abstract}
+    + genererContenuElement() : String {abstract}
     + getNom() : String
     + getType() : ElementKind
+    + findElement(element : Element) : ElementContent
+}
+class EnumContent{
+    - attributs : Attribut *
+    + <<create>> EnumContent()
+    + setElement(element : Element)
+    + genererContenuElement() : String
+}
+class ClassContent{
+    - attributs : Attribut *
+    - methodes : Methodes *
+    + <<create>> ClassContent()
+    + setElement(element : Element)
+    + genererContenuElement() : String
+}
+class InterfaceContent{
+    - methodes : Methodes *
+    + <<create>> InterfaceContent()
+    + setElement(element : Element)
+    + genererContenuElement() : String
 }
 class Attribut{
     - nom : String
-    - type : PrimitiveType
+    - type : TypeMirror
     + <<create>> Attribut(nom : String)
+    + <<create>> Attribut(nom : String, type : TypeMirror)
+    + <<create>> Attribut(nom : String, type : TypeMirror, visibilite : Visibilite)
+    + <<create>> Attribut(nom : String, type : TypeMirror, modificateur : Modificateur)
+    + <<create>> Attribut(nom : String, type : TypeMirror, visibilite : Visibilite, modificateur : Modificateur)
     + getNom() : String
-    + getType() : PrimitiveType
+    + getType() : TypeMirror
     + getVisibilite() : Visibilite
+    + getModificateur() : Modificateur
+    + setType(type : TypeMirror)
+    + setVisibilite(visibiilite : Visibilite)
+    + setModificateur(modificateur : Modificateur)
 }
 class Methode{
     - nom : String
-    - type : PrimitiveType
-    + <<create>> Attribut(nom : String)
-    + getNom() : String
-    + getType() : PrimitiveType
-    + getVisibilite() : Visibilite
+        - type : TypeMirror
+        + <<create>> Methode(nom : String)
+        + <<create>> Methode(nom : String, type : TypeMirror)
+        + <<create>> Methode(nom : String, type : TypeMirror, visibilite : Visibilite)
+        + <<create>> Methode(nom : String, type : TypeMirror, modificateur : Modificateur)
+        + <<create>> Methode(nom : String, type : TypeMirror, visibilite : Visibilite, modificateur : Modificateur)
+        + getNom() : String
+        + getType() : TypeMirror
+        + getVisibilite() : Visibilite
+        + getModificateur() : Modificateur
+        + setType(type : TypeMirror)
+        + setVisibilite(visibiilite : Visibilite)
+        + setModificateur(modificateur : Modificateur)
+}
+enum Modificateur <<enum>>{
+    ABSTRACT
+    STATIC
+    FINAL
 }
 class Liaison{
     + <<create>> Liaison(element1 : ClassContent, element2 : ClassContent)
     + <<create>> Liaison(element1 : ClassContent, element2 : ClassContent, typeLiaison : TypeLiaison)
     + genererLiaison() : String
+    + trouverLiaisons(elementContent : ElementContent, docletEnvironment : DocletEnvironment) : void
 }
 enum TypeLiaison <<enum>>{
     HERITAGE
@@ -74,16 +113,34 @@ enum Visibilite <<enum>>{
     PARTIAL
     PRIVATE
 }
+class GenerateurDiagramme{
+    + <<create>> GenerateurDiagramme()
+    + <<create>> GenerateurDiagramme(name : String, path : String, elements : ElementContent, liaisons : Liaison)
+    + setInfos(name : String, path : String, elements : ElementContent, liaisons : Liaison)
+    + createFile()
+    + initFile()
+    + generateElementForPuml()
+    + generateLinkstForPuml()
+    + endFile()
+}
 
 Java2Puml *-> PumlDoclet : > exécute le doclet
 PumlDoclet o-> PumlDiagram : > génère le diagramme à l'aide de
-PumlDiagram "1" o-> "*\n- classes" ClassContent : Stocke le contenu des classes\n >
+PumlDiagram "1" o-> "*\n- elements" ElementContent : Stocke le contenu des élements\n >
 PumlDiagram "1" o--> "*\n- liaisons" Liaison : Stocke les liaisons entre les classes\n >
+ElementContent --|> ClassContent
+ElementContent --|> EnumContent
+ElementContent --|> InterfaceContent
 ClassContent "1" *--> "*\n- classAttributs" Attribut : Liste les attributs de\n >
 ClassContent "1" *--> "*\n- classMethods" Methode : Liste les méthodes de\n >
+EnumContent "1" *--> "*\n- classAttributs" Attribut : Liste les attributs de\n >
+InterfaceContent "1" *--> "*\n- classMethods" Methode : Liste les méthodes de\n >
 Attribut "1" *--> "1\n- visibilite" Visibilite : indique la visibilité\n >
 Methode "1" *--> "1\n- visibilite" Visibilite : indique la visibilité\n >
-Liaison "1" o-> "2\n- element1\nelement2" ClassContent : Informe de la liaison entre\n >
+Attribut "1" *--> "1\n- modificateur" Modificateur : indique le modificateur\n >
+Methode "1" *--> "1\n- modificateur" Modificateur : indique le modificateur\n >
+Methode "1" o-> "*\n- parametres" Attribut : Stocke les paramètres\nde la méthode\n >
+Liaison "1" o-> "2\n- element1\n- element2" ElementContent : Informe de la liaison entre\n >
 Liaison "1" *--> "1\n- typeLiaison" TypeLiaison : Indique le type de liaison\n >
 
 @enduml

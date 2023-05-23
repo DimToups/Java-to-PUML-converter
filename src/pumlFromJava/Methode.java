@@ -9,7 +9,7 @@ public class Methode {
     private TypeMirror type;
     private Visibilite visibilite;
     private Modificateur modificateur;
-    private ArrayList<Attribut> parametres;
+    private ArrayList<Attribut> parametres = new ArrayList<>();
     public Methode(String nom){
         this.nom = nom;
     }

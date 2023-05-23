@@ -2,6 +2,7 @@ package pumlFromJava;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import java.util.ArrayList;
 
@@ -11,7 +12,7 @@ public class ClassContent{
     private ArrayList<Attribut> classAttributs = new ArrayList<>();
     private ArrayList<Methode> classMethods = new ArrayList<>();
     public ClassContent() {}
-    public void setClass(Element element){
+    public void setClass(Element element, boolean isDCA){
         this.className = element.getSimpleName().toString();
         this.classType = element.getKind();
         for (Element enclosedElement : element.getEnclosedElements()){
@@ -21,7 +22,7 @@ public class ClassContent{
                 classAttributs.add(attribut);
             }
             //Gestion des méthodes
-            if (false){
+            if (!isDCA && enclosedElement.getKind() == ElementKind.METHOD){
                 Methode methode = new Methode(enclosedElement.getSimpleName().toString());
                 classMethods.add(methode);
             }

@@ -30,7 +30,7 @@ public class PumlDiagram {
         for (Element element : docletEnvironment.getIncludedElements()){
             if (element.getKind() == ElementKind.CLASS || element.getKind() == ElementKind.ENUM || element.getKind() == ElementKind.INTERFACE){
                 ClassContent classContent = new ClassContent();
-                classContent.setClass(element);
+                classContent.setClass(element, isDca);
                 this.classes.add(classContent);
             }
             else if (element.getKind() == ElementKind.PACKAGE) {
