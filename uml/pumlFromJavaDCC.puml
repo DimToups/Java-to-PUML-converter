@@ -34,7 +34,7 @@ abstract class ElementContent{
     - classType : ElementKind
     + <<create>> ElementContent()
     + setElement(element : Element) {abstract}
-    + genererContenuElement() : String {abstract}
+    + genererContenuElement(isDca : Boolean) : String {abstract}
     + getNom() : String
     + getType() : ElementKind
     + findElement(element : Element) : ElementContent
@@ -43,20 +43,20 @@ class EnumContent{
     - attributs : Attribut *
     + <<create>> EnumContent()
     + setElement(element : Element)
-    + genererContenuElement() : String
+    + genererContenuElement(isDca : Boolean) : String
 }
 class ClassContent{
     - attributs : Attribut *
     - methodes : Methodes *
     + <<create>> ClassContent()
     + setElement(element : Element)
-    + genererContenuElement() : String
+    + genererContenuElement(isDca : Boolean) : String
 }
 class InterfaceContent{
     - methodes : Methodes *
     + <<create>> InterfaceContent()
     + setElement(element : Element)
-    + genererContenuElement() : String
+    + genererContenuElement(isDca : Boolean) : String
 }
 class Attribut{
     - nom : String
