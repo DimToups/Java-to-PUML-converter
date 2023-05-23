@@ -1,5 +1,5 @@
 package pumlFromJava;
 
-public enum TypeLiaison {
+public enum TypeAssociation {
     HERITAGE, SIMPLE, IMPLEMENT, AGREGATION, COMPOSITION
 }
