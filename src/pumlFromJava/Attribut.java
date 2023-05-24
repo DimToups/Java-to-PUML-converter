@@ -46,19 +46,32 @@ public class Attribut {
 
         if (this.getVisibilite().equals(Visibilite.PUBLIC))
         {
-            toString += "+ " + this.nom + " : " + this.type.toString();
+            toString += "+ " + this.nom + " : " + SubstringTypeMethode(this.type.toString());
         }
         else if (this.getVisibilite().equals(Visibilite.PRIVATE))
         {
-            toString += "- " + this.nom + " : " + this.type.toString();
+            toString += "- " + this.nom + " : " + SubstringTypeMethode(this.type.toString());
         }
         else if (this.getVisibilite().equals(Visibilite.PROTECTED))
         {
-            toString += "# " + this.nom + " : " + this.type.toString();
+            toString += "# " + this.nom + " : " + SubstringTypeMethode(this.type.toString());
         }
 
         return toString;
     }
+
+    public String SubstringTypeMethode(String string)
+    {
+        int index = 0;
+        for(int i = 0; i< string.length(); i++){
+            if(string.charAt(i) == '.'){
+                index = i;
+            }
+        }
+        string = string.substring(index+1, string.length());
+        return string;
+    }
+
     public void findModifier(Element element){
         for (Modifier modifier : element.getModifiers()){
             if (modifier == Modifier.ABSTRACT)
