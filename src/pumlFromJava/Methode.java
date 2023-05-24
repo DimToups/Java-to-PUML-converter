@@ -26,10 +26,10 @@ public class Methode {
         int i = 0;
         for (Attribut attribut : parametres){
             if (i == 0){
-                parameters += attribut.getNom() + " : " + attribut.getType();
+                parameters += attribut.toString();
             }
             else{
-                parameters += ", " + attribut.getNom() + " : " + attribut.getType();
+                parameters += ", " + attribut.toString();
             }
             i++;
         }
