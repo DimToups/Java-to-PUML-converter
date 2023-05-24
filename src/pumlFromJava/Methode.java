@@ -39,6 +39,7 @@ public class Methode {
     }
 
     public String MethodetoString(){
+        //Integer fullstop = this.type.toString().indexOf(".");
         String toString = "";
         if (this.getVisibilite().equals(Visibilite.PUBLIC))
         {
@@ -61,11 +62,26 @@ public class Methode {
 
         if (type != null)
         {
-            toString += " : " + this.type.toString();
+            //toString += " : " + this.type.toString().substring(this.type.toString().indexOf(".", this.type.toString().indexOf(".")+1)+1, this.type.toString().length());
+            //toString += " : " + this.type.toString();
+            toString += " : " + SubstringTypeMethode(this.type.toString());
         }
 
         return toString;
     }
+
+    public String SubstringTypeMethode(String string)
+    {
+        int index = 0;
+        for(int i = 0; i< string.length(); i++){
+            if(string.charAt(i) == '.'){
+                index = i;
+            }
+        }
+        string = string.substring(index+1, string.length());
+        return string;
+    }
+
     public String getParameters(){
         String parameters = "";
 
