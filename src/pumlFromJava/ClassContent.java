@@ -20,11 +20,15 @@ public class ClassContent extends ElementContent{
             //Gestion des attributs
             if (enclosedElement.getKind().isField()){
                 Attribut attribut = new Attribut(enclosedElement.getSimpleName().toString());
+                attribut.findModifier(enclosedElement);
+                attribut.findVisibility(enclosedElement);
                 classAttributs.add(attribut);
             }
             //Gestion des méthodes
             if (enclosedElement.getKind() == ElementKind.METHOD){
                 Methode methode = new Methode(enclosedElement.getSimpleName().toString());
+                methode.findModifier(enclosedElement);
+                methode.findVisibility(enclosedElement);
                 classMethods.add(methode);
             }
         }

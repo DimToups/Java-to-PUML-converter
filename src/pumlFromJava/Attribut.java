@@ -1,5 +1,7 @@
 package pumlFromJava;
 
+import javax.lang.model.element.Element;
+import javax.lang.model.element.Modifier;
 import javax.lang.model.type.PrimitiveType;
 import javax.lang.model.type.TypeMirror;
 
@@ -56,5 +58,25 @@ public class Attribut {
         }
 
         return toString;
+    }
+    public void findModifier(Element element){
+        for (Modifier modifier : element.getModifiers()){
+            if (modifier == Modifier.ABSTRACT)
+                this.modificateur = Modificateur.ABSTRACT;
+            else if (modifier == Modifier.FINAL)
+                this.modificateur = Modificateur.FINAL;
+            else if (modifier == Modifier.STATIC)
+                this.modificateur = Modificateur.STATIC;
+        }
+    }
+    public void findVisibility(Element element){
+        for (Modifier modifier : element.getModifiers()){
+            if (modifier == Modifier.PUBLIC)
+                this.visibilite = Visibilite.PUBLIC;
+            else if (modifier == Modifier.PROTECTED)
+                this.visibilite = Visibilite.PROTECTED;
+            else if (modifier == Modifier.PRIVATE)
+                this.visibilite = Visibilite.PRIVATE;
+        }
     }
 }
