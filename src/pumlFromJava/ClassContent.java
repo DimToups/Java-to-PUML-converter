@@ -41,9 +41,21 @@ public class ClassContent extends ElementContent{
         }
         else{
             for(Attribut attribut : classAttributs){
+                if (attribut.getVisibilite() == Visibilite.PUBLIC)
+                    contenu += "+ ";
+                else if (attribut.getVisibilite() == Visibilite.PROTECTED)
+                    contenu += "# ";
+                else if (attribut.getVisibilite() == Visibilite.PRIVATE)
+                    contenu += "- ";
                 contenu += attribut.toString() + "\n";
             }
             for (Methode methode : classMethods){
+                if (methode.getVisibilite() == Visibilite.PUBLIC)
+                    contenu += "+ ";
+                else if (methode.getVisibilite() == Visibilite.PROTECTED)
+                    contenu += "# ";
+                else if (methode.getVisibilite() == Visibilite.PRIVATE)
+                    contenu += "- ";
                 contenu += methode.toString() + "\n";
             }
             return contenu += "}\n";
