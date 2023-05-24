@@ -7,6 +7,147 @@ skinparam classFontStyle Bold
 hide empty members
 
 package western{
+class Boisson{
+substantif
+EAU
+getNom()
+getGenre()
+getNomAvecArticleIndefini()
+getNomAvecArticlePartitif()
+getNomAvecArticleDefini()
+getNomAvecPreposition()
+}
+
+class Brigand{
+LOOK_PAR_DEFAUT
+look
+recompense
+estLibre
+captives
+gardien
+boissonParDefaut
+getLook()
+getRecompense()
+estLibre()
+kidnapper()
+seFaireCapturer()
+seFaireTirerDessus()
+getPseudo()
+getCaptives()
+sePresenter()
+getBoissonParDefaut()
+setBoissonParDefaut()
+}
+
+class Cowboy{
+gains
+captures
+boissonParDefaut
+getPseudo()
+liberer()
+liberer()
+capturer()
+tirerSur()
+sePresenter()
+getBoissonParDefaut()
+setBoissonParDefaut()
+}
+
+class Dame{
+estLibre
+sauveur
+ravisseur
+boissonParDefaut
+getPseudo()
+seFaireKidnapper()
+seFaireLiberer()
+estLibre()
+sePresenter()
+getBoissonParDefaut()
+setBoissonParDefaut()
+getRavisseur()
+}
+
+class Genre{
+FEMININ
+MASCULIN
+}
+
+class Histoire4{
+main()
+}
+
+interface HorsLaLoi<<interface>>{
+estLibre()
+getRecompense()
+kidnapper()
+seFaireCapturer()
+seFaireTirerDessus()
+getLook()
+getCaptives()
+}
+
+class Narrateur{
+dire()
+boire()
+boire()
+getPseudo()
+}
+
+interface Nommable<<interface>>{
+getNom()
+getPseudo()
+}
+
+class Personnage{
+BOISSON_PAR_DEFAUT
+nom
+boisson
+dire()
+sePresenter()
+boire()
+boire()
+getNom()
+getBoisson()
+getPseudos()
+getBoissonParDefaut()
+}
+
+class Ripou{
+brigand
+getLook()
+estLibre()
+getRecompense()
+kidnapper()
+getCaptives()
+seFaireCapturer()
+seFaireTirerDessus()
+getPseudo()
+sePresenter()
+liberer()
+}
+
+class Substantif{
+nom
+genre
+getNom()
+getGenre()
+toString()
+isVowel()
+startsWithVowel()
+getArticleIndefini()
+avecArticleIndefini()
+getArticleDefini()
+getArticleDefini()
+avecArticleDefini()
+faireElision()
+elision()
+getArticlePartitif()
+avecArticlePartitif()
+avecElision()
+avecPreposition()
+}
+
 
 }
 @enduml
