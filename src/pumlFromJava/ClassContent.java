@@ -54,13 +54,7 @@ public class ClassContent extends ElementContent{
                 contenu += attribut.toString() + "\n";
             }
             for (Methode methode : classMethods){
-                if (methode.getVisibilite() == Visibilite.PUBLIC)
-                    contenu += "+ ";
-                else if (methode.getVisibilite() == Visibilite.PROTECTED)
-                    contenu += "# ";
-                else if (methode.getVisibilite() == Visibilite.PRIVATE)
-                    contenu += "- ";
-                contenu += methode.toString() + "\n";
+                contenu += methode.MethodetoString() + "\n";
             }
             return contenu += "}\n";
         }

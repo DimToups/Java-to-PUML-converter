@@ -28,13 +28,7 @@ public class InterfaceContent extends ElementContent{
             return contenu += "}";
         else{
             for (Methode methode : classMethods){
-                if (methode.getVisibilite() == Visibilite.PUBLIC)
-                    contenu += "+ ";
-                else if (methode.getVisibilite() == Visibilite.PROTECTED)
-                    contenu += "# ";
-                else if (methode.getVisibilite() == Visibilite.PRIVATE)
-                    contenu += "- ";
-                contenu += methode.toString() + "\n";
+                contenu += methode.MethodetoString() + "\n";
             }
             return contenu += "}\n";
         }

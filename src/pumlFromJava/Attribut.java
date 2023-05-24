@@ -40,12 +40,24 @@ public class Attribut {
     public void setType(TypeMirror type) {this.type = type;}
     public void setVisibilite(Visibilite visibilite) {this.visibilite = visibilite;}
     public void setModificateur(Modificateur modificateur) {this.modificateur = modificateur;}
-    @Override
-    public String toString(){
-        if (this.type != null)
-            return this.nom + " : " + this.type.toString();
-        else
-            return this.nom;
+
+    public String AttributtoString(){
+        String toString = "";
+
+        if (this.getVisibilite().equals(Visibilite.PUBLIC))
+        {
+            toString += "+" + this.nom + this.type.toString();
+        }
+        if (this.getVisibilite().equals(Visibilite.PRIVATE))
+        {
+            toString += "-" + this.nom + this.type.toString();
+        }
+        if (this.getVisibilite().equals(Visibilite.PROTECTED))
+        {
+            toString += "#" + this.nom + this.type.toString();
+        }
+
+        return toString;
     }
     public void findModifier(Element element){
         for (Modifier modifier : element.getModifiers()){
