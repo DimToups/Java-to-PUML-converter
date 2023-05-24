@@ -7,3 +7,147 @@ skinparam classFontStyle Bold
 hide empty members
 
 package western{
+class Boisson{
+- pumlFromJava.Attribut@2aa5fe93
++ pumlFromJava.Attribut@5c1a8622
++ getNom() : ()java.lang.String
++ getGenre() : ()western.Genre
++ getNomAvecArticleIndefini() : ()java.lang.String
++ getNomAvecArticlePartitif() : ()java.lang.String
++ getNomAvecArticleDefini() : ()java.lang.String
++ getNomAvecPreposition() : (java.lang.String)java.lang.String
+}
+
+class Brigand{
+# pumlFromJava.Attribut@15761df8
+- pumlFromJava.Attribut@6ab7a896
+- pumlFromJava.Attribut@327b636c
+- pumlFromJava.Attribut@45dd4eda
+- pumlFromJava.Attribut@60611244
+- pumlFromJava.Attribut@3745e5c6
+- pumlFromJava.Attribut@5e4c8041
++ getLook() : ()java.lang.String
++ getRecompense() : ()int
++ estLibre() : ()boolean
++ kidnapper() : (western.Dame)void
++ seFaireCapturer() : (western.Cowboy)void
++ seFaireTirerDessus() : (western.Cowboy)void
++ getPseudo() : ()java.lang.String
++ getCaptives() : ()java.util.List<western.Dame>
++ sePresenter() : ()void
++ getBoissonParDefaut() : ()western.Boisson
++ setBoissonParDefaut() : (western.Boisson)void
+}
+
+class Cowboy{
+- pumlFromJava.Attribut@71c8becc
+- pumlFromJava.Attribut@19d37183
+- pumlFromJava.Attribut@1a0dcaa
++ getPseudo() : ()java.lang.String
++ liberer() : (western.Dame)void
++ liberer() : (java.util.List<western.Dame>)void
++ capturer() : (western.HorsLaLoi)void
++ tirerSur() : (western.HorsLaLoi)void
++ sePresenter() : ()void
++ getBoissonParDefaut() : ()western.Boisson
++ setBoissonParDefaut() : (western.Boisson)void
+}
+
+class Dame{
+- pumlFromJava.Attribut@3bd40a57
+- pumlFromJava.Attribut@fdefd3f
+- pumlFromJava.Attribut@d83da2e
+- pumlFromJava.Attribut@a4102b8
++ getPseudo() : ()java.lang.String
++ seFaireKidnapper() : (western.HorsLaLoi)void
++ seFaireLiberer() : (western.Cowboy)void
++ estLibre() : ()boolean
++ sePresenter() : ()void
++ getBoissonParDefaut() : ()western.Boisson
++ setBoissonParDefaut() : (western.Boisson)void
++ getRavisseur() : ()western.HorsLaLoi
+}
+
+class Genre{
+pumlFromJava.Attribut@11dc3715
+pumlFromJava.Attribut@69930714
+}
+
+class Histoire4{
++ main() : (java.lang.String[])void
+}
+
+interface HorsLaLoi<<interface>>{
++ estLibre()
++ getRecompense()
++ kidnapper()
++ seFaireCapturer()
++ seFaireTirerDessus()
++ getLook()
++ getCaptives()
+}
+
+class Narrateur{
++ dire() : (java.lang.String)void
++ boire() : (western.Boisson)void
++ boire() : ()void
++ getPseudo() : ()java.lang.String
+}
+
+interface Nommable<<interface>>{
++ getNom()
++ getPseudo()
+}
+
+class Personnage{
+- pumlFromJava.Attribut@7a52f2a2
+- pumlFromJava.Attribut@78047b92
+- pumlFromJava.Attribut@8909f18
++ dire() : (java.lang.String)void
++ sePresenter() : ()void
++ boire() : (western.Boisson)void
++ boire() : ()void
++ getNom() : ()java.lang.String
++ getBoisson() : ()western.Boisson
++ getPseudos() : (java.util.List<? extends western.Nommable>)java.lang.String
++ getBoissonParDefaut() : ()western.Boisson
+}
+
+class Ripou{
+- pumlFromJava.Attribut@79ca92b9
++ getLook() : ()java.lang.String
++ estLibre() : ()boolean
++ getRecompense() : ()int
++ kidnapper() : (western.Dame)void
++ getCaptives() : ()java.util.List<western.Dame>
++ seFaireCapturer() : (western.Cowboy)void
++ seFaireTirerDessus() : (western.Cowboy)void
++ getPseudo() : ()java.lang.String
++ sePresenter() : ()void
++ liberer() : (western.Dame)void
+}
+
+class Substantif{
+- pumlFromJava.Attribut@1460a8c0
+- pumlFromJava.Attribut@4f638935
++ getNom() : ()java.lang.String
++ getGenre() : ()western.Genre
++ toString() : ()java.lang.String
++ isVowel() : (char)boolean
++ startsWithVowel() : (java.lang.String)boolean
++ getArticleIndefini() : ()java.lang.String
++ avecArticleIndefini() : ()java.lang.String
++ getArticleDefini() : (western.Genre)java.lang.String
++ getArticleDefini() : ()java.lang.String
++ avecArticleDefini() : ()java.lang.String
++ faireElision() : (java.lang.String)java.lang.String
++ elision() : ()boolean
++ getArticlePartitif() : ()java.lang.String
++ avecArticlePartitif() : ()java.lang.String
++ avecElision() : (java.lang.String)java.lang.String
++ avecPreposition() : (java.lang.String)java.lang.String
+}
+
+
+}
+@enduml

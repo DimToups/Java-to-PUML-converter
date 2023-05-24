@@ -19,14 +19,14 @@ public class ClassContent extends ElementContent{
         for (Element enclosedElement : element.getEnclosedElements()){
             //Gestion des attributs
             if (enclosedElement.getKind().isField()){
-                Attribut attribut = new Attribut(enclosedElement.getSimpleName().toString());
+                Attribut attribut = new Attribut(enclosedElement.getSimpleName().toString(), enclosedElement.asType());
                 attribut.findModifier(enclosedElement);
                 attribut.findVisibility(enclosedElement);
                 classAttributs.add(attribut);
             }
             //Gestion des méthodes
             if (enclosedElement.getKind() == ElementKind.METHOD){
-                Methode methode = new Methode(enclosedElement.getSimpleName().toString());
+                Methode methode = new Methode(enclosedElement.getSimpleName().toString(), enclosedElement.asType());
                 methode.findModifier(enclosedElement);
                 methode.findVisibility(enclosedElement);
                 classMethods.add(methode);

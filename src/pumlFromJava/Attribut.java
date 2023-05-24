@@ -46,15 +46,15 @@ public class Attribut {
 
         if (this.getVisibilite().equals(Visibilite.PUBLIC))
         {
-            toString += "+" + this.nom + this.type.toString();
+            toString += "+ " + this.nom + " : " + this.type.toString();
         }
-        if (this.getVisibilite().equals(Visibilite.PRIVATE))
+        else if (this.getVisibilite().equals(Visibilite.PRIVATE))
         {
-            toString += "-" + this.nom + this.type.toString();
+            toString += "- " + this.nom + " : " + this.type.toString();
         }
-        if (this.getVisibilite().equals(Visibilite.PROTECTED))
+        else if (this.getVisibilite().equals(Visibilite.PROTECTED))
         {
-            toString += "#" + this.nom + this.type.toString();
+            toString += "# " + this.nom + " : " + this.type.toString();
         }
 
         return toString;
