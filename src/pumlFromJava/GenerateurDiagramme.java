@@ -66,12 +66,30 @@ public class GenerateurDiagramme {
     }
     public void generateElementsForPuml(ArrayList<ElementContent> elements){
         for(ElementContent element : elements){
-            element.genererContenuElement(isDCA);
+            try {
+                String elementContent = element.genererContenuElement(isDCA) + "\n";
+                FileOutputStream fos = null;
+                fos = new FileOutputStream(path + "/" + name, true);
+                byte[] b = elementContent.getBytes();
+                fos.write(b);
+            }
+            catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
     public void generateLinksForPuml(ArrayList<Association> associations){
         for(Association association : associations){
-            association.genererAssociation();
+            try {
+                String linkContent = association.genererAssociation() + "\n";
+                FileOutputStream fos = null;
+                fos = new FileOutputStream(path + "/" + name, true);
+                byte[] b = linkContent.getBytes();
+                fos.write(b);
+            }
+            catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
     public void endFile(){
