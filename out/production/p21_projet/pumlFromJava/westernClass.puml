@@ -19,13 +19,13 @@ class Boisson{
 }
 
 class Brigand{
-# LOOK_PAR_DEFAUT : java.lang.String
+# LOOK_PAR_DEFAUT : java.lang.String {static}
 - look : java.lang.String
 - recompense : int
 - estLibre : boolean
 - captives : java.util.List<western.Dame>
 - gardien : western.Cowboy
-- boissonParDefaut : western.Boisson
+- boissonParDefaut : western.Boisson {static}
 + getLook() : ()java.lang.String
 + getRecompense() : ()int
 + estLibre() : ()boolean
@@ -35,36 +35,36 @@ class Brigand{
 + getPseudo() : ()java.lang.String
 + getCaptives() : ()java.util.List<western.Dame>
 + sePresenter() : ()void
-+ getBoissonParDefaut() : ()western.Boisson
-+ setBoissonParDefaut() : (western.Boisson)void
++ getBoissonParDefaut() {static} : ()western.Boisson
++ setBoissonParDefaut() {static} : (western.Boisson)void
 }
 
 class Cowboy{
 - gains : int
 - captures : java.util.Set<western.HorsLaLoi>
-- boissonParDefaut : western.Boisson
+- boissonParDefaut : western.Boisson {static}
 + getPseudo() : ()java.lang.String
 + liberer() : (western.Dame)void
 + liberer() : (java.util.List<western.Dame>)void
 + capturer() : (western.HorsLaLoi)void
 + tirerSur() : (western.HorsLaLoi)void
 + sePresenter() : ()void
-+ getBoissonParDefaut() : ()western.Boisson
-+ setBoissonParDefaut() : (western.Boisson)void
++ getBoissonParDefaut() {static} : ()western.Boisson
++ setBoissonParDefaut() {static} : (western.Boisson)void
 }
 
 class Dame{
 - estLibre : boolean
 - sauveur : western.Cowboy
 - ravisseur : western.HorsLaLoi
-- boissonParDefaut : western.Boisson
+- boissonParDefaut : western.Boisson {static}
 + getPseudo() : ()java.lang.String
 + seFaireKidnapper() : (western.HorsLaLoi)void
 + seFaireLiberer() : (western.Cowboy)void
 + estLibre() : ()boolean
 + sePresenter() : ()void
-+ getBoissonParDefaut() : ()western.Boisson
-+ setBoissonParDefaut() : (western.Boisson)void
++ getBoissonParDefaut() {static} : ()western.Boisson
++ setBoissonParDefaut() {static} : (western.Boisson)void
 + getRavisseur() : ()western.HorsLaLoi
 }
 
@@ -74,17 +74,17 @@ pumlFromJava.Attribut@29f69090
 }
 
 class Histoire4{
-+ main() : (java.lang.String[])void
++ main() {static} : (java.lang.String[])void
 }
 
 interface HorsLaLoi<<interface>>{
-+ estLibre()
-+ getRecompense()
-+ kidnapper()
-+ seFaireCapturer()
-+ seFaireTirerDessus()
-+ getLook()
-+ getCaptives()
++ estLibre() {abstract}
++ getRecompense() {abstract}
++ kidnapper() {abstract}
++ seFaireCapturer() {abstract}
++ seFaireTirerDessus() {abstract}
++ getLook() {abstract}
++ getCaptives() {abstract}
 }
 
 class Narrateur{
@@ -95,12 +95,12 @@ class Narrateur{
 }
 
 interface Nommable<<interface>>{
-+ getNom()
-+ getPseudo()
++ getNom() {abstract}
++ getPseudo() {abstract}
 }
 
 class Personnage{
-- BOISSON_PAR_DEFAUT : western.Boisson
+- BOISSON_PAR_DEFAUT : western.Boisson {static}
 - nom : java.lang.String
 - boisson : western.Boisson
 + dire() : (java.lang.String)void
@@ -109,8 +109,8 @@ class Personnage{
 + boire() : ()void
 + getNom() : ()java.lang.String
 + getBoisson() : ()western.Boisson
-+ getPseudos() : (java.util.List<? extends western.Nommable>)java.lang.String
-+ getBoissonParDefaut() : ()western.Boisson
++ getPseudos() {static} : (java.util.List<? extends western.Nommable>)java.lang.String
++ getBoissonParDefaut() {static} : ()western.Boisson
 }
 
 class Ripou{
@@ -133,14 +133,14 @@ class Substantif{
 + getNom() : ()java.lang.String
 + getGenre() : ()western.Genre
 + toString() : ()java.lang.String
-+ isVowel() : (char)boolean
-+ startsWithVowel() : (java.lang.String)boolean
++ isVowel() {static} : (char)boolean
++ startsWithVowel() {static} : (java.lang.String)boolean
 + getArticleIndefini() : ()java.lang.String
 + avecArticleIndefini() : ()java.lang.String
-+ getArticleDefini() : (western.Genre)java.lang.String
++ getArticleDefini() {static} : (western.Genre)java.lang.String
 + getArticleDefini() : ()java.lang.String
 + avecArticleDefini() : ()java.lang.String
-+ faireElision() : (java.lang.String)java.lang.String
++ faireElision() {static} : (java.lang.String)java.lang.String
 + elision() : ()boolean
 + getArticlePartitif() : ()java.lang.String
 + avecArticlePartitif() : ()java.lang.String
