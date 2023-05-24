@@ -16,9 +16,8 @@ public class ClassContent extends ElementContent{
         for (Element enclosedElement : element.getEnclosedElements()){
             //Gestion des attributs
             if (enclosedElement.getKind().isField()){
-                Attribut attribut = new Attribut(enclosedElement.getSimpleName().toString(), enclosedElement.asType());
-                attribut.findModifier(enclosedElement);
-                attribut.findVisibility(enclosedElement);
+                VariableElement variableElement = (VariableElement) enclosedElement;
+                Attribut attribut = new Attribut(variableElement);
                 classAttributs.add(attribut);
             }
             //Gestion des méthodes

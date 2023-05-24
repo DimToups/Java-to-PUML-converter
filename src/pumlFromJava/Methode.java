@@ -32,7 +32,7 @@ public class Methode {
         System.out.println(element.getSimpleName());
         ExecutableElement executableElement = (ExecutableElement) element;
         for(VariableElement variableElement : executableElement.getParameters()){
-            Attribut attribut = new Attribut(variableElement.getSimpleName().toString(), variableElement.asType());
+            Attribut attribut = new Attribut(variableElement);
             this.parametres.add(attribut);
             System.out.println("\t" + variableElement.getSimpleName().toString() + " : " + variableElement.asType().toString());
         }
@@ -72,14 +72,19 @@ public class Methode {
 
     public String SubstringTypeMethode(String string)
     {
-        int index = 0;
-        for(int i = 0; i< string.length(); i++){
-            if(string.charAt(i) == '.'){
-                index = i;
+        if (string.contains(".")){
+            int index = 0;
+            for(int i = 0; i< string.length(); i++){
+                if(string.charAt(i) == '.'){
+                    index = i;
+                }
             }
+            string = string.substring(index+1, string.length());
+            return string;
         }
-        string = string.substring(index+1, string.length());
-        return string;
+        else{
+            return string;
+        }
     }
 
     public String getParameters(){

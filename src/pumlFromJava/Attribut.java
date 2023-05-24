@@ -2,6 +2,7 @@ package pumlFromJava;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
+import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.PrimitiveType;
 import javax.lang.model.type.TypeMirror;
 
@@ -12,6 +13,12 @@ public class Attribut {
     private Modificateur modificateur;
     public Attribut(String nom){
         this.nom = nom;
+    }
+    public Attribut(VariableElement variableElement){
+        this.nom = variableElement.getSimpleName().toString();
+        this.type = variableElement.asType();
+        this.findModifier(variableElement);
+        this.findVisibility(variableElement);
     }
     public Attribut(String nom, TypeMirror type){
         this.nom = nom;
@@ -64,14 +71,19 @@ public class Attribut {
 
     public String SubstringTypeMethode(String string)
     {
-        int index = 0;
-        for(int i = 0; i< string.length(); i++){
-            if(string.charAt(i) == '.'){
-                index = i;
+        if (string.contains(".")){
+            int index = 0;
+            for(int i = 0; i< string.length(); i++){
+                if(string.charAt(i) == '.'){
+                    index = i;
+                }
             }
+            string = string.substring(index+1, string.length());
+            return string;
         }
-        string = string.substring(index+1, string.length());
-        return string;
+        else{
+            return string;
+        }
     }
 
     public void findModifier(Element element){

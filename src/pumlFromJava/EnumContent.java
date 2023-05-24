@@ -1,6 +1,7 @@
 package pumlFromJava;
 
 import javax.lang.model.element.Element;
+import javax.lang.model.element.VariableElement;
 import java.util.ArrayList;
 
 public class EnumContent extends ElementContent{
@@ -10,10 +11,11 @@ public class EnumContent extends ElementContent{
     public void setElement(Element element){
         this.className = element.getSimpleName().toString();
         this.classType = element.getKind();
-        for (Element element1 : element.getEnclosedElements()){
-            if (element1.getKind().isField()){
-                Attribut attributEnum = new Attribut(element1.getSimpleName().toString(), element1.asType());
-                classAttributs.add(attributEnum);
+        for (Element enclosedElement : element.getEnclosedElements()){
+            if (enclosedElement.getKind().isField()){
+                VariableElement variableElement = (VariableElement) enclosedElement;
+                Attribut attribut = new Attribut(variableElement);
+                classAttributs.add(attribut);
             }
         }
     }

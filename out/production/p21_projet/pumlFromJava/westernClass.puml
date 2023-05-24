@@ -21,76 +21,76 @@ class Boisson{
 class Brigand{
 # LOOK_PAR_DEFAUT : String {static}
 - look : String
-- recompense : nt
-- estLibre : oolean
+- recompense : int
+- estLibre : boolean
 - captives : Dame>
 - gardien : Cowboy
 - boissonParDefaut : Boisson {static}
 + getLook() : String
-+ getRecompense() : nt
-+ estLibre() : oolean
-+ kidnapper(pumlFromJava.Attribut@29f69090) : oid
-+ seFaireCapturer(pumlFromJava.Attribut@568bf312) : oid
-+ seFaireTirerDessus(pumlFromJava.Attribut@ca263c2) : oid
++ getRecompense() : int
++ estLibre() : boolean
++ kidnapper(pumlFromJava.Attribut@29f69090) : void
++ seFaireCapturer(pumlFromJava.Attribut@568bf312) : void
++ seFaireTirerDessus(pumlFromJava.Attribut@ca263c2) : void
 + getPseudo() : String
 + getCaptives() : Dame>
-+ sePresenter() : oid
++ sePresenter() : void
 + getBoissonParDefaut() {static} : Boisson
-+ setBoissonParDefaut(pumlFromJava.Attribut@589b3632) {static} : oid
++ setBoissonParDefaut(pumlFromJava.Attribut@589b3632) {static} : void
 }
 
 class Cowboy{
-- gains : nt
+- gains : int
 - captures : HorsLaLoi>
 - boissonParDefaut : Boisson {static}
 + getPseudo() : String
-+ liberer(pumlFromJava.Attribut@45f45fa1) : oid
-+ liberer(pumlFromJava.Attribut@4c6e276e) : oid
-+ capturer(pumlFromJava.Attribut@534df152) : oid
-+ tirerSur(pumlFromJava.Attribut@52e677af) : oid
-+ sePresenter() : oid
++ liberer(pumlFromJava.Attribut@45f45fa1) : void
++ liberer(pumlFromJava.Attribut@4c6e276e) : void
++ capturer(pumlFromJava.Attribut@534df152) : void
++ tirerSur(pumlFromJava.Attribut@52e677af) : void
++ sePresenter() : void
 + getBoissonParDefaut() {static} : Boisson
-+ setBoissonParDefaut(pumlFromJava.Attribut@35083305) {static} : oid
++ setBoissonParDefaut(pumlFromJava.Attribut@35083305) {static} : void
 }
 
 class Dame{
-- estLibre : oolean
+- estLibre : boolean
 - sauveur : Cowboy
 - ravisseur : HorsLaLoi
 - boissonParDefaut : Boisson {static}
 + getPseudo() : String
-+ seFaireKidnapper(pumlFromJava.Attribut@8e0379d) : oid
-+ seFaireLiberer(pumlFromJava.Attribut@341b80b2) : oid
-+ estLibre() : oolean
-+ sePresenter() : oid
++ seFaireKidnapper(pumlFromJava.Attribut@8e0379d) : void
++ seFaireLiberer(pumlFromJava.Attribut@341b80b2) : void
++ estLibre() : boolean
++ sePresenter() : void
 + getBoissonParDefaut() {static} : Boisson
-+ setBoissonParDefaut(pumlFromJava.Attribut@55a1c291) {static} : oid
++ setBoissonParDefaut(pumlFromJava.Attribut@55a1c291) {static} : void
 + getRavisseur() : HorsLaLoi
 }
 
 class Genre{
-pumlFromJava.Attribut@2145433b
-pumlFromJava.Attribut@2890c451
++ pumlFromJava.Attribut@2145433b
++ pumlFromJava.Attribut@2890c451
 }
 
 class Histoire4{
-+ main(pumlFromJava.Attribut@40e6dfe1) {static} : oid
++ main(pumlFromJava.Attribut@40e6dfe1) {static} : void
 }
 
 interface HorsLaLoi<<interface>>{
-+ estLibre() {abstract} : oolean
-+ getRecompense() {abstract} : nt
-+ kidnapper(pumlFromJava.Attribut@1b083826, pumlFromJava.Attribut@105fece7) {abstract} : oid
-+ seFaireCapturer(pumlFromJava.Attribut@3ec300f1, pumlFromJava.Attribut@482cd91f) {abstract} : oid
-+ seFaireTirerDessus(pumlFromJava.Attribut@123f1134, pumlFromJava.Attribut@7d68ef40) {abstract} : oid
++ estLibre() {abstract} : boolean
++ getRecompense() {abstract} : int
++ kidnapper(pumlFromJava.Attribut@1b083826, pumlFromJava.Attribut@105fece7) {abstract} : void
++ seFaireCapturer(pumlFromJava.Attribut@3ec300f1, pumlFromJava.Attribut@482cd91f) {abstract} : void
++ seFaireTirerDessus(pumlFromJava.Attribut@123f1134, pumlFromJava.Attribut@7d68ef40) {abstract} : void
 + getLook() {abstract} : String
 + getCaptives() {abstract} : Dame>
 }
 
 class Narrateur{
-+ dire(pumlFromJava.Attribut@5b0abc94) : oid
-+ boire(pumlFromJava.Attribut@75c072cb) : oid
-+ boire() : oid
++ dire(pumlFromJava.Attribut@5b0abc94) : void
++ boire(pumlFromJava.Attribut@75c072cb) : void
++ boire() : void
 + getPseudo() : String
 }
 
@@ -103,10 +103,10 @@ class Personnage{
 - BOISSON_PAR_DEFAUT : Boisson {static}
 - nom : String
 - boisson : Boisson
-+ dire(pumlFromJava.Attribut@1f1c7bf6) : oid
-+ sePresenter() : oid
-+ boire(pumlFromJava.Attribut@25b485ba) : oid
-+ boire() : oid
++ dire(pumlFromJava.Attribut@1f1c7bf6) : void
++ sePresenter() : void
++ boire(pumlFromJava.Attribut@25b485ba) : void
++ boire() : void
 + getNom() : String
 + getBoisson() : Boisson
 + getPseudos(pumlFromJava.Attribut@2b546384) {static} : String
@@ -116,15 +116,15 @@ class Personnage{
 class Ripou{
 - brigand : Brigand
 + getLook() : String
-+ estLibre() : oolean
-+ getRecompense() : nt
-+ kidnapper(pumlFromJava.Attribut@5d740a0f) : oid
++ estLibre() : boolean
++ getRecompense() : int
++ kidnapper(pumlFromJava.Attribut@5d740a0f) : void
 + getCaptives() : Dame>
-+ seFaireCapturer(pumlFromJava.Attribut@214b199c) : oid
-+ seFaireTirerDessus(pumlFromJava.Attribut@20d3d15a) : oid
++ seFaireCapturer(pumlFromJava.Attribut@214b199c) : void
++ seFaireTirerDessus(pumlFromJava.Attribut@20d3d15a) : void
 + getPseudo() : String
-+ sePresenter() : oid
-+ liberer(pumlFromJava.Attribut@2893de87) : oid
++ sePresenter() : void
++ liberer(pumlFromJava.Attribut@2893de87) : void
 }
 
 class Substantif{
@@ -133,15 +133,15 @@ class Substantif{
 + getNom() : String
 + getGenre() : Genre
 + toString() : String
-+ isVowel(pumlFromJava.Attribut@55ca8de8) {static} : oolean
-+ startsWithVowel(pumlFromJava.Attribut@2c34f934) {static} : oolean
++ isVowel(pumlFromJava.Attribut@55ca8de8) {static} : boolean
++ startsWithVowel(pumlFromJava.Attribut@2c34f934) {static} : boolean
 + getArticleIndefini() : String
 + avecArticleIndefini() : String
 + getArticleDefini(pumlFromJava.Attribut@12d3a4e9) {static} : String
 + getArticleDefini() : String
 + avecArticleDefini() : String
 + faireElision(pumlFromJava.Attribut@240237d2) {static} : String
-+ elision() : oolean
++ elision() : boolean
 + getArticlePartitif() : String
 + avecArticlePartitif() : String
 + avecElision(pumlFromJava.Attribut@25a65b77) : String
