@@ -2,6 +2,7 @@ package pumlFromJava;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.ExecutableElement;
 import java.util.ArrayList;
 
 public class InterfaceContent extends ElementContent{
@@ -14,7 +15,8 @@ public class InterfaceContent extends ElementContent{
         for (Element enclosedElement : element.getEnclosedElements()){
             //Gestion des méthodes
             if (enclosedElement.getKind() == ElementKind.METHOD){
-                Methode methode = new Methode(enclosedElement.getSimpleName().toString());
+                ExecutableElement executableElement = (ExecutableElement)enclosedElement;
+                Methode methode = new Methode(executableElement);
                 methode.setParameters(enclosedElement);
                 methode.findModifier(enclosedElement);
                 methode.findVisibility(enclosedElement);

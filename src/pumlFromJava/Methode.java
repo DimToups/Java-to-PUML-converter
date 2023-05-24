@@ -14,12 +14,12 @@ public class Methode {
     private Visibilite visibilite;
     private Modificateur modificateur;
     private ArrayList<Attribut> parametres = new ArrayList<>();
-    public Methode(String nom){
-        this.nom = nom;
-    }
-    public Methode(String nom, TypeMirror type){
-        this.nom = nom;
-        this.type = type;
+    public Methode(ExecutableElement executableElement){
+        this.nom = executableElement.getSimpleName().toString();
+        this.type = executableElement.getReturnType();
+        this.findModifier(executableElement);
+        this.findVisibility(executableElement);
+        this.setParameters(executableElement);
     }
     public String getNom(){ return this.nom;}
     public TypeMirror getType(){return this.type;}

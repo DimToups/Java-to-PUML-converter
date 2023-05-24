@@ -1,9 +1,6 @@
 package pumlFromJava;
 
-import javax.lang.model.element.Element;
-import javax.lang.model.element.ElementKind;
-import javax.lang.model.element.Modifier;
-import javax.lang.model.element.TypeElement;
+import javax.lang.model.element.*;
 import java.util.ArrayList;
 
 public class ClassContent extends ElementContent{
@@ -26,10 +23,8 @@ public class ClassContent extends ElementContent{
             }
             //Gestion des méthodes
             if (enclosedElement.getKind() == ElementKind.METHOD){
-                Methode methode = new Methode(enclosedElement.getSimpleName().toString(), enclosedElement.asType());
-                methode.setParameters(enclosedElement);
-                methode.findModifier(enclosedElement);
-                methode.findVisibility(enclosedElement);
+                ExecutableElement executableElement = (ExecutableElement) enclosedElement;
+                Methode methode = new Methode(executableElement);
                 classMethods.add(methode);
             }
         }
