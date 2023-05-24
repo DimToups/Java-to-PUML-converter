@@ -15,6 +15,10 @@ public class Methode {
     public Methode(String nom){
         this.nom = nom;
     }
+    public Methode(String nom, TypeMirror type){
+        this.nom = nom;
+        this.type = type;
+    }
     public String getNom(){ return this.nom;}
     public TypeMirror getType(){return this.type;}
     public Visibilite getVisibilite(){return this.visibilite;}
@@ -27,15 +31,15 @@ public class Methode {
         String toString = "";
         if (this.getVisibilite().equals(Visibilite.PUBLIC))
         {
-            toString += "+" + this.nom + "(" + this.getParameters() + ")";
+            toString += "+ " + this.nom + "(" + this.getParameters() + ")";
         }
         else if (this.getVisibilite().equals(Visibilite.PRIVATE))
         {
-            toString += "-" + this.nom + "(" + this.getParameters() + ")";
+            toString += "- " + this.nom + "(" + this.getParameters() + ")";
         }
         else if (this.getVisibilite().equals(Visibilite.PROTECTED))
         {
-            toString += "#" + this.nom + "(" + this.getParameters() + ")";
+            toString += "# " + this.nom + "(" + this.getParameters() + ")";
         }
 
         if (type != null)
