@@ -8,64 +8,64 @@ hide empty members
 
 package western{
 class Boisson{
-- substantif : Substantif
-+ EAU : Boisson
-+ getNom() : String
-+ getGenre() : Genre
-+ getNomAvecArticleIndefini() : String
-+ getNomAvecArticlePartitif() : String
-+ getNomAvecArticleDefini() : String
-+ getNomAvecPreposition() : String
+- substantif : western.Substantif
++ EAU : western.Boisson
++ getNom() : ()java.lang.String
++ getGenre() : ()western.Genre
++ getNomAvecArticleIndefini() : ()java.lang.String
++ getNomAvecArticlePartitif() : ()java.lang.String
++ getNomAvecArticleDefini() : ()java.lang.String
++ getNomAvecPreposition() : (java.lang.String)java.lang.String
 }
 
 class Brigand{
-# LOOK_PAR_DEFAUT : String
-- look : String
-- recompense : nt
-- estLibre : oolean
-- captives : Dame>
-- gardien : Cowboy
-- boissonParDefaut : Boisson
-+ getLook() : String
-+ getRecompense() : )int
-+ estLibre() : )boolean
-+ kidnapper() : Dame)void
-+ seFaireCapturer() : Cowboy)void
-+ seFaireTirerDessus() : Cowboy)void
-+ getPseudo() : String
-+ getCaptives() : Dame>
-+ sePresenter() : )void
-+ getBoissonParDefaut() : Boisson
-+ setBoissonParDefaut() : Boisson)void
+# LOOK_PAR_DEFAUT : java.lang.String {static}
+- look : java.lang.String
+- recompense : int
+- estLibre : boolean
+- captives : java.util.List<western.Dame>
+- gardien : western.Cowboy
+- boissonParDefaut : western.Boisson {static}
++ getLook() : ()java.lang.String
++ getRecompense() : ()int
++ estLibre() : ()boolean
++ kidnapper() : (western.Dame)void
++ seFaireCapturer() : (western.Cowboy)void
++ seFaireTirerDessus() : (western.Cowboy)void
++ getPseudo() : ()java.lang.String
++ getCaptives() : ()java.util.List<western.Dame>
++ sePresenter() : ()void
++ getBoissonParDefaut() {static} : ()western.Boisson
++ setBoissonParDefaut() {static} : (western.Boisson)void
 }
 
 class Cowboy{
-- gains : nt
-- captures : HorsLaLoi>
-- boissonParDefaut : Boisson
-+ getPseudo() : String
-+ liberer() : Dame)void
-+ liberer() : Dame>)void
-+ capturer() : HorsLaLoi)void
-+ tirerSur() : HorsLaLoi)void
-+ sePresenter() : )void
-+ getBoissonParDefaut() : Boisson
-+ setBoissonParDefaut() : Boisson)void
+- gains : int
+- captures : java.util.Set<western.HorsLaLoi>
+- boissonParDefaut : western.Boisson {static}
++ getPseudo() : ()java.lang.String
++ liberer() : (western.Dame)void
++ liberer() : (java.util.List<western.Dame>)void
++ capturer() : (western.HorsLaLoi)void
++ tirerSur() : (western.HorsLaLoi)void
++ sePresenter() : ()void
++ getBoissonParDefaut() {static} : ()western.Boisson
++ setBoissonParDefaut() {static} : (western.Boisson)void
 }
 
 class Dame{
-- estLibre : oolean
-- sauveur : Cowboy
-- ravisseur : HorsLaLoi
-- boissonParDefaut : Boisson
-+ getPseudo() : String
-+ seFaireKidnapper() : HorsLaLoi)void
-+ seFaireLiberer() : Cowboy)void
-+ estLibre() : )boolean
-+ sePresenter() : )void
-+ getBoissonParDefaut() : Boisson
-+ setBoissonParDefaut() : Boisson)void
-+ getRavisseur() : HorsLaLoi
+- estLibre : boolean
+- sauveur : western.Cowboy
+- ravisseur : western.HorsLaLoi
+- boissonParDefaut : western.Boisson {static}
++ getPseudo() : ()java.lang.String
++ seFaireKidnapper() : (western.HorsLaLoi)void
++ seFaireLiberer() : (western.Cowboy)void
++ estLibre() : ()boolean
++ sePresenter() : ()void
++ getBoissonParDefaut() {static} : ()western.Boisson
++ setBoissonParDefaut() {static} : (western.Boisson)void
++ getRavisseur() : ()western.HorsLaLoi
 }
 
 class Genre{
@@ -74,78 +74,78 @@ pumlFromJava.Attribut@29f69090
 }
 
 class Histoire4{
-+ main() : String[])void
++ main() {static} : (java.lang.String[])void
 }
 
 interface HorsLaLoi<<interface>>{
-+ estLibre()
-+ getRecompense()
-+ kidnapper()
-+ seFaireCapturer()
-+ seFaireTirerDessus()
-+ getLook()
-+ getCaptives()
++ estLibre() {abstract}
++ getRecompense() {abstract}
++ kidnapper() {abstract}
++ seFaireCapturer() {abstract}
++ seFaireTirerDessus() {abstract}
++ getLook() {abstract}
++ getCaptives() {abstract}
 }
 
 class Narrateur{
-+ dire() : String)void
-+ boire() : Boisson)void
-+ boire() : )void
-+ getPseudo() : String
++ dire() : (java.lang.String)void
++ boire() : (western.Boisson)void
++ boire() : ()void
++ getPseudo() : ()java.lang.String
 }
 
 interface Nommable<<interface>>{
-+ getNom()
-+ getPseudo()
++ getNom() {abstract}
++ getPseudo() {abstract}
 }
 
 class Personnage{
-- BOISSON_PAR_DEFAUT : Boisson
-- nom : String
-- boisson : Boisson
-+ dire() : String)void
-+ sePresenter() : )void
-+ boire() : Boisson)void
-+ boire() : )void
-+ getNom() : String
-+ getBoisson() : Boisson
-+ getPseudos() : String
-+ getBoissonParDefaut() : Boisson
+- BOISSON_PAR_DEFAUT : western.Boisson {static}
+- nom : java.lang.String
+- boisson : western.Boisson
++ dire() : (java.lang.String)void
++ sePresenter() : ()void
++ boire() : (western.Boisson)void
++ boire() : ()void
++ getNom() : ()java.lang.String
++ getBoisson() : ()western.Boisson
++ getPseudos() {static} : (java.util.List<? extends western.Nommable>)java.lang.String
++ getBoissonParDefaut() {static} : ()western.Boisson
 }
 
 class Ripou{
-- brigand : Brigand
-+ getLook() : String
-+ estLibre() : )boolean
-+ getRecompense() : )int
-+ kidnapper() : Dame)void
-+ getCaptives() : Dame>
-+ seFaireCapturer() : Cowboy)void
-+ seFaireTirerDessus() : Cowboy)void
-+ getPseudo() : String
-+ sePresenter() : )void
-+ liberer() : Dame)void
+- brigand : western.Brigand
++ getLook() : ()java.lang.String
++ estLibre() : ()boolean
++ getRecompense() : ()int
++ kidnapper() : (western.Dame)void
++ getCaptives() : ()java.util.List<western.Dame>
++ seFaireCapturer() : (western.Cowboy)void
++ seFaireTirerDessus() : (western.Cowboy)void
++ getPseudo() : ()java.lang.String
++ sePresenter() : ()void
++ liberer() : (western.Dame)void
 }
 
 class Substantif{
-- nom : String
-- genre : Genre
-+ getNom() : String
-+ getGenre() : Genre
-+ toString() : String
-+ isVowel() : char)boolean
-+ startsWithVowel() : String)boolean
-+ getArticleIndefini() : String
-+ avecArticleIndefini() : String
-+ getArticleDefini() : String
-+ getArticleDefini() : String
-+ avecArticleDefini() : String
-+ faireElision() : String
-+ elision() : )boolean
-+ getArticlePartitif() : String
-+ avecArticlePartitif() : String
-+ avecElision() : String
-+ avecPreposition() : String
+- nom : java.lang.String
+- genre : western.Genre
++ getNom() : ()java.lang.String
++ getGenre() : ()western.Genre
++ toString() : ()java.lang.String
++ isVowel() {static} : (char)boolean
++ startsWithVowel() {static} : (java.lang.String)boolean
++ getArticleIndefini() : ()java.lang.String
++ avecArticleIndefini() : ()java.lang.String
++ getArticleDefini() {static} : (western.Genre)java.lang.String
++ getArticleDefini() : ()java.lang.String
++ avecArticleDefini() : ()java.lang.String
++ faireElision() {static} : (java.lang.String)java.lang.String
++ elision() : ()boolean
++ getArticlePartitif() : ()java.lang.String
++ avecArticlePartitif() : ()java.lang.String
++ avecElision() : (java.lang.String)java.lang.String
++ avecPreposition() : (java.lang.String)java.lang.String
 }
 
 

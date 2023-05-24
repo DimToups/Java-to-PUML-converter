@@ -56,6 +56,9 @@ public class Attribut {
         {
             toString += "# " + this.nom + " : " + SubstringTypeMethode(this.type.toString());
         }
+        //Ajout de son éventuel modificateur static
+        if(this.modificateur == Modificateur.STATIC)
+            toString += " {static}";
 
         return toString;
     }

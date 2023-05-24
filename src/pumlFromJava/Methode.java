@@ -43,6 +43,12 @@ public class Methode {
             toString += "# " + this.nom + "(" + this.getParameters() + ")";
         }
 
+        //Ajout de son éventuel modificateur static
+        if(this.modificateur == Modificateur.STATIC)
+            toString += " {static}";
+        if (this.modificateur == Modificateur.ABSTRACT)
+            toString += " {abstract}";
+
         if (type != null)
         {
             //toString += " : " + this.type.toString().substring(this.type.toString().indexOf(".", this.type.toString().indexOf(".")+1)+1, this.type.toString().length());
