@@ -21,6 +21,14 @@ public class InterfaceContent extends ElementContent{
     }
     @Override
     public String genererContenuElement(boolean isDca){
-        return "";
+        String contenu = "interface " + this.className + "<<interface>>{\n";
+        if (isDca)
+            return contenu += "}";
+        else{
+            for (Methode methode : classMethods){
+                contenu += methode.toString();
+            }
+            return contenu += "\n}";
+        }
     }
 }
