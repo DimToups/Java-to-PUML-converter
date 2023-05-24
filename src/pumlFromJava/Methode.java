@@ -20,17 +20,22 @@ public class Methode {
     public void setType(TypeMirror type) {this.type = type;}
     public void setVisibilite(Visibilite visibilite) {this.visibilite = visibilite;}
     public void setModificateur(Modificateur modificateur) {this.modificateur = modificateur;}
+    @Override
+    public String toString(){
+        String toString = this.nom + "(" + this.getParameters() + ")";
+        if (type != null)
+            toString += " : " + this.type.toString();
+        return toString;
+    }
     public String getParameters(){
         String parameters = "";
 
         int i = 0;
         for (Attribut attribut : parametres){
-            if (i == 0){
+            if (i == 0)
                 parameters += attribut.toString();
-            }
-            else{
+            else
                 parameters += ", " + attribut.toString();
-            }
             i++;
         }
 
