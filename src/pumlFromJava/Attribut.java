@@ -38,4 +38,8 @@ public class Attribut {
     public void setType(TypeMirror type) {this.type = type;}
     public void setVisibilite(Visibilite visibilite) {this.visibilite = visibilite;}
     public void setModificateur(Modificateur modificateur) {this.modificateur = modificateur;}
+    @Override
+    public String toString(){
+        return this.nom + " : " + this.type.toString();
+    }
 }
