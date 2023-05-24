@@ -40,6 +40,9 @@ public class Attribut {
     public void setModificateur(Modificateur modificateur) {this.modificateur = modificateur;}
     @Override
     public String toString(){
-        return this.nom + " : " + this.type.toString();
+        if (this.type != null)
+            return this.nom + " : " + this.type.toString();
+        else
+            return this.nom;
     }
 }
