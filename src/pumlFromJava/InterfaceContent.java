@@ -15,6 +15,7 @@ public class InterfaceContent extends ElementContent{
             //Gestion des méthodes
             if (enclosedElement.getKind() == ElementKind.METHOD){
                 Methode methode = new Methode(enclosedElement.getSimpleName().toString());
+                methode.setParameters(enclosedElement);
                 methode.findModifier(enclosedElement);
                 methode.findVisibility(enclosedElement);
                 classMethods.add(methode);

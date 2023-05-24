@@ -40,7 +40,6 @@ public class Attribut {
     public void setType(TypeMirror type) {this.type = type;}
     public void setVisibilite(Visibilite visibilite) {this.visibilite = visibilite;}
     public void setModificateur(Modificateur modificateur) {this.modificateur = modificateur;}
-
     public String AttributtoString(){
         String toString = "";
 

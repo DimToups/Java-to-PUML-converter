@@ -15,7 +15,7 @@ class Boisson{
 + getNomAvecArticleIndefini() : ()java.lang.String
 + getNomAvecArticlePartitif() : ()java.lang.String
 + getNomAvecArticleDefini() : ()java.lang.String
-+ getNomAvecPreposition() : (java.lang.String)java.lang.String
++ getNomAvecPreposition(pumlFromJava.Attribut@4ae3c1cd) : (java.lang.String)java.lang.String
 }
 
 class Brigand{
@@ -29,14 +29,14 @@ class Brigand{
 + getLook() : ()java.lang.String
 + getRecompense() : ()int
 + estLibre() : ()boolean
-+ kidnapper() : (western.Dame)void
-+ seFaireCapturer() : (western.Cowboy)void
-+ seFaireTirerDessus() : (western.Cowboy)void
++ kidnapper(pumlFromJava.Attribut@29f69090) : (western.Dame)void
++ seFaireCapturer(pumlFromJava.Attribut@568bf312) : (western.Cowboy)void
++ seFaireTirerDessus(pumlFromJava.Attribut@ca263c2) : (western.Cowboy)void
 + getPseudo() : ()java.lang.String
 + getCaptives() : ()java.util.List<western.Dame>
 + sePresenter() : ()void
 + getBoissonParDefaut() {static} : ()western.Boisson
-+ setBoissonParDefaut() {static} : (western.Boisson)void
++ setBoissonParDefaut(pumlFromJava.Attribut@589b3632) {static} : (western.Boisson)void
 }
 
 class Cowboy{
@@ -44,13 +44,13 @@ class Cowboy{
 - captures : java.util.Set<western.HorsLaLoi>
 - boissonParDefaut : western.Boisson {static}
 + getPseudo() : ()java.lang.String
-+ liberer() : (western.Dame)void
-+ liberer() : (java.util.List<western.Dame>)void
-+ capturer() : (western.HorsLaLoi)void
-+ tirerSur() : (western.HorsLaLoi)void
++ liberer(pumlFromJava.Attribut@45f45fa1) : (western.Dame)void
++ liberer(pumlFromJava.Attribut@4c6e276e) : (java.util.List<western.Dame>)void
++ capturer(pumlFromJava.Attribut@534df152) : (western.HorsLaLoi)void
++ tirerSur(pumlFromJava.Attribut@52e677af) : (western.HorsLaLoi)void
 + sePresenter() : ()void
 + getBoissonParDefaut() {static} : ()western.Boisson
-+ setBoissonParDefaut() {static} : (western.Boisson)void
++ setBoissonParDefaut(pumlFromJava.Attribut@35083305) {static} : (western.Boisson)void
 }
 
 class Dame{
@@ -59,37 +59,37 @@ class Dame{
 - ravisseur : western.HorsLaLoi
 - boissonParDefaut : western.Boisson {static}
 + getPseudo() : ()java.lang.String
-+ seFaireKidnapper() : (western.HorsLaLoi)void
-+ seFaireLiberer() : (western.Cowboy)void
++ seFaireKidnapper(pumlFromJava.Attribut@8e0379d) : (western.HorsLaLoi)void
++ seFaireLiberer(pumlFromJava.Attribut@341b80b2) : (western.Cowboy)void
 + estLibre() : ()boolean
 + sePresenter() : ()void
 + getBoissonParDefaut() {static} : ()western.Boisson
-+ setBoissonParDefaut() {static} : (western.Boisson)void
++ setBoissonParDefaut(pumlFromJava.Attribut@55a1c291) {static} : (western.Boisson)void
 + getRavisseur() : ()western.HorsLaLoi
 }
 
 class Genre{
-pumlFromJava.Attribut@4ae3c1cd
-pumlFromJava.Attribut@29f69090
+pumlFromJava.Attribut@2145433b
+pumlFromJava.Attribut@2890c451
 }
 
 class Histoire4{
-+ main() {static} : (java.lang.String[])void
++ main(pumlFromJava.Attribut@40e6dfe1) {static} : (java.lang.String[])void
 }
 
 interface HorsLaLoi<<interface>>{
 + estLibre() {abstract}
 + getRecompense() {abstract}
-+ kidnapper() {abstract}
-+ seFaireCapturer() {abstract}
-+ seFaireTirerDessus() {abstract}
++ kidnapper(pumlFromJava.Attribut@1b083826) {abstract}
++ seFaireCapturer(pumlFromJava.Attribut@105fece7) {abstract}
++ seFaireTirerDessus(pumlFromJava.Attribut@3ec300f1) {abstract}
 + getLook() {abstract}
 + getCaptives() {abstract}
 }
 
 class Narrateur{
-+ dire() : (java.lang.String)void
-+ boire() : (western.Boisson)void
++ dire(pumlFromJava.Attribut@482cd91f) : (java.lang.String)void
++ boire(pumlFromJava.Attribut@123f1134) : (western.Boisson)void
 + boire() : ()void
 + getPseudo() : ()java.lang.String
 }
@@ -103,13 +103,13 @@ class Personnage{
 - BOISSON_PAR_DEFAUT : western.Boisson {static}
 - nom : java.lang.String
 - boisson : western.Boisson
-+ dire() : (java.lang.String)void
++ dire(pumlFromJava.Attribut@7d68ef40) : (java.lang.String)void
 + sePresenter() : ()void
-+ boire() : (western.Boisson)void
++ boire(pumlFromJava.Attribut@5b0abc94) : (western.Boisson)void
 + boire() : ()void
 + getNom() : ()java.lang.String
 + getBoisson() : ()western.Boisson
-+ getPseudos() {static} : (java.util.List<? extends western.Nommable>)java.lang.String
++ getPseudos(pumlFromJava.Attribut@75c072cb) {static} : (java.util.List<? extends western.Nommable>)java.lang.String
 + getBoissonParDefaut() {static} : ()western.Boisson
 }
 
@@ -118,13 +118,13 @@ class Ripou{
 + getLook() : ()java.lang.String
 + estLibre() : ()boolean
 + getRecompense() : ()int
-+ kidnapper() : (western.Dame)void
++ kidnapper(pumlFromJava.Attribut@1f1c7bf6) : (western.Dame)void
 + getCaptives() : ()java.util.List<western.Dame>
-+ seFaireCapturer() : (western.Cowboy)void
-+ seFaireTirerDessus() : (western.Cowboy)void
++ seFaireCapturer(pumlFromJava.Attribut@25b485ba) : (western.Cowboy)void
++ seFaireTirerDessus(pumlFromJava.Attribut@2b546384) : (western.Cowboy)void
 + getPseudo() : ()java.lang.String
 + sePresenter() : ()void
-+ liberer() : (western.Dame)void
++ liberer(pumlFromJava.Attribut@5d740a0f) : (western.Dame)void
 }
 
 class Substantif{
@@ -133,19 +133,19 @@ class Substantif{
 + getNom() : ()java.lang.String
 + getGenre() : ()western.Genre
 + toString() : ()java.lang.String
-+ isVowel() {static} : (char)boolean
-+ startsWithVowel() {static} : (java.lang.String)boolean
++ isVowel(pumlFromJava.Attribut@214b199c) {static} : (char)boolean
++ startsWithVowel(pumlFromJava.Attribut@20d3d15a) {static} : (java.lang.String)boolean
 + getArticleIndefini() : ()java.lang.String
 + avecArticleIndefini() : ()java.lang.String
-+ getArticleDefini() {static} : (western.Genre)java.lang.String
++ getArticleDefini(pumlFromJava.Attribut@2893de87) {static} : (western.Genre)java.lang.String
 + getArticleDefini() : ()java.lang.String
 + avecArticleDefini() : ()java.lang.String
-+ faireElision() {static} : (java.lang.String)java.lang.String
++ faireElision(pumlFromJava.Attribut@55ca8de8) {static} : (java.lang.String)java.lang.String
 + elision() : ()boolean
 + getArticlePartitif() : ()java.lang.String
 + avecArticlePartitif() : ()java.lang.String
-+ avecElision() : (java.lang.String)java.lang.String
-+ avecPreposition() : (java.lang.String)java.lang.String
++ avecElision(pumlFromJava.Attribut@2c34f934) : (java.lang.String)java.lang.String
++ avecPreposition(pumlFromJava.Attribut@12d3a4e9) : (java.lang.String)java.lang.String
 }
 
 

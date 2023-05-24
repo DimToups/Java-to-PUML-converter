@@ -1,7 +1,9 @@
 package pumlFromJava;
 
 import javax.lang.model.element.Element;
+import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
+import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.PrimitiveType;
 import javax.lang.model.type.TypeMirror;
 import java.util.ArrayList;
@@ -26,6 +28,15 @@ public class Methode {
     public void setType(TypeMirror type) {this.type = type;}
     public void setVisibilite(Visibilite visibilite) {this.visibilite = visibilite;}
     public void setModificateur(Modificateur modificateur) {this.modificateur = modificateur;}
+    public void setParameters(Element element){
+        System.out.println(element.getSimpleName());
+        ExecutableElement executableElement = (ExecutableElement) element;
+        for(VariableElement variableElement : executableElement.getParameters()){
+            Attribut attribut = new Attribut(variableElement.getSimpleName().toString(), variableElement.asType());
+            this.parametres.add(attribut);
+            System.out.println("\t" + variableElement.getSimpleName().toString() + " : " + variableElement.asType().toString());
+        }
+    }
 
     public String MethodetoString(){
         String toString = "";
