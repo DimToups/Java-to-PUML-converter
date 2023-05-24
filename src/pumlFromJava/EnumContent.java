@@ -8,7 +8,14 @@ public class EnumContent extends ElementContent{
     public EnumContent(){}
     @Override
     public void setElement(Element element){
-
+        for (Element element1 : element.getEnclosedElements())
+        {
+            if (element1.getKind().isField())
+            {
+                Attribut attributEnum = new Attribut(element1.getSimpleName().toString());
+                attributs.add(attributEnum);
+            }
+        }
     }
     @Override
     public String genererContenuElement(boolean isDca){

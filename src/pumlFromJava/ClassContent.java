@@ -42,11 +42,30 @@ public class ClassContent extends ElementContent{
         classContent += "{\n";
         //Affichage des attributs
         for(Attribut attribut : classAttributs){
-            classContent += "\t" + attribut.getNom() + "\n";
+            // Gestion de la visibilité
+            if (attribut.getVisibilite().equals(Visibilite.PRIVATE))
+            {
+                classContent += "\t" + "-" + attribut.getNom() + " : " + attribut.getType() +"\n";
+            }
+            else if (attribut.getVisibilite().equals(Visibilite.PUBLIC))
+            {
+                classContent += "\t" + "+" + attribut.getNom() + " : " + attribut.getType() + "\n";
+            } else if (attribut.getVisibilite().equals(Visibilite.PROTECTED))
+            {
+                classContent += "\t" + "#" + attribut.getNom() + " : " + attribut.getType() + "\n";
+            }
         }
         //Affichage des méthodes
         for(Methode methode : classMethods){
-            classContent += "\t" + methode.getNom() + "(" + methode.getParameters() + ") : " + methode.getType() + "\n";
+            // Gestion de la visibilité
+            if (methode.getVisibilite().equals(Visibilite.PRIVATE))
+            {
+                classContent += "\t" + "-" + methode.getNom() + "(" + methode.getParameters() + ") : " + methode.getType() + "\n";
+            } else if (methode.getVisibilite().equals(Visibilite.PUBLIC)) {
+                classContent += "\t" + "+" + methode.getNom() + "(" + methode.getParameters() + ") : " + methode.getType() + "\n";
+            } else if (methode.getVisibilite().equals(Visibilite.PROTECTED)) {
+                classContent += "\t" + "#" + methode.getNom() + "(" + methode.getParameters() + ") : " + methode.getType() + "\n";
+            }
         }
         classContent += "}\n";
         return classContent;
