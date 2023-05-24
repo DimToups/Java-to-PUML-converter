@@ -8,8 +8,8 @@ hide empty members
 
 package western{
 class Boisson{
-- pumlFromJava.Attribut@2aa5fe93
-+ pumlFromJava.Attribut@5c1a8622
+- substantif : western.Substantif
++ EAU : western.Boisson
 + getNom() : ()java.lang.String
 + getGenre() : ()western.Genre
 + getNomAvecArticleIndefini() : ()java.lang.String
@@ -19,13 +19,13 @@ class Boisson{
 }
 
 class Brigand{
-# pumlFromJava.Attribut@15761df8
-- pumlFromJava.Attribut@6ab7a896
-- pumlFromJava.Attribut@327b636c
-- pumlFromJava.Attribut@45dd4eda
-- pumlFromJava.Attribut@60611244
-- pumlFromJava.Attribut@3745e5c6
-- pumlFromJava.Attribut@5e4c8041
+# LOOK_PAR_DEFAUT : java.lang.String
+- look : java.lang.String
+- recompense : int
+- estLibre : boolean
+- captives : java.util.List<western.Dame>
+- gardien : western.Cowboy
+- boissonParDefaut : western.Boisson
 + getLook() : ()java.lang.String
 + getRecompense() : ()int
 + estLibre() : ()boolean
@@ -40,9 +40,9 @@ class Brigand{
 }
 
 class Cowboy{
-- pumlFromJava.Attribut@71c8becc
-- pumlFromJava.Attribut@19d37183
-- pumlFromJava.Attribut@1a0dcaa
+- gains : int
+- captures : java.util.Set<western.HorsLaLoi>
+- boissonParDefaut : western.Boisson
 + getPseudo() : ()java.lang.String
 + liberer() : (western.Dame)void
 + liberer() : (java.util.List<western.Dame>)void
@@ -54,10 +54,10 @@ class Cowboy{
 }
 
 class Dame{
-- pumlFromJava.Attribut@3bd40a57
-- pumlFromJava.Attribut@fdefd3f
-- pumlFromJava.Attribut@d83da2e
-- pumlFromJava.Attribut@a4102b8
+- estLibre : boolean
+- sauveur : western.Cowboy
+- ravisseur : western.HorsLaLoi
+- boissonParDefaut : western.Boisson
 + getPseudo() : ()java.lang.String
 + seFaireKidnapper() : (western.HorsLaLoi)void
 + seFaireLiberer() : (western.Cowboy)void
@@ -69,8 +69,8 @@ class Dame{
 }
 
 class Genre{
-pumlFromJava.Attribut@11dc3715
-pumlFromJava.Attribut@69930714
+pumlFromJava.Attribut@4ae3c1cd
+pumlFromJava.Attribut@29f69090
 }
 
 class Histoire4{
@@ -100,9 +100,9 @@ interface Nommable<<interface>>{
 }
 
 class Personnage{
-- pumlFromJava.Attribut@7a52f2a2
-- pumlFromJava.Attribut@78047b92
-- pumlFromJava.Attribut@8909f18
+- BOISSON_PAR_DEFAUT : western.Boisson
+- nom : java.lang.String
+- boisson : western.Boisson
 + dire() : (java.lang.String)void
 + sePresenter() : ()void
 + boire() : (western.Boisson)void
@@ -114,7 +114,7 @@ class Personnage{
 }
 
 class Ripou{
-- pumlFromJava.Attribut@79ca92b9
+- brigand : western.Brigand
 + getLook() : ()java.lang.String
 + estLibre() : ()boolean
 + getRecompense() : ()int
@@ -128,8 +128,8 @@ class Ripou{
 }
 
 class Substantif{
-- pumlFromJava.Attribut@1460a8c0
-- pumlFromJava.Attribut@4f638935
+- nom : java.lang.String
+- genre : western.Genre
 + getNom() : ()java.lang.String
 + getGenre() : ()western.Genre
 + toString() : ()java.lang.String

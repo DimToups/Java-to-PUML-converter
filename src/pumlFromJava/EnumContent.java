@@ -12,7 +12,7 @@ public class EnumContent extends ElementContent{
         this.classType = element.getKind();
         for (Element element1 : element.getEnclosedElements()){
             if (element1.getKind().isField()){
-                Attribut attributEnum = new Attribut(element1.getSimpleName().toString());
+                Attribut attributEnum = new Attribut(element1.getSimpleName().toString(), element1.asType());
                 classAttributs.add(attributEnum);
             }
         }
