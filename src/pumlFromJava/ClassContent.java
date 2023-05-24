@@ -30,27 +30,23 @@ public class ClassContent extends ElementContent{
         }
     }
     @Override
-    public String genererContenuElement(boolean isDCA){
-        String classContent = "class " + className;
-        //Affichage du stéréotype
-        if (classType == ElementKind.INTERFACE){
-            classContent += " <<Interface>>";
+    public String genererContenuElement(boolean isDca) {
+        String contenu = "class " + this.className + "{\n";
+        if (isDca){
+            for (Attribut attribut : classAttributs) {
+                if (attribut.getType().toString().contains("."))
+                    contenu += attribut.toString() + "\n";
+            }
+            return contenu += "}";
         }
-        else if (classType == ElementKind.ENUM) {
-            classContent += " <<Enum>>";
+        else{
+            for(Attribut attribut : classAttributs){
+                contenu += attribut.toString() + "\n";
+            }
+            for (Methode methode : classMethods){
+                contenu += methode.toString() + "\n";
+            }
+            return contenu += "}\n";
         }
-        classContent += "{\n";
-        //Affichage des attributs
-        for(Attribut attribut : classAttributs){
-            classContent += "\t" + attribut.getNom() + "\n";
-        }
-        //Affichage des méthodes
-        for(Methode methode : classMethods){
-            classContent += "\t" + methode.getNom() + "(" + methode.getParameters() + ") : " + methode.getType() + "\n";
-        }
-        classContent += "}\n";
-        return classContent;
     }
-    public String getNom(){ return this.className; }
-    public ElementKind getType(){ return this.classType; }
 }

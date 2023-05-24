@@ -26,9 +26,9 @@ public class InterfaceContent extends ElementContent{
             return contenu += "}";
         else{
             for (Methode methode : classMethods){
-                contenu += methode.toString();
+                contenu += methode.toString() + "\n";
             }
-            return contenu += "\n}";
+            return contenu += "}\n";
         }
     }
 }
