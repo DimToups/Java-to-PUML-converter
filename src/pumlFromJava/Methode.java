@@ -20,11 +20,27 @@ public class Methode {
     public void setType(TypeMirror type) {this.type = type;}
     public void setVisibilite(Visibilite visibilite) {this.visibilite = visibilite;}
     public void setModificateur(Modificateur modificateur) {this.modificateur = modificateur;}
-    @Override
-    public String toString(){
-        String toString = this.nom + "(" + this.getParameters() + ")";
+
+    public String MethodetoString(){
+        String toString = "";
+        if (this.getVisibilite().equals(Visibilite.PUBLIC))
+        {
+            toString += "+" + this.nom + "(" + this.getParameters() + ")";
+        }
+        else if (this.getVisibilite().equals(Visibilite.PRIVATE))
+        {
+            toString += "-" + this.nom + "(" + this.getParameters() + ")";
+        }
+        else if (this.getVisibilite().equals(Visibilite.PROTECTED))
+        {
+            toString += "#" + this.nom + "(" + this.getParameters() + ")";
+        }
+
         if (type != null)
+        {
             toString += " : " + this.type.toString();
+        }
+
         return toString;
     }
     public String getParameters(){

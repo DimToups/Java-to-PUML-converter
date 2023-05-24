@@ -7,6 +7,3 @@ skinparam classFontStyle Bold
 hide empty members
 
 package western{
-
-}
-@enduml

@@ -38,7 +38,7 @@ enum TypeLiaison <<enum>>{
 }
 enum Visibilite <<enum>>{
     PUBLIC
-    PARTIAL
+    PROTECTED
     PRIVATE
 }
 
