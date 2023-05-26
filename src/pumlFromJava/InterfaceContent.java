@@ -11,7 +11,7 @@ public class InterfaceContent extends ElementContent{
         super(element);
         for (Element enclosedElement : element.getEnclosedElements()){
             //Gestion des méthodes
-            if (enclosedElement.getKind() == ElementKind.METHOD){
+            if (enclosedElement.getKind() == ElementKind.METHOD ||enclosedElement.getKind() == ElementKind.CONSTRUCTOR){
                 ExecutableElement executableElement = (ExecutableElement)enclosedElement;
                 Methode methode = new Methode(executableElement);
                 methode.setParameters(enclosedElement);

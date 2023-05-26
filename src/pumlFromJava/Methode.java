@@ -9,6 +9,7 @@ public class Methode {
     private TypeMirror type;
     private Visibilite visibilite;
     private Modificateur modificateur;
+    private boolean isConstructor = false;
     private ArrayList<Attribut> parametres = new ArrayList<>();
     public Methode(ExecutableElement executableElement){
         this.nom = executableElement.getSimpleName().toString();
@@ -16,11 +17,14 @@ public class Methode {
         this.findModifier(executableElement);
         this.findVisibility(executableElement);
         this.setParameters(executableElement);
+        if (executableElement.getKind() == ElementKind.CONSTRUCTOR)
+            isConstructor = true;
     }
     public String getNom(){ return this.nom;}
     public TypeMirror getType(){return this.type;}
     public Visibilite getVisibilite(){return this.visibilite;}
     public Modificateur getModificateur(){return this.modificateur;}
+    public void setName(String string) {this.nom = string;}
     public void setType(TypeMirror type) {this.type = type;}
     public void setVisibilite(Visibilite visibilite) {this.visibilite = visibilite;}
     public void setModificateur(Modificateur modificateur) {this.modificateur = modificateur;}
@@ -37,17 +41,16 @@ public class Methode {
         //Integer fullstop = this.type.toString().indexOf(".");
         String toString = "";
         if (this.getVisibilite().equals(Visibilite.PUBLIC))
-        {
-            toString += "+ " + this.nom + "(" + this.getParameters() + ")";
-        }
+            toString += "+ ";
         else if (this.getVisibilite().equals(Visibilite.PRIVATE))
-        {
-            toString += "- " + this.nom + "(" + this.getParameters() + ")";
-        }
+            toString += "- ";
         else if (this.getVisibilite().equals(Visibilite.PROTECTED))
-        {
-            toString += "# " + this.nom + "(" + this.getParameters() + ")";
-        }
+            toString += "# ";
+
+        if (isConstructor)
+            toString += "<<create>> ";
+
+        toString += this.nom + "(" + this.getParameters() + ")";
 
         //Ajout de son éventuel modificateur static
         if(this.modificateur == Modificateur.STATIC)

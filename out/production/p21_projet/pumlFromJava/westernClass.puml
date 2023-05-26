@@ -10,6 +10,7 @@ package western{
 class Boisson{
 substantif
 EAU
++ <<create>> Boisson(nom : String, genre : Genre)
 + getNom() : String
 + getGenre() : Genre
 + getNomAvecArticleIndefini() : String
@@ -24,6 +25,9 @@ look
 captives
 gardien
 boissonParDefaut
++ <<create>> Brigand(nom : String)
++ <<create>> Brigand(nom : String, boisson : Boisson)
++ <<create>> Brigand(nom : String, boisson : Boisson, look : String)
 + getLook() : String
 + getRecompense() : int
 + estLibre() : boolean
@@ -40,6 +44,8 @@ boissonParDefaut
 class Cowboy{
 captures
 boissonParDefaut
++ <<create>> Cowboy(nom : String)
++ <<create>> Cowboy(nom : String, boisson : Boisson)
 + getPseudo() : String
 + liberer(dame : Dame)
 + liberer(captives : Dame *)
@@ -54,6 +60,8 @@ class Dame{
 sauveur
 ravisseur
 boissonParDefaut
++ <<create>> Dame(nom : String)
++ <<create>> Dame(nom : String, boisson : Boisson)
 + getPseudo() : String
 + seFaireKidnapper(horsLaLoi : HorsLaLoi)
 + seFaireLiberer(cowBoy : Cowboy)
@@ -70,6 +78,7 @@ class Genre{
 }
 
 class Histoire4{
++ <<create>> Histoire4()
 + main(args : String[]) {static}
 }
 
@@ -84,6 +93,8 @@ interface HorsLaLoi<<interface>>{
 }
 
 class Narrateur{
++ <<create>> Narrateur()
++ <<create>> Narrateur(nom : String)
 + dire(texte : String)
 + boire(boisson : Boisson)
 + boire()
@@ -99,6 +110,8 @@ class Personnage{
 BOISSON_PAR_DEFAUT
 nom
 boisson
++ <<create>> Personnage(nom : String)
++ <<create>> Personnage(nom : String, boisson : Boisson)
 + dire(texte : String)
 + sePresenter()
 + boire(boisson : Boisson)
@@ -111,6 +124,9 @@ boisson
 
 class Ripou{
 brigand
++ <<create>> Ripou(nom : String)
++ <<create>> Ripou(nom : String, boisson : Boisson)
++ <<create>> Ripou(nom : String, boisson : Boisson, look : String)
 + getLook() : String
 + estLibre() : boolean
 + getRecompense() : int
@@ -126,6 +142,7 @@ brigand
 class Substantif{
 nom
 genre
++ <<create>> Substantif(nom : String, genre : Genre)
 + getNom() : String
 + getGenre() : Genre
 + toString() : String

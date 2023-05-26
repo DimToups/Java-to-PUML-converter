@@ -16,9 +16,11 @@ public class ClassContent extends ElementContent{
                 classAttributs.add(attribut);
             }
             //Gestion des méthodes
-            if (enclosedElement.getKind() == ElementKind.METHOD){
+            if (enclosedElement.getKind() == ElementKind.METHOD ||enclosedElement.getKind() == ElementKind.CONSTRUCTOR){
                 ExecutableElement executableElement = (ExecutableElement) enclosedElement;
                 Methode methode = new Methode(executableElement);
+                if (enclosedElement.getKind() == ElementKind.CONSTRUCTOR)
+                    methode.setName(this.className);
                 classMethods.add(methode);
             }
         }
