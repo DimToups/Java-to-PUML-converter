@@ -35,7 +35,8 @@ public class ClassContent extends ElementContent{
         }
         else{
             for(Attribut attribut : classAttributs){
-                contenu += attribut.AttributtoString() + "\n";
+                if (attribut.getType().toString().contains("."))
+                    contenu += attribut.getNom() + "\n";
             }
             for (Methode methode : classMethods){
                 contenu += methode.MethodetoString() + "\n";

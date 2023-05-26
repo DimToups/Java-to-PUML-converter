@@ -8,8 +8,8 @@ hide empty members
 
 package western{
 class Boisson{
-- substantif : Substantif
-+ EAU : Boisson
+substantif
+EAU
 + getNom() : String
 + getGenre() : Genre
 + getNomAvecArticleIndefini() : String
@@ -19,13 +19,11 @@ class Boisson{
 }
 
 class Brigand{
-# LOOK_PAR_DEFAUT : String {static}
-- look : String
-- recompense : int
-- estLibre : boolean
-- captives : Dame *
-- gardien : Cowboy
-- boissonParDefaut : Boisson {static}
+LOOK_PAR_DEFAUT
+look
+captives
+gardien
+boissonParDefaut
 + getLook() : String
 + getRecompense() : int
 + estLibre() : boolean
@@ -40,9 +38,8 @@ class Brigand{
 }
 
 class Cowboy{
-- gains : int
-- captures : HorsLaLoi *
-- boissonParDefaut : Boisson {static}
+captures
+boissonParDefaut
 + getPseudo() : String
 + liberer(dame : Dame)
 + liberer(captives : Dame *)
@@ -54,10 +51,9 @@ class Cowboy{
 }
 
 class Dame{
-- estLibre : boolean
-- sauveur : Cowboy
-- ravisseur : HorsLaLoi
-- boissonParDefaut : Boisson {static}
+sauveur
+ravisseur
+boissonParDefaut
 + getPseudo() : String
 + seFaireKidnapper(horsLaLoi : HorsLaLoi)
 + seFaireLiberer(cowBoy : Cowboy)
@@ -100,9 +96,9 @@ interface Nommable<<interface>>{
 }
 
 class Personnage{
-- BOISSON_PAR_DEFAUT : Boisson {static}
-- nom : String
-- boisson : Boisson
+BOISSON_PAR_DEFAUT
+nom
+boisson
 + dire(texte : String)
 + sePresenter()
 + boire(boisson : Boisson)
@@ -114,7 +110,7 @@ class Personnage{
 }
 
 class Ripou{
-- brigand : Brigand
+brigand
 + getLook() : String
 + estLibre() : boolean
 + getRecompense() : int
@@ -128,8 +124,8 @@ class Ripou{
 }
 
 class Substantif{
-- nom : String
-- genre : Genre
+nom
+genre
 + getNom() : String
 + getGenre() : Genre
 + toString() : String
