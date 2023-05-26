@@ -15,7 +15,7 @@ class Boisson{
 + getNomAvecArticleIndefini() : String
 + getNomAvecArticlePartitif() : String
 + getNomAvecArticleDefini() : String
-+ getNomAvecPreposition(pumlFromJava.Attribut@4ae3c1cd) : String
++ getNomAvecPreposition(pumlFromJava.Attribut@64c87930) : String
 }
 
 class Brigand{
@@ -29,14 +29,14 @@ class Brigand{
 + getLook() : String
 + getRecompense() : int
 + estLibre() : boolean
-+ kidnapper(pumlFromJava.Attribut@29f69090) : void
-+ seFaireCapturer(pumlFromJava.Attribut@568bf312) : void
-+ seFaireTirerDessus(pumlFromJava.Attribut@ca263c2) : void
++ kidnapper(pumlFromJava.Attribut@400cff1a)
++ seFaireCapturer(pumlFromJava.Attribut@275710fc)
++ seFaireTirerDessus(pumlFromJava.Attribut@525f1e4e)
 + getPseudo() : String
 + getCaptives() : Dame>
-+ sePresenter() : void
++ sePresenter()
 + getBoissonParDefaut() {static} : Boisson
-+ setBoissonParDefaut(pumlFromJava.Attribut@589b3632) {static} : void
++ setBoissonParDefaut(pumlFromJava.Attribut@75f9eccc) {static}
 }
 
 class Cowboy{
@@ -44,13 +44,13 @@ class Cowboy{
 - captures : HorsLaLoi>
 - boissonParDefaut : Boisson {static}
 + getPseudo() : String
-+ liberer(pumlFromJava.Attribut@45f45fa1) : void
-+ liberer(pumlFromJava.Attribut@4c6e276e) : void
-+ capturer(pumlFromJava.Attribut@534df152) : void
-+ tirerSur(pumlFromJava.Attribut@52e677af) : void
-+ sePresenter() : void
++ liberer(pumlFromJava.Attribut@52aa2946)
++ liberer(pumlFromJava.Attribut@4de5031f)
++ capturer(pumlFromJava.Attribut@67e2d983)
++ tirerSur(pumlFromJava.Attribut@5d47c63f)
++ sePresenter()
 + getBoissonParDefaut() {static} : Boisson
-+ setBoissonParDefaut(pumlFromJava.Attribut@35083305) {static} : void
++ setBoissonParDefaut(pumlFromJava.Attribut@5ea434c8) {static}
 }
 
 class Dame{
@@ -59,38 +59,38 @@ class Dame{
 - ravisseur : HorsLaLoi
 - boissonParDefaut : Boisson {static}
 + getPseudo() : String
-+ seFaireKidnapper(pumlFromJava.Attribut@8e0379d) : void
-+ seFaireLiberer(pumlFromJava.Attribut@341b80b2) : void
++ seFaireKidnapper(pumlFromJava.Attribut@3bbc39f8)
++ seFaireLiberer(pumlFromJava.Attribut@4ae3c1cd)
 + estLibre() : boolean
-+ sePresenter() : void
++ sePresenter()
 + getBoissonParDefaut() {static} : Boisson
-+ setBoissonParDefaut(pumlFromJava.Attribut@55a1c291) {static} : void
++ setBoissonParDefaut(pumlFromJava.Attribut@29f69090) {static}
 + getRavisseur() : HorsLaLoi
 }
 
 class Genre{
-+ pumlFromJava.Attribut@2145433b
-+ pumlFromJava.Attribut@2890c451
++ pumlFromJava.Attribut@568bf312
++ pumlFromJava.Attribut@ca263c2
 }
 
 class Histoire4{
-+ main(pumlFromJava.Attribut@40e6dfe1) {static} : void
++ main(pumlFromJava.Attribut@589b3632) {static}
 }
 
 interface HorsLaLoi<<interface>>{
 + estLibre() {abstract} : boolean
 + getRecompense() {abstract} : int
-+ kidnapper(pumlFromJava.Attribut@1b083826, pumlFromJava.Attribut@105fece7) {abstract} : void
-+ seFaireCapturer(pumlFromJava.Attribut@3ec300f1, pumlFromJava.Attribut@482cd91f) {abstract} : void
-+ seFaireTirerDessus(pumlFromJava.Attribut@123f1134, pumlFromJava.Attribut@7d68ef40) {abstract} : void
++ kidnapper(pumlFromJava.Attribut@45f45fa1, pumlFromJava.Attribut@4c6e276e) {abstract}
++ seFaireCapturer(pumlFromJava.Attribut@534df152, pumlFromJava.Attribut@52e677af) {abstract}
++ seFaireTirerDessus(pumlFromJava.Attribut@35083305, pumlFromJava.Attribut@8e0379d) {abstract}
 + getLook() {abstract} : String
 + getCaptives() {abstract} : Dame>
 }
 
 class Narrateur{
-+ dire(pumlFromJava.Attribut@5b0abc94) : void
-+ boire(pumlFromJava.Attribut@75c072cb) : void
-+ boire() : void
++ dire(pumlFromJava.Attribut@341b80b2)
++ boire(pumlFromJava.Attribut@55a1c291)
++ boire()
 + getPseudo() : String
 }
 
@@ -103,13 +103,13 @@ class Personnage{
 - BOISSON_PAR_DEFAUT : Boisson {static}
 - nom : String
 - boisson : Boisson
-+ dire(pumlFromJava.Attribut@1f1c7bf6) : void
-+ sePresenter() : void
-+ boire(pumlFromJava.Attribut@25b485ba) : void
-+ boire() : void
++ dire(pumlFromJava.Attribut@2145433b)
++ sePresenter()
++ boire(pumlFromJava.Attribut@2890c451)
++ boire()
 + getNom() : String
 + getBoisson() : Boisson
-+ getPseudos(pumlFromJava.Attribut@2b546384) {static} : String
++ getPseudos(pumlFromJava.Attribut@40e6dfe1) {static} : String
 + getBoissonParDefaut() {static} : Boisson
 }
 
@@ -118,13 +118,13 @@ class Ripou{
 + getLook() : String
 + estLibre() : boolean
 + getRecompense() : int
-+ kidnapper(pumlFromJava.Attribut@5d740a0f) : void
++ kidnapper(pumlFromJava.Attribut@1b083826)
 + getCaptives() : Dame>
-+ seFaireCapturer(pumlFromJava.Attribut@214b199c) : void
-+ seFaireTirerDessus(pumlFromJava.Attribut@20d3d15a) : void
++ seFaireCapturer(pumlFromJava.Attribut@105fece7)
++ seFaireTirerDessus(pumlFromJava.Attribut@3ec300f1)
 + getPseudo() : String
-+ sePresenter() : void
-+ liberer(pumlFromJava.Attribut@2893de87) : void
++ sePresenter()
++ liberer(pumlFromJava.Attribut@482cd91f)
 }
 
 class Substantif{
@@ -133,19 +133,19 @@ class Substantif{
 + getNom() : String
 + getGenre() : Genre
 + toString() : String
-+ isVowel(pumlFromJava.Attribut@55ca8de8) {static} : boolean
-+ startsWithVowel(pumlFromJava.Attribut@2c34f934) {static} : boolean
++ isVowel(pumlFromJava.Attribut@123f1134) {static} : boolean
++ startsWithVowel(pumlFromJava.Attribut@7d68ef40) {static} : boolean
 + getArticleIndefini() : String
 + avecArticleIndefini() : String
-+ getArticleDefini(pumlFromJava.Attribut@12d3a4e9) {static} : String
++ getArticleDefini(pumlFromJava.Attribut@5b0abc94) {static} : String
 + getArticleDefini() : String
 + avecArticleDefini() : String
-+ faireElision(pumlFromJava.Attribut@240237d2) {static} : String
++ faireElision(pumlFromJava.Attribut@75c072cb) {static} : String
 + elision() : boolean
 + getArticlePartitif() : String
 + avecArticlePartitif() : String
-+ avecElision(pumlFromJava.Attribut@25a65b77) : String
-+ avecPreposition(pumlFromJava.Attribut@2ed0fbae) : String
++ avecElision(pumlFromJava.Attribut@1f1c7bf6) : String
++ avecPreposition(pumlFromJava.Attribut@25b485ba) : String
 }
 
 

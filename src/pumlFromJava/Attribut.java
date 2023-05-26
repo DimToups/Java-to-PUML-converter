@@ -51,24 +51,18 @@ public class Attribut {
         String toString = "";
 
         if (this.getVisibilite().equals(Visibilite.PUBLIC))
-        {
             toString += "+ " + this.nom + " : " + SubstringTypeMethode(this.type.toString());
-        }
         else if (this.getVisibilite().equals(Visibilite.PRIVATE))
-        {
             toString += "- " + this.nom + " : " + SubstringTypeMethode(this.type.toString());
-        }
         else if (this.getVisibilite().equals(Visibilite.PROTECTED))
-        {
             toString += "# " + this.nom + " : " + SubstringTypeMethode(this.type.toString());
-        }
+
         //Ajout de son éventuel modificateur static
         if(this.modificateur == Modificateur.STATIC)
             toString += " {static}";
 
         return toString;
     }
-
     public String SubstringTypeMethode(String string)
     {
         if (string.contains(".")){

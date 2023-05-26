@@ -60,10 +60,8 @@ public class Methode {
         if (this.modificateur == Modificateur.ABSTRACT)
             toString += " {abstract}";
 
-        if (type != null)
+        if (!type.toString().equals("void"))
         {
-            //toString += " : " + this.type.toString().substring(this.type.toString().indexOf(".", this.type.toString().indexOf(".")+1)+1, this.type.toString().length());
-            //toString += " : " + this.type.toString();
             toString += " : " + SubstringTypeMethode(this.type.toString());
         }
 
