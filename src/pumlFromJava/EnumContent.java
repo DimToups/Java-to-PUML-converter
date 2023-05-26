@@ -28,12 +28,6 @@ public class EnumContent extends ElementContent{
         }
         else{
             for(Attribut attribut : classAttributs){
-                if (attribut.getVisibilite() == Visibilite.PUBLIC)
-                    contenu += "+ ";
-                else if (attribut.getVisibilite() == Visibilite.PROTECTED)
-                    contenu += "# ";
-                else if (attribut.getVisibilite() == Visibilite.PRIVATE)
-                    contenu += "- ";
                 contenu += attribut.AttributtoString() + "\n";
             }
             return contenu += "}\n";

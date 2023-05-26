@@ -69,8 +69,8 @@ class Dame{
 }
 
 class Genre{
-+ + FEMININ : Genre
-+ + MASCULIN : Genre
++ FEMININ : Genre
++ MASCULIN : Genre
 }
 
 class Histoire4{
