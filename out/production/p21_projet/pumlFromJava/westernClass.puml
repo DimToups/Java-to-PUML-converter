@@ -8,88 +8,88 @@ hide empty members
 
 package western{
 class Boisson{
-- substantif : Substantif
-+ EAU : Boisson
+- substantif : Substantifsubstantif : Substantif
++ EAU : BoissonEAU : Boisson
 + getNom() : String
 + getGenre() : Genre
 + getNomAvecArticleIndefini() : String
 + getNomAvecArticlePartitif() : String
 + getNomAvecArticleDefini() : String
-+ getNomAvecPreposition(pumlFromJava.Attribut@64c87930) : String
++ getNomAvecPreposition(preposition : String) : String
 }
 
 class Brigand{
-# LOOK_PAR_DEFAUT : String {static}
-- look : String
-- recompense : int
-- estLibre : boolean
-- captives : Dame>
-- gardien : Cowboy
-- boissonParDefaut : Boisson {static}
+# LOOK_PAR_DEFAUT : StringLOOK_PAR_DEFAUT : String {static}
+- look : Stringlook : String
+- recompense : intrecompense : int
+- estLibre : booleanestLibre : boolean
+- captives : Dame>captives : Dame>
+- gardien : Cowboygardien : Cowboy
+- boissonParDefaut : BoissonboissonParDefaut : Boisson {static}
 + getLook() : String
 + getRecompense() : int
 + estLibre() : boolean
-+ kidnapper(pumlFromJava.Attribut@400cff1a)
-+ seFaireCapturer(pumlFromJava.Attribut@275710fc)
-+ seFaireTirerDessus(pumlFromJava.Attribut@525f1e4e)
++ kidnapper(dame : Dame)
++ seFaireCapturer(cowBoy : Cowboy)
++ seFaireTirerDessus(cowBoy : Cowboy)
 + getPseudo() : String
 + getCaptives() : Dame>
 + sePresenter()
 + getBoissonParDefaut() {static} : Boisson
-+ setBoissonParDefaut(pumlFromJava.Attribut@75f9eccc) {static}
++ setBoissonParDefaut(boisson : Boisson) {static}
 }
 
 class Cowboy{
-- gains : int
-- captures : HorsLaLoi>
-- boissonParDefaut : Boisson {static}
+- gains : intgains : int
+- captures : HorsLaLoi>captures : HorsLaLoi>
+- boissonParDefaut : BoissonboissonParDefaut : Boisson {static}
 + getPseudo() : String
-+ liberer(pumlFromJava.Attribut@52aa2946)
-+ liberer(pumlFromJava.Attribut@4de5031f)
-+ capturer(pumlFromJava.Attribut@67e2d983)
-+ tirerSur(pumlFromJava.Attribut@5d47c63f)
++ liberer(dame : Dame)
++ liberer(captives : Dame>)
++ capturer(horsLaLoi : HorsLaLoi)
++ tirerSur(brigand : HorsLaLoi)
 + sePresenter()
 + getBoissonParDefaut() {static} : Boisson
-+ setBoissonParDefaut(pumlFromJava.Attribut@5ea434c8) {static}
++ setBoissonParDefaut(boisson : Boisson) {static}
 }
 
 class Dame{
-- estLibre : boolean
-- sauveur : Cowboy
-- ravisseur : HorsLaLoi
-- boissonParDefaut : Boisson {static}
+- estLibre : booleanestLibre : boolean
+- sauveur : Cowboysauveur : Cowboy
+- ravisseur : HorsLaLoiravisseur : HorsLaLoi
+- boissonParDefaut : BoissonboissonParDefaut : Boisson {static}
 + getPseudo() : String
-+ seFaireKidnapper(pumlFromJava.Attribut@3bbc39f8)
-+ seFaireLiberer(pumlFromJava.Attribut@4ae3c1cd)
++ seFaireKidnapper(horsLaLoi : HorsLaLoi)
++ seFaireLiberer(cowBoy : Cowboy)
 + estLibre() : boolean
 + sePresenter()
 + getBoissonParDefaut() {static} : Boisson
-+ setBoissonParDefaut(pumlFromJava.Attribut@29f69090) {static}
++ setBoissonParDefaut(boisson : Boisson) {static}
 + getRavisseur() : HorsLaLoi
 }
 
 class Genre{
-+ pumlFromJava.Attribut@568bf312
-+ pumlFromJava.Attribut@ca263c2
++ pumlFromJava.Attribut@4ae3c1cd
++ pumlFromJava.Attribut@29f69090
 }
 
 class Histoire4{
-+ main(pumlFromJava.Attribut@589b3632) {static}
++ main(args : String[]) {static}
 }
 
 interface HorsLaLoi<<interface>>{
 + estLibre() {abstract} : boolean
 + getRecompense() {abstract} : int
-+ kidnapper(pumlFromJava.Attribut@45f45fa1, pumlFromJava.Attribut@4c6e276e) {abstract}
-+ seFaireCapturer(pumlFromJava.Attribut@534df152, pumlFromJava.Attribut@52e677af) {abstract}
-+ seFaireTirerDessus(pumlFromJava.Attribut@35083305, pumlFromJava.Attribut@8e0379d) {abstract}
++ kidnapper(dame : Dame, dame : Dame) {abstract}
++ seFaireCapturer(cowBoy : Cowboy, cowBoy : Cowboy) {abstract}
++ seFaireTirerDessus(cowBoy : Cowboy, cowBoy : Cowboy) {abstract}
 + getLook() {abstract} : String
 + getCaptives() {abstract} : Dame>
 }
 
 class Narrateur{
-+ dire(pumlFromJava.Attribut@341b80b2)
-+ boire(pumlFromJava.Attribut@55a1c291)
++ dire(texte : String)
++ boire(boisson : Boisson)
 + boire()
 + getPseudo() : String
 }
@@ -100,52 +100,52 @@ interface Nommable<<interface>>{
 }
 
 class Personnage{
-- BOISSON_PAR_DEFAUT : Boisson {static}
-- nom : String
-- boisson : Boisson
-+ dire(pumlFromJava.Attribut@2145433b)
+- BOISSON_PAR_DEFAUT : BoissonBOISSON_PAR_DEFAUT : Boisson {static}
+- nom : Stringnom : String
+- boisson : Boissonboisson : Boisson
++ dire(texte : String)
 + sePresenter()
-+ boire(pumlFromJava.Attribut@2890c451)
++ boire(boisson : Boisson)
 + boire()
 + getNom() : String
 + getBoisson() : Boisson
-+ getPseudos(pumlFromJava.Attribut@40e6dfe1) {static} : String
++ getPseudos(personnages : Nommable>) {static} : String
 + getBoissonParDefaut() {static} : Boisson
 }
 
 class Ripou{
-- brigand : Brigand
+- brigand : Brigandbrigand : Brigand
 + getLook() : String
 + estLibre() : boolean
 + getRecompense() : int
-+ kidnapper(pumlFromJava.Attribut@1b083826)
++ kidnapper(dame : Dame)
 + getCaptives() : Dame>
-+ seFaireCapturer(pumlFromJava.Attribut@105fece7)
-+ seFaireTirerDessus(pumlFromJava.Attribut@3ec300f1)
++ seFaireCapturer(cowBoy : Cowboy)
++ seFaireTirerDessus(cowBoy : Cowboy)
 + getPseudo() : String
 + sePresenter()
-+ liberer(pumlFromJava.Attribut@482cd91f)
++ liberer(dame : Dame)
 }
 
 class Substantif{
-- nom : String
-- genre : Genre
+- nom : Stringnom : String
+- genre : Genregenre : Genre
 + getNom() : String
 + getGenre() : Genre
 + toString() : String
-+ isVowel(pumlFromJava.Attribut@123f1134) {static} : boolean
-+ startsWithVowel(pumlFromJava.Attribut@7d68ef40) {static} : boolean
++ isVowel(c : char) {static} : boolean
++ startsWithVowel(s : String) {static} : boolean
 + getArticleIndefini() : String
 + avecArticleIndefini() : String
-+ getArticleDefini(pumlFromJava.Attribut@5b0abc94) {static} : String
++ getArticleDefini(genre : Genre) {static} : String
 + getArticleDefini() : String
 + avecArticleDefini() : String
-+ faireElision(pumlFromJava.Attribut@75c072cb) {static} : String
++ faireElision(article : String) {static} : String
 + elision() : boolean
 + getArticlePartitif() : String
 + avecArticlePartitif() : String
-+ avecElision(pumlFromJava.Attribut@1f1c7bf6) : String
-+ avecPreposition(pumlFromJava.Attribut@25b485ba) : String
++ avecElision(article : String) : String
++ avecPreposition(preposition : String) : String
 }
 
 

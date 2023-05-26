@@ -29,12 +29,12 @@ public class Methode {
     public void setVisibilite(Visibilite visibilite) {this.visibilite = visibilite;}
     public void setModificateur(Modificateur modificateur) {this.modificateur = modificateur;}
     public void setParameters(Element element){
-        System.out.println(element.getSimpleName());
+        System.out.println("\t" + element.toString());
         ExecutableElement executableElement = (ExecutableElement) element;
         for(VariableElement variableElement : executableElement.getParameters()){
             Attribut attribut = new Attribut(variableElement);
             this.parametres.add(attribut);
-            System.out.println("\t" + variableElement.getSimpleName().toString() + " : " + variableElement.asType().toString());
+            System.out.println("\t\t" + attribut.getNom() + " : " + attribut.getType());
         }
     }
 
@@ -91,9 +91,9 @@ public class Methode {
         int i = 0;
         for (Attribut attribut : parametres){
             if (i == 0)
-                parameters += attribut.toString();
+                parameters += attribut.AttributtoString();
             else
-                parameters += ", " + attribut.toString();
+                parameters += ", " + attribut.AttributtoString();
             i++;
         }
 

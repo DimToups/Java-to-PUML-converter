@@ -11,34 +11,12 @@ public class Attribut {
     private TypeMirror type;
     private Visibilite visibilite;
     private Modificateur modificateur;
-    public Attribut(String nom){
-        this.nom = nom;
-    }
     public Attribut(VariableElement variableElement){
+        System.out.println("\t" + variableElement.toString());
         this.nom = variableElement.getSimpleName().toString();
         this.type = variableElement.asType();
         this.findModifier(variableElement);
         this.findVisibility(variableElement);
-    }
-    public Attribut(String nom, TypeMirror type){
-        this.nom = nom;
-        this.type = type;
-    }
-    public Attribut(String nom, TypeMirror type, Visibilite visibilite){
-        this.nom = nom;
-        this.type = type;
-        this.visibilite = visibilite;
-    }
-    public Attribut(String nom, TypeMirror type, Modificateur modificateur){
-        this.nom = nom;
-        this.type = type;
-        this.modificateur = modificateur;
-    }
-    public Attribut(String nom, TypeMirror type, Visibilite visibilite, Modificateur modificateur){
-        this.nom = nom;
-        this.type = type;
-        this.visibilite = visibilite;
-        this.modificateur = modificateur;
     }
     public String getNom(){return this.nom;}
     public TypeMirror getType(){return this.type;}
@@ -50,12 +28,17 @@ public class Attribut {
     public String AttributtoString(){
         String toString = "";
 
-        if (this.getVisibilite().equals(Visibilite.PUBLIC))
-            toString += "+ " + this.nom + " : " + SubstringTypeMethode(this.type.toString());
-        else if (this.getVisibilite().equals(Visibilite.PRIVATE))
-            toString += "- " + this.nom + " : " + SubstringTypeMethode(this.type.toString());
-        else if (this.getVisibilite().equals(Visibilite.PROTECTED))
-            toString += "# " + this.nom + " : " + SubstringTypeMethode(this.type.toString());
+        //Gestion de la visibilité
+        if (this.getVisibilite() != null){
+            if (this.getVisibilite().equals(Visibilite.PUBLIC))
+                toString += "+ " + this.getNom() + " : " + SubstringTypeMethode(this.getType().toString());
+            else if (this.getVisibilite().equals(Visibilite.PRIVATE))
+                toString += "- " + this.getNom() + " : " + SubstringTypeMethode(this.getType().toString());
+            else if (this.getVisibilite().equals(Visibilite.PROTECTED))
+                toString += "# " + this.getNom() + " : " + SubstringTypeMethode(this.getType().toString());
+        }
+        //Ajout du nom de l'attribut
+        toString += this.getNom() + " : " + SubstringTypeMethode(this.getType().toString());
 
         //Ajout de son éventuel modificateur static
         if(this.modificateur == Modificateur.STATIC)
@@ -79,7 +62,6 @@ public class Attribut {
             return string;
         }
     }
-
     public void findModifier(Element element){
         for (Modifier modifier : element.getModifiers()){
             if (modifier == Modifier.ABSTRACT)
