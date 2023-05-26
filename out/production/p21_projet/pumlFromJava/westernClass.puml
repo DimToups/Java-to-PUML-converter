@@ -23,7 +23,7 @@ class Brigand{
 - look : String
 - recompense : int
 - estLibre : boolean
-- captives : Dame>
+- captives : Dame *
 - gardien : Cowboy
 - boissonParDefaut : Boisson {static}
 + getLook() : String
@@ -33,7 +33,7 @@ class Brigand{
 + seFaireCapturer(cowBoy : Cowboy)
 + seFaireTirerDessus(cowBoy : Cowboy)
 + getPseudo() : String
-+ getCaptives() : Dame>
++ getCaptives() : Dame *
 + sePresenter()
 + getBoissonParDefaut() {static} : Boisson
 + setBoissonParDefaut(boisson : Boisson) {static}
@@ -41,11 +41,11 @@ class Brigand{
 
 class Cowboy{
 - gains : int
-- captures : HorsLaLoi>
+- captures : HorsLaLoi *
 - boissonParDefaut : Boisson {static}
 + getPseudo() : String
 + liberer(dame : Dame)
-+ liberer(captives : Dame>)
++ liberer(captives : Dame *)
 + capturer(horsLaLoi : HorsLaLoi)
 + tirerSur(brigand : HorsLaLoi)
 + sePresenter()
@@ -84,7 +84,7 @@ interface HorsLaLoi<<interface>>{
 + seFaireCapturer(cowBoy : Cowboy, cowBoy : Cowboy) {abstract}
 + seFaireTirerDessus(cowBoy : Cowboy, cowBoy : Cowboy) {abstract}
 + getLook() {abstract} : String
-+ getCaptives() {abstract} : Dame>
++ getCaptives() {abstract} : Dame *
 }
 
 class Narrateur{
@@ -109,7 +109,7 @@ class Personnage{
 + boire()
 + getNom() : String
 + getBoisson() : Boisson
-+ getPseudos(personnages : Nommable>) {static} : String
++ getPseudos(personnages : Nommable *) {static} : String
 + getBoissonParDefaut() {static} : Boisson
 }
 
@@ -119,7 +119,7 @@ class Ripou{
 + estLibre() : boolean
 + getRecompense() : int
 + kidnapper(dame : Dame)
-+ getCaptives() : Dame>
++ getCaptives() : Dame *
 + seFaireCapturer(cowBoy : Cowboy)
 + seFaireTirerDessus(cowBoy : Cowboy)
 + getPseudo() : String

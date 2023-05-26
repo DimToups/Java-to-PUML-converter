@@ -1,11 +1,7 @@
 package pumlFromJava;
 
-import javax.lang.model.element.Element;
-import javax.lang.model.element.ExecutableElement;
-import javax.lang.model.element.Modifier;
-import javax.lang.model.element.VariableElement;
-import javax.lang.model.type.PrimitiveType;
-import javax.lang.model.type.TypeMirror;
+import javax.lang.model.element.*;
+import javax.lang.model.type.*;
 import java.util.ArrayList;
 
 public class Methode {
@@ -37,7 +33,6 @@ public class Methode {
             System.out.println("\t\t" + attribut.getNom() + " : " + attribut.getType());
         }
     }
-
     public String MethodetoString(){
         //Integer fullstop = this.type.toString().indexOf(".");
         String toString = "";
@@ -60,16 +55,33 @@ public class Methode {
         if (this.modificateur == Modificateur.ABSTRACT)
             toString += " {abstract}";
 
-        if (!type.toString().equals("void"))
-        {
-            toString += " : " + SubstringTypeMethode(this.type.toString());
+        if (!type.toString().equals("void")) {
+            if (this.nom.equals("getCaptives"))
+                System.out.println(this.nom);
+            toString += " : " + findUmlType(this.type);
         }
 
         return toString;
     }
-
-    public String SubstringTypeMethode(String string)
-    {
+    private String findUmlType(TypeMirror typeMirror){
+        boolean isUmlMulti = false;
+        String umlType = "";
+        if (typeMirror.toString().contains("java.util")){
+            isUmlMulti = true;
+            DeclaredType declaredType = (DeclaredType) typeMirror;
+            for (TypeMirror typeMirrorCompar : declaredType.getTypeArguments()){
+                System.out.println(SubstringType(typeMirrorCompar.toString()));
+                umlType = SubstringType(typeMirrorCompar.toString());
+            }
+        }
+        else{
+            umlType = SubstringType(typeMirror.toString());
+        }
+        if (isUmlMulti)
+            umlType += " *";
+        return umlType;
+    }
+    private String SubstringType(String string) {
         if (string.contains(".")){
             int index = 0;
             for(int i = 0; i< string.length(); i++){

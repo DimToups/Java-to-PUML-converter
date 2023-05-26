@@ -3,6 +3,7 @@ package pumlFromJava;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.VariableElement;
+import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.PrimitiveType;
 import javax.lang.model.type.TypeMirror;
 
@@ -38,7 +39,7 @@ public class Attribut {
                 toString += "# ";
         }
         //Ajout du nom de l'attribut
-        toString += this.getNom() + " : " + SubstringTypeMethode(this.getType().toString());
+        toString += this.getNom() + " : " + findUmlType(this.getType());
 
         //Ajout de son éventuel modificateur static
         if(this.modificateur == Modificateur.STATIC)
@@ -46,8 +47,25 @@ public class Attribut {
 
         return toString;
     }
-    public String SubstringTypeMethode(String string)
-    {
+    private String findUmlType(TypeMirror typeMirror){
+        boolean isUmlMulti = false;
+        String umlType = "";
+        if (typeMirror.toString().contains("java.util")){
+            isUmlMulti = true;
+            DeclaredType declaredType = (DeclaredType) typeMirror;
+            for (TypeMirror typeMirrorCompar : declaredType.getTypeArguments()){
+                System.out.println(SubstringType(typeMirrorCompar.toString()));
+                umlType = SubstringType(typeMirrorCompar.toString());
+            }
+        }
+        else{
+            umlType = SubstringType(typeMirror.toString());
+        }
+        if (isUmlMulti)
+            umlType += " *";
+        return umlType;
+    }
+    public String SubstringType(String string) {
         if (string.contains(".")){
             int index = 0;
             for(int i = 0; i< string.length(); i++){
@@ -56,6 +74,8 @@ public class Attribut {
                 }
             }
             string = string.substring(index+1, string.length());
+            if (string.contains(">"))
+                string = string.substring(0, string.length()-1);
             return string;
         }
         else{
