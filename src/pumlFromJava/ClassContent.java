@@ -6,13 +6,8 @@ import java.util.ArrayList;
 public class ClassContent extends ElementContent{
     private ArrayList<Attribut> classAttributs = new ArrayList<>();
     private ArrayList<Methode> classMethods = new ArrayList<>();
-    public ClassContent() {
-        super();
-    }
-    @Override
-    public void setElement(Element element){
-        this.className = element.getSimpleName().toString();
-        this.classType = element.getKind();
+    public ClassContent(Element element) {
+        super(element);
         for (Element enclosedElement : element.getEnclosedElements()){
             //Gestion des attributs
             if (enclosedElement.getKind().isField()){

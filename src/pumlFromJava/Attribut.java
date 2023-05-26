@@ -31,11 +31,11 @@ public class Attribut {
         //Gestion de la visibilité
         if (this.getVisibilite() != null){
             if (this.getVisibilite().equals(Visibilite.PUBLIC))
-                toString += "+ " + this.getNom() + " : " + SubstringTypeMethode(this.getType().toString());
+                toString += "+ ";
             else if (this.getVisibilite().equals(Visibilite.PRIVATE))
-                toString += "- " + this.getNom() + " : " + SubstringTypeMethode(this.getType().toString());
+                toString += "- ";
             else if (this.getVisibilite().equals(Visibilite.PROTECTED))
-                toString += "# " + this.getNom() + " : " + SubstringTypeMethode(this.getType().toString());
+                toString += "# ";
         }
         //Ajout du nom de l'attribut
         toString += this.getNom() + " : " + SubstringTypeMethode(this.getType().toString());

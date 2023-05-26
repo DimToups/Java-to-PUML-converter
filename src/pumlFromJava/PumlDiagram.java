@@ -29,18 +29,15 @@ public class PumlDiagram {
     public void chercherClasses(){
         for (Element element : docletEnvironment.getIncludedElements()){
             if (element.getKind() == ElementKind.CLASS){
-                ClassContent classContent = new ClassContent();
-                classContent.setElement(element);
+                ClassContent classContent = new ClassContent(element);
                 this.elements.add(classContent);
             }
             else if(element.getKind() == ElementKind.ENUM){
-                EnumContent enumContent = new EnumContent();
-                enumContent.setElement(element);
+                EnumContent enumContent = new EnumContent(element);
                 this.elements.add(enumContent);
             }
             else if (element.getKind() == ElementKind.INTERFACE){
-                InterfaceContent interfaceContent = new InterfaceContent();
-                interfaceContent.setElement(element);
+                InterfaceContent interfaceContent = new InterfaceContent(element);
                 this.elements.add(interfaceContent);
             }
             else if (element.getKind() == ElementKind.PACKAGE) {

@@ -7,11 +7,8 @@ import java.util.ArrayList;
 
 public class InterfaceContent extends ElementContent{
     private ArrayList<Methode> classMethods = new ArrayList<>();
-    public InterfaceContent(){}
-    @Override
-    public void setElement(Element element){
-        this.className = element.getSimpleName().toString();
-        this.classType = element.getKind();
+    public InterfaceContent(Element element){
+        super(element);
         for (Element enclosedElement : element.getEnclosedElements()){
             //Gestion des méthodes
             if (enclosedElement.getKind() == ElementKind.METHOD){

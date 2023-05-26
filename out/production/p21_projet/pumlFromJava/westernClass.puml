@@ -8,8 +8,8 @@ hide empty members
 
 package western{
 class Boisson{
-- substantif : Substantifsubstantif : Substantif
-+ EAU : BoissonEAU : Boisson
+- substantif : Substantif
++ EAU : Boisson
 + getNom() : String
 + getGenre() : Genre
 + getNomAvecArticleIndefini() : String
@@ -19,13 +19,13 @@ class Boisson{
 }
 
 class Brigand{
-# LOOK_PAR_DEFAUT : StringLOOK_PAR_DEFAUT : String {static}
-- look : Stringlook : String
-- recompense : intrecompense : int
-- estLibre : booleanestLibre : boolean
-- captives : Dame>captives : Dame>
-- gardien : Cowboygardien : Cowboy
-- boissonParDefaut : BoissonboissonParDefaut : Boisson {static}
+# LOOK_PAR_DEFAUT : String {static}
+- look : String
+- recompense : int
+- estLibre : boolean
+- captives : Dame>
+- gardien : Cowboy
+- boissonParDefaut : Boisson {static}
 + getLook() : String
 + getRecompense() : int
 + estLibre() : boolean
@@ -40,9 +40,9 @@ class Brigand{
 }
 
 class Cowboy{
-- gains : intgains : int
-- captures : HorsLaLoi>captures : HorsLaLoi>
-- boissonParDefaut : BoissonboissonParDefaut : Boisson {static}
+- gains : int
+- captures : HorsLaLoi>
+- boissonParDefaut : Boisson {static}
 + getPseudo() : String
 + liberer(dame : Dame)
 + liberer(captives : Dame>)
@@ -54,10 +54,10 @@ class Cowboy{
 }
 
 class Dame{
-- estLibre : booleanestLibre : boolean
-- sauveur : Cowboysauveur : Cowboy
-- ravisseur : HorsLaLoiravisseur : HorsLaLoi
-- boissonParDefaut : BoissonboissonParDefaut : Boisson {static}
+- estLibre : boolean
+- sauveur : Cowboy
+- ravisseur : HorsLaLoi
+- boissonParDefaut : Boisson {static}
 + getPseudo() : String
 + seFaireKidnapper(horsLaLoi : HorsLaLoi)
 + seFaireLiberer(cowBoy : Cowboy)
@@ -69,8 +69,8 @@ class Dame{
 }
 
 class Genre{
-+ pumlFromJava.Attribut@4ae3c1cd
-+ pumlFromJava.Attribut@29f69090
++ + FEMININ : Genre
++ + MASCULIN : Genre
 }
 
 class Histoire4{
@@ -100,9 +100,9 @@ interface Nommable<<interface>>{
 }
 
 class Personnage{
-- BOISSON_PAR_DEFAUT : BoissonBOISSON_PAR_DEFAUT : Boisson {static}
-- nom : Stringnom : String
-- boisson : Boissonboisson : Boisson
+- BOISSON_PAR_DEFAUT : Boisson {static}
+- nom : String
+- boisson : Boisson
 + dire(texte : String)
 + sePresenter()
 + boire(boisson : Boisson)
@@ -114,7 +114,7 @@ class Personnage{
 }
 
 class Ripou{
-- brigand : Brigandbrigand : Brigand
+- brigand : Brigand
 + getLook() : String
 + estLibre() : boolean
 + getRecompense() : int
@@ -128,8 +128,8 @@ class Ripou{
 }
 
 class Substantif{
-- nom : Stringnom : String
-- genre : Genregenre : Genre
+- nom : String
+- genre : Genre
 + getNom() : String
 + getGenre() : Genre
 + toString() : String

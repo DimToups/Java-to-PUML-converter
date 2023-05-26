@@ -6,11 +6,8 @@ import java.util.ArrayList;
 
 public class EnumContent extends ElementContent{
     private ArrayList<Attribut> classAttributs = new ArrayList<>();
-    public EnumContent(){}
-    @Override
-    public void setElement(Element element){
-        this.className = element.getSimpleName().toString();
-        this.classType = element.getKind();
+    public EnumContent(Element element){
+        super(element);
         for (Element enclosedElement : element.getEnclosedElements()){
             if (enclosedElement.getKind().isField()){
                 VariableElement variableElement = (VariableElement) enclosedElement;
@@ -25,7 +22,7 @@ public class EnumContent extends ElementContent{
         if (isDca){
             for (Attribut attribut : classAttributs) {
                 if (attribut.getType().toString().contains("."))
-                    contenu += attribut.toString() + "\n";
+                    contenu += attribut.getNom() + "\n";
             }
             return contenu += "}";
         }
@@ -37,7 +34,7 @@ public class EnumContent extends ElementContent{
                     contenu += "# ";
                 else if (attribut.getVisibilite() == Visibilite.PRIVATE)
                     contenu += "- ";
-                contenu += attribut.toString() + "\n";
+                contenu += attribut.AttributtoString() + "\n";
             }
             return contenu += "}\n";
         }
