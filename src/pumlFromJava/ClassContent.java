@@ -30,8 +30,8 @@ public class ClassContent extends ElementContent{
         String contenu = "class " + this.className + "{\n";
         if (isDca){
             for (Attribut attribut : classAttributs) {
-                if (attribut.getType().toString().contains("."))
-                    contenu += attribut.toString() + "\n";
+                if (!attribut.getType().toString().contains("."))
+                    contenu += attribut.getNom() + "\n";
             }
             return contenu += "}";
         }
