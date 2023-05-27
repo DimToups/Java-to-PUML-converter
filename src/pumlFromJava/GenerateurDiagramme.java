@@ -25,10 +25,6 @@ public class GenerateurDiagramme {
         this.packageName = packageName;
         this.isDCA = isDCA;
     }
-    public void setFile(String name, String path){
-        this.name = name;
-        this.path = path;
-    }
     public void setDCA(boolean DCA) {
         isDCA = DCA;
     }

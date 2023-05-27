@@ -65,7 +65,7 @@ public class Attribut {
             umlType += " *";
         return umlType;
     }
-    public String SubstringType(String string) {
+    private String SubstringType(String string) {
         if (string.contains(".")){
             int index = 0;
             for(int i = 0; i< string.length(); i++){

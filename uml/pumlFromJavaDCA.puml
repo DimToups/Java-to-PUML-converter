@@ -10,26 +10,33 @@ hide empty members
 class Java2Puml{
 }
 class PumlDoclet{
-    - name : String
-    - directory : String
+    isDca
 }
 class PumlDiagram{
-    - name : String
-    - directory : String
+    isDca
+}
+abstract class ElementContent{
+}
+class EnumContent{
 }
 class ClassContent{
-    - className : String
+}
+class InterfaceContent{
 }
 class Attribut{
-    - nom : String
-    - type : PrimitiveType
+    nom
 }
 class Methode{
-    - nom : String
+    isConstructor
 }
-class Liaison{
+enum Modificateur <<enum>>{
+    ABSTRACT
+    STATIC
+    FINAL
 }
-enum TypeLiaison <<enum>>{
+class Association{
+}
+enum TypeAssociation <<enum>>{
     HERITAGE
     SIMPLE
     IMPLEMENT
@@ -41,16 +48,28 @@ enum Visibilite <<enum>>{
     PROTECTED
     PRIVATE
 }
+class GenerateurDiagramme{
+    isDCA
+}
 
-Java2Puml - PumlDoclet : > exécute le doclet
-PumlDoclet - PumlDiagram : > génère le diagramme à l'aide de
-PumlDiagram "1" - "*\n- classes" ClassContent : Stocke le contenu des classes\n >
-PumlDiagram "1" -- "*\n- liaisons" Liaison : Stocke les liaisons entre les classes\n >
-ClassContent "1" -- "*\n- classAttributs" Attribut : Liste les attributs de\n >
-ClassContent "1" -- "*\n- classMethods" Methode : Liste les méthodes de\n >
-Attribut "1" -- "1\n- visibilite" Visibilite : indique la visibilité\n >
-Methode "1" -- "1\n- visibilite" Visibilite : indique la visibilité\n >
-Liaison "1" - "2\n- element1\nelement2" ClassContent : Informe de la liaison entre\n >
-Liaison "1" -- "1\n- typeLiaison" TypeLiaison : Indique le type de liaison\n >
+Java2Puml - PumlDoclet
+PumlDoclet - PumlDiagram
+PumlDiagram - GenerateurDiagramme
+PumlDiagram - ElementContent
+PumlDiagram -- Association
+ElementContent --|> ClassContent
+ElementContent --|> EnumContent
+ElementContent --|> InterfaceContent
+ClassContent -- Attribut
+ClassContent -- Methode
+EnumContent -- Attribut
+InterfaceContent -- Methode
+Attribut  --  Visibilite
+Methode  -- Visibilite
+Attribut  -- Modificateur
+Methode --  Modificateur
+Methode - Attribut
+Association - ElementContent
+Association -- TypeAssociation
 
 @enduml
