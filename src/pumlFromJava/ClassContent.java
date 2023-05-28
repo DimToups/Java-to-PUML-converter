@@ -1,53 +1,49 @@
 package pumlFromJava;
 
-import javax.lang.model.element.Element;
-import javax.lang.model.element.ElementKind;
-import javax.lang.model.element.TypeElement;
+import javax.lang.model.element.*;
 import java.util.ArrayList;
 
-public class ClassContent{
-    private String className;
-    private ElementKind classType;
+public class ClassContent extends ElementContent{
     private ArrayList<Attribut> classAttributs = new ArrayList<>();
     private ArrayList<Methode> classMethods = new ArrayList<>();
-    public ClassContent() {}
-    public void setClass(Element element){
-        this.className = element.getSimpleName().toString();
-        this.classType = element.getKind();
+    public ClassContent(Element element) {
+        super(element);
         for (Element enclosedElement : element.getEnclosedElements()){
             //Gestion des attributs
-            if (enclosedElement.getKind().isField() && !enclosedElement.asType().toString().contains(".")){
-                Attribut attribut = new Attribut(enclosedElement.getSimpleName().toString());
+            if (enclosedElement.getKind().isField()){
+                VariableElement variableElement = (VariableElement) enclosedElement;
+                Attribut attribut = new Attribut(variableElement);
                 classAttributs.add(attribut);
             }
             //Gestion des méthodes
-            if (false){
-                Methode methode = new Methode(enclosedElement.getSimpleName().toString());
+            if (enclosedElement.getKind() == ElementKind.METHOD ||enclosedElement.getKind() == ElementKind.CONSTRUCTOR){
+                ExecutableElement executableElement = (ExecutableElement) enclosedElement;
+                Methode methode = new Methode(executableElement);
+                if (enclosedElement.getKind() == ElementKind.CONSTRUCTOR)
+                    methode.setName(this.className);
                 classMethods.add(methode);
             }
         }
     }
-    public String genererContenuClasse(){
-        String classContent = "class " + className;
-        //Affichage du stéréotype
-        if (classType == ElementKind.INTERFACE){
-            classContent += " <<Interface>>";
+    @Override
+    public String genererContenuElement(boolean isDca) {
+        String contenu = "class " + this.className + "{\n";
+        if (isDca){
+            for (Attribut attribut : classAttributs) {
+                if (!attribut.getType().toString().contains("."))
+                    contenu += attribut.getNom() + "\n";
+            }
+            return contenu += "}";
         }
-        else if (classType == ElementKind.ENUM) {
-            classContent += " <<Enum>>";
+        else{
+            for(Attribut attribut : classAttributs){
+                if (attribut.getType().toString().contains("."))
+                    contenu += attribut.getNom() + "\n";
+            }
+            for (Methode methode : classMethods){
+                contenu += methode.MethodetoString() + "\n";
+            }
+            return contenu += "}\n";
         }
-        classContent += "{\n";
-        //Affichage des attributs
-        for(Attribut attribut : classAttributs){
-            classContent += "\t" + attribut.getNom() + "\n";
-        }
-        //Affichage des méthodes
-        for(Methode methode : classMethods){
-            classContent += "\t" + methode.getNom() + "() : " + methode.getType() + "\n";
-        }
-        classContent += "}\n";
-        return classContent;
     }
-    public String getNom(){ return this.className; }
-    public ElementKind getType(){ return this.classType; }
 }

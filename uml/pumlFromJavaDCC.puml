@@ -13,6 +13,7 @@ class Java2Puml{
 class PumlDoclet{
     - name : String
     - directory : String
+    - isDca : Boolean
     + init(locale : Locale, reporter : Reporter)
     + getName() : String
     + getSupportedOptions() : Option *
@@ -22,47 +23,88 @@ class PumlDoclet{
 class PumlDiagram{
     - name : String
     - directory : String
+    - packageName : String
     - docletEnvironment : DocletEnvironment
-    + <<create>> PumlDiagram(name: String, directory : String, docletEnvironment : DocletEnvironment)
+    - isDca : Boolean
+    + <<create>> PumlDiagram(name: String, directory : String, docletEnvironment : DocletEnvironment, isDca : Boolean)
     + chercherClasses()
-    + chercherLiaisons()
+    + chercherAssociations()
     - findClass(element : Element) : ClassContent
     + genererDiagramme()
-    - createFile()
-    - initFile()
-    - endFile()
 }
-class ClassContent{
+abstract class ElementContent{
     - className : String
     - classType : ElementKind
-    + <<create>> ClassContent()
-    + setClass(element : Element)
-    + genererContenuClasse() : String
+    + <<create>> ElementContent(element : Element)
+    + genererContenuElement(isDca : Boolean) : String {abstract}
     + getNom() : String
     + getType() : ElementKind
 }
+class EnumContent{
+    - attributs : Attribut *
+    + <<create>> EnumContent(element : Element)
+    + genererContenuElement(isDca : Boolean) : String
+}
+class ClassContent{
+    - attributs : Attribut *
+    - methodes : Methodes *
+    + <<create>> ClassContent(element : Element)
+    + genererContenuElement(isDca : Boolean) : String
+}
+class InterfaceContent{
+    - methodes : Methodes *
+    + <<create>> InterfaceContent(element : Element)
+    + genererContenuElement(isDca : Boolean) : String
+}
 class Attribut{
     - nom : String
-    - type : PrimitiveType
-    + <<create>> Attribut(nom : String)
+    - type : TypeMirror
+    + <<create>> Attribut(variableElement : VariableElement)
     + getNom() : String
-    + getType() : PrimitiveType
+    + getType() : TypeMirror
     + getVisibilite() : Visibilite
+    + getModificateur() : Modificateur
+    + setType(type : TypeMirror)
+    + setVisibilite(visibiilite : Visibilite)
+    + setModificateur(modificateur : Modificateur)
+    + AttributtoString() : String
+    - findUmlType(typeMirror : TypeMirror)
+    - SubstringType(string : String) : String
+    + findModifier(element : Element)
+    + findVisibility(element : Element)
 }
 class Methode{
     - nom : String
-    - type : PrimitiveType
-    + <<create>> Attribut(nom : String)
+    - type : TypeMirror
+    - isConstructor : Boolean
+    + <<create>> Methode(executableElement : ExecutableElement)
     + getNom() : String
-    + getType() : PrimitiveType
+    + getType() : TypeMirror
     + getVisibilite() : Visibilite
+    + getModificateur() : Modificateur
+    + getParameters() : String
+    + setType(type : TypeMirror)
+    + setVisibilite(visibiilite : Visibilite)
+    + setModificateur(modificateur : Modificateur)
+    + setParameters(element : Element)
+    + MethodetoString() : String
+    - findUmlType(typeMirror : TypeMirror) String
+    - SubstringType(string : String) : String
+    + findModifier(element : Element)
+    + findVisibility(element : Element)
 }
-class Liaison{
-    + <<create>> Liaison(element1 : ClassContent, element2 : ClassContent)
-    + <<create>> Liaison(element1 : ClassContent, element2 : ClassContent, typeLiaison : TypeLiaison)
-    + genererLiaison() : String
+enum Modificateur <<enum>>{
+    ABSTRACT
+    STATIC
+    FINAL
 }
-enum TypeLiaison <<enum>>{
+class Association{
+    + <<create>> Association(element1 : ClassContent, element2 : ClassContent)
+    + <<create>> Association(element1 : ClassContent, element2 : ClassContent, typeLiaison : TypeLiaison)
+    + getTypeAssociation() : TypeAssociation
+    + genererAssociations() : String
+}
+enum TypeAssociation <<enum>>{
     HERITAGE
     SIMPLE
     IMPLEMENT
@@ -71,19 +113,42 @@ enum TypeLiaison <<enum>>{
 }
 enum Visibilite <<enum>>{
     PUBLIC
-    PARTIAL
+    PROTECTED
     PRIVATE
+}
+class GenerateurDiagramme{
+    - name : String
+    - path : String
+    - packageName : String
+    - isDCA : Boolean
+    + <<create>> GenerateurDiagramme()
+    + <<create>> GenerateurDiagramme(name : String, path : String, packageName : String, isDCA : Boolean)
+    + setDCA(isDCA : Boolean*)
+    + createFile()
+    + initFile()
+    + generateElementForPuml(elements : ElementContent*)
+    + generateLinkstForPuml(liaisons : Liaison*)
+    + endFile()
 }
 
 Java2Puml *-> PumlDoclet : > exécute le doclet
 PumlDoclet o-> PumlDiagram : > génère le diagramme à l'aide de
-PumlDiagram "1" o-> "*\n- classes" ClassContent : Stocke le contenu des classes\n >
-PumlDiagram "1" o--> "*\n- liaisons" Liaison : Stocke les liaisons entre les classes\n >
+PumlDiagram "1" o-> "1\n -generateur" GenerateurDiagramme : Génère le diagramme\n
+PumlDiagram "1" o-> "*\n- elements" ElementContent : Stocke le contenu des élements\n >
+PumlDiagram "1" o--> "*\n- liaisons" Association : Stocke les liaisons entre les classes\n >
+ElementContent --|> ClassContent
+ElementContent --|> EnumContent
+ElementContent --|> InterfaceContent
 ClassContent "1" *--> "*\n- classAttributs" Attribut : Liste les attributs de\n >
 ClassContent "1" *--> "*\n- classMethods" Methode : Liste les méthodes de\n >
+EnumContent "1" *--> "*\n- classAttributs" Attribut : Liste les attributs de\n >
+InterfaceContent "1" *--> "*\n- classMethods" Methode : Liste les méthodes de\n >
 Attribut "1" *--> "1\n- visibilite" Visibilite : indique la visibilité\n >
 Methode "1" *--> "1\n- visibilite" Visibilite : indique la visibilité\n >
-Liaison "1" o-> "2\n- element1\nelement2" ClassContent : Informe de la liaison entre\n >
-Liaison "1" *--> "1\n- typeLiaison" TypeLiaison : Indique le type de liaison\n >
+Attribut "1" *--> "1\n- modificateur" Modificateur : indique le modificateur\n >
+Methode "1" *--> "1\n- modificateur" Modificateur : indique le modificateur\n >
+Methode "1" o-> "*\n- parametres" Attribut : Stocke les paramètres\nde la méthode\n >
+Association "1" o-> "2\n- element1\n- element2" ElementContent : Informe de la liaison entre\n >
+Association "1" *--> "1\n- TypeAssociation" TypeAssociation : Indique le type de liaison\n >
 
 @enduml
