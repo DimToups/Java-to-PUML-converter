@@ -134,7 +134,9 @@ public class PumlDoclet implements Doclet{
     public boolean run(DocletEnvironment docletEnvironment) {
         PumlDiagram diagram = new PumlDiagram(name, directory, docletEnvironment, isDca);
         diagram.chercherClasses();
-        //diagram.chercherAssociations();
+        if (isDca) {
+            diagram.chercherAssociations();
+        }
         diagram.genererDiagramme();
         return true;
     }

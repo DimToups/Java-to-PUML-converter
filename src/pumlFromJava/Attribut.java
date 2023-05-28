@@ -54,7 +54,6 @@ public class Attribut {
             isUmlMulti = true;
             DeclaredType declaredType = (DeclaredType) typeMirror;
             for (TypeMirror typeMirrorCompar : declaredType.getTypeArguments()){
-                System.out.println(SubstringType(typeMirrorCompar.toString()));
                 umlType = SubstringType(typeMirrorCompar.toString());
             }
         }

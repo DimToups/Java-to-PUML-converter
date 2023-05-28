@@ -29,12 +29,10 @@ public class Methode {
     public void setVisibilite(Visibilite visibilite) {this.visibilite = visibilite;}
     public void setModificateur(Modificateur modificateur) {this.modificateur = modificateur;}
     public void setParameters(Element element){
-        System.out.println("\t" + element.toString());
         ExecutableElement executableElement = (ExecutableElement) element;
         for(VariableElement variableElement : executableElement.getParameters()){
             Attribut attribut = new Attribut(variableElement);
             this.parametres.add(attribut);
-            System.out.println("\t\t" + attribut.getNom() + " : " + attribut.getType());
         }
     }
     public String MethodetoString(){
@@ -73,7 +71,6 @@ public class Methode {
             isUmlMulti = true;
             DeclaredType declaredType = (DeclaredType) typeMirror;
             for (TypeMirror typeMirrorCompar : declaredType.getTypeArguments()){
-                System.out.println(SubstringType(typeMirrorCompar.toString()));
                 umlType = SubstringType(typeMirrorCompar.toString());
             }
         }

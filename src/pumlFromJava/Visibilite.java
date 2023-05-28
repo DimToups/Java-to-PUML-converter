@@ -1,5 +1,5 @@
 package pumlFromJava;
 
 public enum Visibilite {
-    PUBLIC, PROTECTED, PRIVATE
+    PUBLIC, PROTECTED, PRIVATE, NONE
 }

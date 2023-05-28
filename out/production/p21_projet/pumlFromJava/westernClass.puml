@@ -38,5 +38,43 @@ class Ripou{
 class Substantif{
 }
 
+Boisson -- Substantif
+
+Brigand -- Cowboy
+
+Brigand -- Boisson
+
+Brigand --|> Personnage
+
+Brigand ..|> HorsLaLoi
+
+Cowboy -- Boisson
+
+Cowboy --|> Personnage
+
+Dame -- Cowboy
+
+Dame -- HorsLaLoi
+
+Dame -- Boisson
+
+Dame --|> Personnage
+
+Narrateur --|> Personnage
+
+Personnage -- Boisson
+
+Personnage -- Boisson
+
+Personnage ..|> Nommable
+
+Ripou -- Brigand
+
+Ripou --|> Cowboy
+
+Ripou ..|> HorsLaLoi
+
+Substantif -- Genre
+
 }
 @enduml
