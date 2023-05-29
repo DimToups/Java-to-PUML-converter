@@ -7,41 +7,69 @@ skinparam classFontStyle Bold
 
 hide empty members
 
-class PumlDoclet implements Doclet{
-
+class Java2Puml{
+}
+class PumlDoclet{
+    isDca
+}
+class PumlDiagram{
+    isDca
+}
+abstract class ElementContent{
+}
+class EnumContent{
+}
+class ClassContent{
+}
+class InterfaceContent{
+}
+class Attribut{
+    nom
+}
+class Methode{
+    isConstructor
+}
+enum Modificateur <<enum>>{
+    ABSTRACT
+    STATIC
+    FINAL
+}
+class Association{
+}
+enum TypeAssociation <<enum>>{
+    HERITAGE
+    SIMPLE
+    IMPLEMENT
+    AGREGATION
+    COMPOSITION
+}
+enum Visibilite <<enum>>{
+    PUBLIC
+    PROTECTED
+    PRIVATE
+}
+class GenerateurDiagramme{
+    isDCA
 }
 
-class PumlDiagram {
-
-}
-
-class ClassContent {
-
-}
-
-class Element {
-
-}
-
-
-class Attribut {
-
-}
-
-class Methode {
-
-}
-
-enum Visibilite {
-
-}
-
+Java2Puml - PumlDoclet
 PumlDoclet - PumlDiagram
-PumlDoclet -- Element
-PumlDiagram - ClassContent
+PumlDiagram - GenerateurDiagramme
+PumlDiagram - ElementContent
+PumlDiagram -- Association
+ElementContent --|> ClassContent
+ElementContent --|> EnumContent
+ElementContent --|> InterfaceContent
 ClassContent -- Attribut
 ClassContent -- Methode
-Attribut -- Visibilite
-Methode -- Visibilite
+EnumContent -- Attribut
+InterfaceContent -- Methode
+Attribut  --  Visibilite
+Methode  -- Visibilite
+Attribut  -- Modificateur
+Methode --  Modificateur
+Methode - Attribut
+Association - ElementContent
+Association -- TypeAssociation
 
 @enduml

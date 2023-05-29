@@ -6,68 +6,161 @@ skinparam classFontStyle Bold
 
 hide empty members
 
-
 package western{
-
 class Boisson{
-
+substantif
+EAU
++ <<create>> Boisson(nom : String, genre : Genre)
++ getNom() : String
++ getGenre() : Genre
++ getNomAvecArticleIndefini() : String
++ getNomAvecArticlePartitif() : String
++ getNomAvecArticleDefini() : String
++ getNomAvecPreposition(preposition : String) : String
 }
+
 class Brigand{
-	recompense
-	estLibre
-
+LOOK_PAR_DEFAUT
+look
+captives
+gardien
+boissonParDefaut
++ <<create>> Brigand(nom : String)
++ <<create>> Brigand(nom : String, boisson : Boisson)
++ <<create>> Brigand(nom : String, boisson : Boisson, look : String)
++ getLook() : String
++ getRecompense() : int
++ estLibre() : boolean
++ kidnapper(dame : Dame)
++ seFaireCapturer(cowBoy : Cowboy)
++ seFaireTirerDessus(cowBoy : Cowboy)
++ getPseudo() : String
++ getCaptives() : Dame *
++ sePresenter()
++ getBoissonParDefaut() {static} : Boisson
++ setBoissonParDefaut(boisson : Boisson) {static}
 }
+
 class Cowboy{
-	gains
-
+captures
+boissonParDefaut
++ <<create>> Cowboy(nom : String)
++ <<create>> Cowboy(nom : String, boisson : Boisson)
++ getPseudo() : String
++ liberer(dame : Dame)
++ liberer(captives : Dame *)
++ capturer(horsLaLoi : HorsLaLoi)
++ tirerSur(brigand : HorsLaLoi)
++ sePresenter()
++ getBoissonParDefaut() {static} : Boisson
++ setBoissonParDefaut(boisson : Boisson) {static}
 }
+
 class Dame{
-	estLibre
-
+sauveur
+ravisseur
+boissonParDefaut
++ <<create>> Dame(nom : String)
++ <<create>> Dame(nom : String, boisson : Boisson)
++ getPseudo() : String
++ seFaireKidnapper(horsLaLoi : HorsLaLoi)
++ seFaireLiberer(cowBoy : Cowboy)
++ estLibre() : boolean
++ sePresenter()
++ getBoissonParDefaut() {static} : Boisson
++ setBoissonParDefaut(boisson : Boisson) {static}
++ getRavisseur() : HorsLaLoi
 }
-class Genre <<enum>>{
-	FEMININ
-	MASCULIN
 
+class Genre{
++ FEMININ : Genre
++ MASCULIN : Genre
 }
+
 class Histoire4{
-
++ <<create>> Histoire4()
++ main(args : String[]) {static}
 }
-class HorsLaLoi <<interface>>{
 
+interface HorsLaLoi<<interface>>{
++ estLibre() {abstract} : boolean
++ getRecompense() {abstract} : int
++ kidnapper(dame : Dame, dame : Dame) {abstract}
++ seFaireCapturer(cowBoy : Cowboy, cowBoy : Cowboy) {abstract}
++ seFaireTirerDessus(cowBoy : Cowboy, cowBoy : Cowboy) {abstract}
++ getLook() {abstract} : String
++ getCaptives() {abstract} : Dame *
 }
+
 class Narrateur{
-
++ <<create>> Narrateur()
++ <<create>> Narrateur(nom : String)
++ dire(texte : String)
++ boire(boisson : Boisson)
++ boire()
++ getPseudo() : String
 }
-class Nommable <<interface>>{
 
+interface Nommable<<interface>>{
++ getNom() {abstract} : String
++ getPseudo() {abstract} : String
 }
+
 class Personnage{
-
+BOISSON_PAR_DEFAUT
+nom
+boisson
++ <<create>> Personnage(nom : String)
++ <<create>> Personnage(nom : String, boisson : Boisson)
++ dire(texte : String)
++ sePresenter()
++ boire(boisson : Boisson)
++ boire()
++ getNom() : String
++ getBoisson() : Boisson
++ getPseudos(personnages : Nommable *) {static} : String
++ getBoissonParDefaut() {static} : Boisson
 }
+
 class Ripou{
-
+brigand
++ <<create>> Ripou(nom : String)
++ <<create>> Ripou(nom : String, boisson : Boisson)
++ <<create>> Ripou(nom : String, boisson : Boisson, look : String)
++ getLook() : String
++ estLibre() : boolean
++ getRecompense() : int
++ kidnapper(dame : Dame)
++ getCaptives() : Dame *
++ seFaireCapturer(cowBoy : Cowboy)
++ seFaireTirerDessus(cowBoy : Cowboy)
++ getPseudo() : String
++ sePresenter()
++ liberer(dame : Dame)
 }
+
 class Substantif{
+nom
+genre
++ <<create>> Substantif(nom : String, genre : Genre)
++ getNom() : String
++ getGenre() : Genre
++ toString() : String
++ isVowel(c : char) {static} : boolean
++ startsWithVowel(s : String) {static} : boolean
++ getArticleIndefini() : String
++ avecArticleIndefini() : String
++ getArticleDefini(genre : Genre) {static} : String
++ getArticleDefini() : String
++ avecArticleDefini() : String
++ faireElision(article : String) {static} : String
++ elision() : boolean
++ getArticlePartitif() : String
++ avecArticlePartitif() : String
++ avecElision(article : String) : String
++ avecPreposition(preposition : String) : String
+}
+
 
 }
-Boisson-Substantif
-Brigand-|>Personnage
-Brigand..|>HorsLaLoi
-Brigand-Cowboy
-Brigand--Boisson
-Cowboy---|>Personnage
-Cowboy--Boisson
-Dame----|>Personnage
-Dame---Cowboy
-Dame---HorsLaLoi
-Dame---Boisson
-Narrateur------|>Personnage
-Personnage.......|>Nommable
-Personnage----Boisson
-Personnage----Boisson
-Ripou--------|>Cowboy
-Ripou.........|>HorsLaLoi
-Ripou-----Brigand
-Substantif-----Genre
 @enduml
