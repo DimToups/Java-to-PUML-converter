@@ -26,6 +26,12 @@ public class Association {
         this.mult1 = mult1;
         this.mult2 = mult2;
     }
+    public ElementContent getElement1(){
+        return element1;
+    }
+    public ElementContent getElement2(){
+        return element2;
+    }
     public TypeAssociation getTypeAssociation() {
         return typeAssociation;
     }

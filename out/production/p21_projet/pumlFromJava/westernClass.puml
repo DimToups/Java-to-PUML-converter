@@ -162,5 +162,13 @@ genre
 }
 
 
+Brigand ..|> Boisson
+
+HorsLaLoi ..|> Boisson
+
+Personnage ..|> Boisson
+
+Ripou ..|> Boisson
+
 }
 @enduml

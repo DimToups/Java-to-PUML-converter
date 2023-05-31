@@ -47,11 +47,23 @@ public class PumlDiagram {
     }
     public void chercherAssociations(){
         //Recherche des agrégations
-        for(ElementContent element : elements){
-            //Si element est une énumération ou une classe
+        for(ElementContent elementContent : elements){
+            Element element = findElementFromElementContent(elementContent);
+            //Recherche d'agrégation/composition
             if (true){
 
             }
+            //Recherche d'héritage
+
+
+            //Recherche d'interface
+            for(TypeMirror typeInterface : ((TypeElement)element).getInterfaces()){
+                Association assoInterface = new Association(elementContent, findElementContentFromTypeMirror(typeInterface), TypeAssociation.IMPLEMENT);
+                associations.add(assoInterface);
+            }
+        }
+        for(Association association : associations){
+            System.out.println(association.getElement1().getNom() + " -> " + association.getElement2().getNom() + " : " + association.getTypeAssociation().toString());
         }
     }
     private ElementContent findClass(Element element){
@@ -73,5 +85,21 @@ public class PumlDiagram {
         generateurDiagramme.generateElementsForPuml(elements);
         generateurDiagramme.generateLinksForPuml(associations);
         generateurDiagramme.endFile();
+    }
+    private ElementContent findElementContentFromTypeMirror(TypeMirror typeMirror){
+        for(ElementContent elementContent : elements){
+            if (elementContent.getNom().equals(typeMirror.toString()));
+                return elementContent;
+        }
+        return null;
+    }
+    private Element findElementFromElementContent(ElementContent elementContent){
+        for(Element element : docletEnvironment.getIncludedElements()){
+            System.out.println(elementContent.getNom() + " : " + element.getSimpleName().toString());
+            if(element.getSimpleName().toString().equals(elementContent.getNom()))
+                return element;
+        }
+
+        return null;
     }
 }
