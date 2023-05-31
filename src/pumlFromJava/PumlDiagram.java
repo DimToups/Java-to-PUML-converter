@@ -54,29 +54,23 @@ public class PumlDiagram {
 
             }
             //Recherche d'héritage
-
+            
 
             //Recherche d'interface
             for(TypeMirror typeInterface : ((TypeElement)element).getInterfaces()){
-                Association assoInterface = new Association(elementContent, findElementContentFromTypeMirror(typeInterface), TypeAssociation.IMPLEMENT);
-                associations.add(assoInterface);
+                //Ajout de l'association
+                Association associationInterface = new Association(findElementContentFromElement(element), findElementContentFromTypeMirror(typeInterface), TypeAssociation.IMPLEMENT);
+                associations.add(associationInterface);
             }
-        }
-        for(Association association : associations){
-            System.out.println(association.getElement1().getNom() + " -> " + association.getElement2().getNom() + " : " + association.getTypeAssociation().toString());
         }
     }
-    private ElementContent findClass(Element element){
+    private ElementContent findElementContentFromElement(Element element){
         ElementContent rightElement = null;
-        boolean found = false;
         for (ElementContent elementContent : elements){
-            if (elementContent.getNom().equals(element.getSimpleName().toString()) && elementContent.getType() == element.getKind()){
-                rightElement = elementContent;
-                found = true;
-            }
+            if (elementContent.getNom().equals(element.getSimpleName().toString()) && elementContent.getType() == element.getKind())
+                return elementContent;
         }
-        if (found) {return rightElement;}
-        else{return null;}
+        return null;
     }
     public void genererDiagramme(){
         GenerateurDiagramme generateurDiagramme = new GenerateurDiagramme(name, directory, packageName, isDca);
@@ -88,18 +82,34 @@ public class PumlDiagram {
     }
     private ElementContent findElementContentFromTypeMirror(TypeMirror typeMirror){
         for(ElementContent elementContent : elements){
-            if (elementContent.getNom().equals(typeMirror.toString()));
+            if (elementContent.getNom().equals(SubstringType(typeMirror.toString())))
                 return elementContent;
         }
         return null;
     }
     private Element findElementFromElementContent(ElementContent elementContent){
         for(Element element : docletEnvironment.getIncludedElements()){
-            System.out.println(elementContent.getNom() + " : " + element.getSimpleName().toString());
             if(element.getSimpleName().toString().equals(elementContent.getNom()))
                 return element;
         }
 
         return null;
+    }
+    private String SubstringType(String string) {
+        if (string.contains(".")){
+            int index = 0;
+            for(int i = 0; i< string.length(); i++){
+                if(string.charAt(i) == '.'){
+                    index = i;
+                }
+            }
+            string = string.substring(index+1, string.length());
+            if (string.contains(">"))
+                string = string.substring(0, string.length()-1);
+            return string;
+        }
+        else{
+            return string;
+        }
     }
 }

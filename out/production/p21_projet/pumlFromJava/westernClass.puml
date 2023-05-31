@@ -162,13 +162,13 @@ genre
 }
 
 
-Brigand ..|> Boisson
+Brigand ..|> HorsLaLoi
 
-HorsLaLoi ..|> Boisson
+HorsLaLoi ..|> Nommable
 
-Personnage ..|> Boisson
+Personnage ..|> Nommable
 
-Ripou ..|> Boisson
+Ripou ..|> HorsLaLoi
 
 }
 @enduml
