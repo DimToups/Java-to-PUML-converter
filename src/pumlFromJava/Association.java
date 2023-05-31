@@ -14,11 +14,17 @@ public class Association {
         this.element1 = element1;
         this.element2 = element2;
     }
-
     public Association(ElementContent element1, ElementContent element2, TypeAssociation typeAssociation) {
         this.element1 = element1;
         this.element2 = element2;
         this.typeAssociation = typeAssociation;
+    }
+    public Association(ElementContent element1, ElementContent element2, TypeAssociation typeAssociation, char mult1, char mult2) {
+        this.element1 = element1;
+        this.element2 = element2;
+        this.typeAssociation = typeAssociation;
+        this.mult1 = mult1;
+        this.mult2 = mult2;
     }
     public TypeAssociation getTypeAssociation() {
         return typeAssociation;
@@ -40,5 +46,11 @@ public class Association {
         }
         associationString += " " + element2.getNom();
         return associationString;
+    }
+    public void setMult1(char mult1){
+        this.mult1 = mult1;
+    }
+    public void setMult2(char mult2){
+        this.mult2 = mult2;
     }
 }
