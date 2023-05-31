@@ -6,6 +6,8 @@ import java.util.List;
 public class Association {
     private ElementContent element1;
     private ElementContent element2;
+    private char mult1;
+    private char mult2;
     private TypeAssociation typeAssociation = TypeAssociation.SIMPLE;
 
     public Association(ElementContent element1, ElementContent element2) {
@@ -18,11 +20,9 @@ public class Association {
         this.element2 = element2;
         this.typeAssociation = typeAssociation;
     }
-
     public TypeAssociation getTypeAssociation() {
         return typeAssociation;
     }
-
     public String genererAssociation() {
         //La méthode entière sera à refaire pour rendre le tout plus agréable visuellement parlant
         String associationString = "\n" + element1.getNom() + " ";

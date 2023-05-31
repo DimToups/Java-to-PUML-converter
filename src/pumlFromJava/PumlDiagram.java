@@ -46,37 +46,11 @@ public class PumlDiagram {
         }
     }
     public void chercherAssociations(){
-        for (Element element : docletEnvironment.getIncludedElements()){
-            if (element.getKind() == ElementKind.CLASS) {
-                TypeElement typeElement = (TypeElement) element;
-                //Lien simple
-                for (Element enclosedElement : element.getEnclosedElements()) {
-                    if (enclosedElement.getKind().isField()) {
-                        for (Element elementCompar : docletEnvironment.getIncludedElements()) {
-                            //Lien simple
-                            if (elementCompar.asType() == enclosedElement.asType() && elementCompar != element) {
-                                Association newAssociation = new Association(findClass(element), findClass(elementCompar), TypeAssociation.SIMPLE);
-                                associations.add(newAssociation);
-                            }
-                        }
-                    }
-                }
-                //Heritage
-                for (Element elementCompar : docletEnvironment.getIncludedElements()) {
-                    if (elementCompar.toString().equals(typeElement.getSuperclass().toString())) {
-                        Association newAssociation = new Association(findClass(element), findClass(elementCompar), TypeAssociation.HERITAGE);
-                        associations.add(newAssociation);
-                    }
-                }
-                //Implémentation
-                for (TypeMirror interfaceElement : typeElement.getInterfaces()) {
-                    for (Element elementCompar : docletEnvironment.getIncludedElements()) {
-                        if (elementCompar.toString().equals(interfaceElement.toString())) {
-                            Association newAssociation = new Association(findClass(element), findClass(elementCompar), TypeAssociation.IMPLEMENT);
-                            associations.add(newAssociation);
-                        }
-                    }
-                }
+        //Recherche des agrégations
+        for(ElementContent element : elements){
+            //Si element est une énumération ou une classe
+            if (true){
+
             }
         }
     }
