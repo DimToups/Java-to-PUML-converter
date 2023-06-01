@@ -54,7 +54,13 @@ public class PumlDiagram {
 
             }
             //Recherche d'héritage
-            
+            if (((TypeElement)element).getSuperclass() != null) {
+                ElementContent superElement = findElementContentFromTypeMirror(((TypeElement) element).getSuperclass());
+                if (superElement != null && superElement != elementContent) {
+                    Association associationSuperElement = new Association(elementContent, superElement, TypeAssociation.HERITAGE);
+                    associations.add(associationSuperElement);
+                }
+            }
 
             //Recherche d'interface
             for(TypeMirror typeInterface : ((TypeElement)element).getInterfaces()){

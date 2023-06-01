@@ -162,11 +162,21 @@ genre
 }
 
 
+Brigand --|> Personnage
+
 Brigand ..|> HorsLaLoi
+
+Cowboy --|> Personnage
+
+Dame --|> Personnage
 
 HorsLaLoi ..|> Nommable
 
+Narrateur --|> Personnage
+
 Personnage ..|> Nommable
+
+Ripou --|> Cowboy
 
 Ripou ..|> HorsLaLoi
 
