@@ -24,6 +24,9 @@ public class Methode {
     public TypeMirror getType(){return this.type;}
     public Visibilite getVisibilite(){return this.visibilite;}
     public Modificateur getModificateur(){return this.modificateur;}
+    public ArrayList<Attribut> getParameters(){
+        return this.parametres;
+    }
     public void setName(String string) {this.nom = string;}
     public void setType(TypeMirror type) {this.type = type;}
     public void setVisibilite(Visibilite visibilite) {this.visibilite = visibilite;}
@@ -48,7 +51,7 @@ public class Methode {
         if (isConstructor)
             toString += "<<create>> ";
 
-        toString += this.nom + "(" + this.getParameters() + ")";
+        toString += this.nom + "(" + this.getStringParameters() + ")";
 
         //Ajout de son éventuel modificateur static
         if(this.modificateur == Modificateur.STATIC)
@@ -81,7 +84,7 @@ public class Methode {
             umlType += " *";
         return umlType;
     }
-    private String SubstringType(String string) {
+    public String SubstringType(String string) {
         if (string.contains(".")){
             int index = 0;
             for(int i = 0; i< string.length(); i++){
@@ -97,7 +100,7 @@ public class Methode {
         }
     }
 
-    public String getParameters(){
+    public String getStringParameters(){
         String parameters = "";
 
         int i = 0;

@@ -33,4 +33,7 @@ public class InterfaceContent extends ElementContent{
             return contenu += "}\n";
         }
     }
+    public ArrayList<Methode> getMethodes(){
+        return this.classMethods;
+    }
 }

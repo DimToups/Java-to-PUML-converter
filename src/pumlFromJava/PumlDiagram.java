@@ -45,31 +45,65 @@ public class PumlDiagram {
             }
         }
     }
-    public void chercherAssociations(){
+    public void chercherAssociations() {
         //Recherche des agrégations
-        for(ElementContent elementContent : elements){
+        for (ElementContent elementContent : elements) {
             Element element = findElementFromElementContent(elementContent);
             //Recherche d'agrégation/composition
-            if (true){
+            if (true) {
 
             }
             //Recherche d'héritage
-            if (((TypeElement)element).getSuperclass() != null) {
+            if (((TypeElement) element).getSuperclass() != null) {
                 ElementContent superElement = findElementContentFromTypeMirror(((TypeElement) element).getSuperclass());
                 if (superElement != null && superElement != elementContent) {
                     Association associationSuperElement = new Association(elementContent, superElement, TypeAssociation.HERITAGE);
                     associations.add(associationSuperElement);
+                    this.ajoutAssociation(associationSuperElement);
                 }
             }
 
             //Recherche d'interface
-            for(TypeMirror typeInterface : ((TypeElement)element).getInterfaces()){
+            for (TypeMirror typeInterface : ((TypeElement) element).getInterfaces()) {
                 //Ajout de l'association
                 Association associationInterface = new Association(findElementContentFromElement(element), findElementContentFromTypeMirror(typeInterface), TypeAssociation.IMPLEMENT);
                 associations.add(associationInterface);
+                this.ajoutAssociation(associationInterface);
             }
+
+            //Recherche de dépendances
+            /*if (elementContent.getType() == ElementKind.CLASS || elementContent.getType() == ElementKind.METHOD) {
+                for (Methode methode : ((ClassContent) elementContent).getMethodes()) {
+                    //Traitement du type de la méthode
+                    if (!methode.getType().toString().equals("void")) {
+                        String methodeType = methode.SubstringType(methode.getType().toString());
+                        for (ElementContent elementContentCompar : elements) {
+                            if (methodeType.equals(elementContentCompar.className)) {
+                                //Ajout de la dépendance
+                                Association associationDependance = new Association(elementContent, elementContentCompar, TypeAssociation.DEPENDANCE);
+                                this.ajoutAssociation(associationDependance);
+                            }
+                        }
+                    }
+
+                    //Traitement de ses paramètres
+                    for (Attribut attribut : methode.getParameters()) {
+                        if (!attribut.getType().toString().equals("void")) {
+                            String attributType = methode.SubstringType(attribut.getType().toString());
+                            for (ElementContent elementContentCompar : elements) {
+                                if (attributType.equals(elementContentCompar.className)) {
+                                    //Ajout de la dépendance
+                                    Association associationDependance = new Association(elementContent, elementContentCompar, TypeAssociation.DEPENDANCE);
+                                    this.ajoutAssociation(associationDependance);
+                                }
+                            }
+                        }
+                    }
+                }
+            }*/
         }
     }
+
     private ElementContent findElementContentFromElement(Element element){
         ElementContent rightElement = null;
         for (ElementContent elementContent : elements){
@@ -117,5 +151,15 @@ public class PumlDiagram {
         else{
             return string;
         }
+    }
+    public void ajoutAssociation(Association associationCandidate){
+        //Traitement de toutes les associations
+        for (Association association : associations){
+            if(association.getElement1().getNom().equals(associationCandidate.getElement1().getNom()) && association.getElement2().getNom().equals(associationCandidate.getElement2().getNom()))
+                return;
+            if(association.getElement1().getNom().equals(associationCandidate.getElement2().getNom()) && association.getElement2().getNom().equals(associationCandidate.getElement1().getNom()))
+                return;
+        }
+        this.associations.add(associationCandidate);
     }
 }
