@@ -72,7 +72,7 @@ public class PumlDiagram {
             }
 
             //Recherche de dépendances
-            /*if (elementContent.getType() == ElementKind.CLASS || elementContent.getType() == ElementKind.METHOD) {
+            if (elementContent.getType() == ElementKind.CLASS || elementContent.getType() == ElementKind.METHOD) {
                 for (Methode methode : ((ClassContent) elementContent).getMethodes()) {
                     //Traitement du type de la méthode
                     if (!methode.getType().toString().equals("void")) {
@@ -100,7 +100,7 @@ public class PumlDiagram {
                         }
                     }
                 }
-            }*/
+            }
         }
     }
 

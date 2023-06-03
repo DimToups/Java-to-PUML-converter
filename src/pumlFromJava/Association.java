@@ -8,6 +8,7 @@ public class Association {
     private ElementContent element2;
     private String mult1;
     private String mult2;
+    private Attribut attributLié;
     private TypeAssociation typeAssociation = TypeAssociation.SIMPLE;
 
     public Association(ElementContent element1, ElementContent element2) {
@@ -41,7 +42,7 @@ public class Association {
 
         //Ajout de la multiplicité du premier élément
         if (mult1 != null)
-            associationString += mult1 + " ";
+            associationString += " " +  mult1 + " ";
 
         //Ajout du début de la flèche selon le type d'association
         if(!isDca) {
@@ -71,10 +72,12 @@ public class Association {
 
         //ajout de la multiplicité du deuxième élément
         if (mult2 != null)
-            associationString += mult2;
+            associationString += " " + mult2 + "\n" + attributLié.getVisibilite() + " " + attributLié.getNom() +" ";
 
         //Ajout du nom du deuxième élément
         associationString += " " + element2.getNom();
+        if(typeAssociation == TypeAssociation.DEPENDANCE)
+            associationString += " : <<uses>>";
         return associationString;
     }
     public void setMult1(String mult1){

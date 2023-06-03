@@ -162,23 +162,51 @@ genre
 }
 
 
+Boisson -- Genre : <<uses>>
+
 Brigand --|> Personnage
 
 Brigand ..|> HorsLaLoi
 
+Brigand -- Boisson : <<uses>>
+
+Brigand -- Dame : <<uses>>
+
+Brigand -- Cowboy : <<uses>>
+
 Cowboy --|> Personnage
 
+Cowboy -- Boisson : <<uses>>
+
+Cowboy -- Dame : <<uses>>
+
+Cowboy -- HorsLaLoi : <<uses>>
+
 Dame --|> Personnage
+
+Dame -- Boisson : <<uses>>
+
+Dame -- HorsLaLoi : <<uses>>
 
 HorsLaLoi ..|> Nommable
 
 Narrateur --|> Personnage
 
+Narrateur -- Boisson : <<uses>>
+
 Personnage ..|> Nommable
+
+Personnage -- Boisson : <<uses>>
 
 Ripou --|> Cowboy
 
 Ripou ..|> HorsLaLoi
+
+Ripou -- Boisson : <<uses>>
+
+Ripou -- Dame : <<uses>>
+
+Substantif -- Genre : <<uses>>
 
 }
 @enduml
