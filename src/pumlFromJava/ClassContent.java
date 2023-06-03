@@ -28,6 +28,7 @@ public class ClassContent extends ElementContent{
     @Override
     public String genererContenuElement(boolean isDca) {
         String contenu = "class " + this.className + "{\n";
+        //Génération type DCA
         if (isDca){
             for (Attribut attribut : classAttributs) {
                 if (!attribut.getType().toString().contains("."))
@@ -35,9 +36,10 @@ public class ClassContent extends ElementContent{
             }
             return contenu += "}";
         }
+        //Génération type DCC
         else{
             for(Attribut attribut : classAttributs){
-                if (attribut.getType().toString().contains("."))
+                if (attribut.getPumlVisibility())
                     contenu += attribut.getNom() + "\n";
             }
             for (Methode methode : classMethods){

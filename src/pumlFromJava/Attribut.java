@@ -12,6 +12,7 @@ public class Attribut {
     private TypeMirror type;
     private Visibilite visibilite;
     private Modificateur modificateur;
+    private boolean isPumlVisible = true;
     public Attribut(VariableElement variableElement){
         System.out.println("\t" + variableElement.toString());
         this.nom = variableElement.getSimpleName().toString();
@@ -100,5 +101,8 @@ public class Attribut {
             else if (modifier == Modifier.PRIVATE)
                 this.visibilite = Visibilite.PRIVATE;
         }
+    }
+    public boolean getPumlVisibility(){
+        return this.isPumlVisible;
     }
 }

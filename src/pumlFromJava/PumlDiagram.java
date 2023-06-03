@@ -53,6 +53,7 @@ public class PumlDiagram {
             if (true) {
 
             }
+            
             //Recherche d'héritage
             if (((TypeElement) element).getSuperclass() != null) {
                 ElementContent superElement = findElementContentFromTypeMirror(((TypeElement) element).getSuperclass());
