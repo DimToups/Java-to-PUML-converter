@@ -38,7 +38,10 @@ public class Association {
     }
     public String genererAssociation(boolean isDca) {
         //La méthode entière sera à refaire pour rendre le tout plus agréable visuellement parlant
-        String associationString = "\n" + element1.getNom() + " ";
+        String associationString = "";
+
+        if (isDca || !isDca && typeAssociation != TypeAssociation.DEPENDANCE)
+            associationString = "\n" + element1.getNom() + " ";
 
         //Ajout de la multiplicité du premier élément
         if (mult1 != null)
@@ -53,12 +56,14 @@ public class Association {
         }
 
         //Ajout du corps de la flèche
-        for (int i = 0; i < 2; i++) {
-            if ((i & 2) == 0) {
-                if (typeAssociation == TypeAssociation.IMPLEMENT)
-                    associationString += ".";
-                else
-                    associationString += "-";
+        if (isDca || !isDca && typeAssociation != TypeAssociation.DEPENDANCE) {
+            for (int i = 0; i < 2; i++) {
+                if ((i & 2) == 0) {
+                    if (typeAssociation == TypeAssociation.IMPLEMENT)
+                        associationString += ".";
+                    else
+                        associationString += "-";
+                }
             }
         }
 
@@ -75,9 +80,12 @@ public class Association {
             associationString += " " + mult2 + "\n" + attributLié.getVisibilite() + " " + attributLié.getNom() +" ";
 
         //Ajout du nom du deuxième élément
-        associationString += " " + element2.getNom();
-        if(typeAssociation == TypeAssociation.DEPENDANCE)
+        if (isDca || !isDca && typeAssociation != TypeAssociation.DEPENDANCE)
+            associationString += " " + element2.getNom();
+        
+        if(typeAssociation == TypeAssociation.DEPENDANCE && isDca)
             associationString += " : <<uses>>";
+
         return associationString;
     }
     public void setMult1(String mult1){
