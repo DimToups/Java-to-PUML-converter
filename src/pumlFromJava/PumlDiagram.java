@@ -53,7 +53,7 @@ public class PumlDiagram {
             if (true) {
 
             }
-            
+
             //Recherche d'héritage
             if (((TypeElement) element).getSuperclass() != null) {
                 ElementContent superElement = findElementContentFromTypeMirror(((TypeElement) element).getSuperclass());
@@ -156,9 +156,9 @@ public class PumlDiagram {
     public void ajoutAssociation(Association associationCandidate){
         //Traitement de toutes les associations
         for (Association association : associations){
-            if(association.getElement1().getNom().equals(associationCandidate.getElement1().getNom()) && association.getElement2().getNom().equals(associationCandidate.getElement2().getNom()))
+            if(association.getElement1().getNom().equals(associationCandidate.getElement1().getNom()) && association.getElement2().getNom().equals(associationCandidate.getElement2().getNom()) && associationCandidate.getTypeAssociation() == association.getTypeAssociation())
                 return;
-            if(association.getElement1().getNom().equals(associationCandidate.getElement2().getNom()) && association.getElement2().getNom().equals(associationCandidate.getElement1().getNom()))
+            if(association.getElement1().getNom().equals(associationCandidate.getElement2().getNom()) && association.getElement2().getNom().equals(associationCandidate.getElement1().getNom()) && associationCandidate.getTypeAssociation() == association.getTypeAssociation())
                 return;
         }
         this.associations.add(associationCandidate);
