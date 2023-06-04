@@ -55,9 +55,15 @@ public class PumlDiagram {
                 for(Attribut attribut : classContent.getAttributs()) {
                     if(!attribut.getType().toString().equals("void")){
                         for(ElementContent elementContentCompar : elements){
-                            if(!elementContentCompar.className.equals(classContent.className) && SubstringType(attribut.getType().toString()).equals(elementContentCompar.className)) {
+                            if(SubstringType(attribut.getType().toString()).equals(elementContentCompar.className)) {
                                 attribut.setToInvisible();
                                 Association associationAgreg = new Association(elementContent, elementContentCompar, TypeAssociation.AGREGATION);
+                                associationAgreg.setAttributLié(attribut);
+                                associationAgreg.setMult1("1");
+                                if(attribut.getType().toString().contains("java.util"))
+                                    associationAgreg.setMult2("*");
+                                else
+                                    associationAgreg.setMult2("1");
                                 this.ajoutAssociation(associationAgreg);
                             }
                         }

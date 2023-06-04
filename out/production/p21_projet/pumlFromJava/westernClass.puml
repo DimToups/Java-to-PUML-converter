@@ -8,7 +8,6 @@ hide empty members
 
 package western{
 class Boisson{
-EAU
 + <<create>> Boisson(nom : String, genre : Genre)
 + getNom() : String
 + getGenre() : Genre
@@ -153,14 +152,16 @@ nom
 }
 
 
-Boisson o--> Substantif
+Boisson  "1" o--> "1\n - substantif"  Substantif
+
+Boisson  "1" o--> "1\n + EAU"  Boisson
 
 
-Brigand o--> Dame
+Brigand  "1" o--> "*\n - captives"  Dame
 
-Brigand o--> Cowboy
+Brigand  "1" o--> "1\n - gardien"  Cowboy
 
-Brigand o--> Boisson
+Brigand  "1" o--> "1\n - boissonParDefaut"  Boisson
 
 Brigand --|> Personnage
 
@@ -169,20 +170,20 @@ Brigand ..|> HorsLaLoi
 
 
 
-Cowboy o--> HorsLaLoi
+Cowboy  "1" o--> "*\n - captures"  HorsLaLoi
 
-Cowboy o--> Boisson
+Cowboy  "1" o--> "1\n - boissonParDefaut"  Boisson
 
 Cowboy --|> Personnage
 
 
 
 
-Dame o--> Cowboy
+Dame  "1" o--> "1\n - sauveur"  Cowboy
 
-Dame o--> HorsLaLoi
+Dame  "1" o--> "1\n - ravisseur"  HorsLaLoi
 
-Dame o--> Boisson
+Dame  "1" o--> "1\n - boissonParDefaut"  Boisson
 
 Dame --|> Personnage
 
@@ -193,12 +194,12 @@ HorsLaLoi ..|> Nommable
 Narrateur --|> Personnage
 
 
-Personnage o--> Boisson
+Personnage  "1" o--> "1\n - BOISSON_PAR_DEFAUT"  Boisson
 
 Personnage ..|> Nommable
 
 
-Ripou o--> Brigand
+Ripou  "1" o--> "1\n - brigand"  Brigand
 
 Ripou --|> Cowboy
 
@@ -207,7 +208,7 @@ Ripou ..|> HorsLaLoi
 
 
 
-Substantif o--> Genre
+Substantif  "1" o--> "1\n - genre"  Genre
 
 
 }

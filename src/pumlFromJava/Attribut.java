@@ -23,6 +23,16 @@ public class Attribut {
     public String getNom(){return this.nom;}
     public TypeMirror getType(){return this.type;}
     public Visibilite getVisibilite(){return this.visibilite;}
+    public String getPumlVisibilite(){
+        if(this.visibilite == Visibilite.PUBLIC)
+            return "+";
+        else if(this.visibilite == Visibilite.PROTECTED)
+            return "#";
+        else if(this.visibilite == Visibilite.PRIVATE)
+            return "-";
+        else
+            return "";
+    }
     public Modificateur getModificateur(){return this.modificateur;}
     public void setType(TypeMirror type) {this.type = type;}
     public void setVisibilite(Visibilite visibilite) {this.visibilite = visibilite;}

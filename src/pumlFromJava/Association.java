@@ -45,7 +45,7 @@ public class Association {
 
         //Ajout de la multiplicité du premier élément
         if (mult1 != null)
-            associationString += " " + mult1 + " ";
+            associationString += " \"" + mult1 + "\" ";
 
         //Ajout du début de la flèche selon le type d'association
         if(!isDca) {
@@ -77,7 +77,7 @@ public class Association {
 
         //ajout de la multiplicité du deuxième élément
         if (mult2 != null)
-            associationString += " " + mult2 + "\n" + attributLié.getVisibilite() + " " + attributLié.getNom() +" ";
+            associationString += " \"" + mult2 + "\\n " + attributLié.getPumlVisibilite() + " " + attributLié.getNom() + "\" ";
 
         //Ajout du nom du deuxième élément
         if (isDca || !isDca && typeAssociation != TypeAssociation.DEPENDANCE)
@@ -94,4 +94,5 @@ public class Association {
     public void setMult2(String mult2){
         this.mult2 = mult2;
     }
+    public void setAttributLié(Attribut attribut){this.attributLié = attribut;}
 }
