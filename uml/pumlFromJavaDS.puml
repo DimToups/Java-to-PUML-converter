@@ -16,30 +16,42 @@ Java2Puml -> PumlDoclet ++ : run(System.out, System.err, args)
     PumlDoclet -->> PumlDiagram ** : <<create>> PumlDiagram(name : String, directory : String, docletEnvironment : DocletEnvironment)
     PumlDoclet -> PumlDiagram ++ : chercherClasses()
         loop element : Element
-            PumlDiagram -> ClassContent ** : <<create>> ClassContent()
-            PumlDiagram -> ClassContent ++ : setClass(element : Element)
-                loop enclosedElement : Element
-                    ClassContent -->> Attribut ** : <<create>> Attribut(enclosedElement : Element)
-                    ClassContent -->> Methode ** : <<create>> Methode(enclosedElement : Element)
-                end
-            return setClass()
+            alt element is class or enum or interface
+                PumlDiagram -> ClassContent ** : <<create>> ClassContent()
+                PumlDiagram -> ClassContent ++ : setClass(element : Element)
+                    loop enclosedElement : Element
+                        alt enclosedElement is Field
+                            ClassContent -->> Attribut ** : <<create>> Attribut(enclosedElement : Element)
+                        else enclosedElement is Method
+                            ClassContent -->> Methode ** : <<create>> Methode(enclosedElement : Element)
+                        end
+                    end
+                return setClass()
+            else element is package
+                PumlDiagram -> PumlDiagram : packagename = element
+            end
         end
     return chercherClasses()
 
     PumlDoclet -> PumlDiagram ++ : chercherLiaisons()
         loop element : Element
-            PumlDiagram -> PumlDiagram ++ : findInherited(element : Element)
+            alt element is Class
                 loop elementCompar : Element
                     alt elementCompar is superclass of element
                         PumlDiagram -->> Liaison ** : <<create>> Liaison(element1 : ClassContent, element2 : ClassContent, typeLiaison : TypeLiaison)
                     end
                 end
-            return findInherited() : Liaison
-            loop enclosedElement : Element
-                alt enclosedElement is Field
-                    PumlDiagram -->> Liaison ** : <<create>> Liaison(element1 : ClassContent, element2 : ClassContent, typeLiaison : TypeLiaison)
-                else enclosedElement is Interface
-                    PumlDiagram -->> Liaison ** : <<create>> Liaison(element1 : ClassContent, element2 : ClassContent, typeLiaison : TypeLiaison)
+                loop enclosedElement : Element
+                    alt enclosedElement is Field
+                        PumlDiagram -->> Liaison ** : <<create>> Liaison(element1 : ClassContent, element2 : ClassContent, typeLiaison : TypeLiaison)
+                    end
+                end
+                loop interfaceElement : TypeMirror
+                    loop enclosedElement : Element
+                        alt enclosedElement is Interface
+                            PumlDiagram -->> Liaison ** : <<create>> Liaison(element1 : ClassContent, element2 : ClassContent, typeLiaison : TypeLiaison)
+                        end
+                    end
                 end
             end
         end
@@ -47,13 +59,14 @@ Java2Puml -> PumlDoclet ++ : run(System.out, System.err, args)
 
     PumlDoclet -> PumlDiagram ++ : genererDiagramme()
         PumlDiagram -> PumlDiagram : createFile()
+        PumlDiagram -> PumlDiagram : initFile()
         loop classContent : ClassContent
-            PumlDiagram -> ClassContent ++ : genererContenuClasse(element : Element)
-            return genererContenuClasse() : String
+            PumlDiagram -> ClassContent ++ : genererContenuClasse(element : Element) : String
+            return genererContenuClasse()
         end
         loop liaison : Liaison
-            PumlDiagram -> Liaison ++ : genererLiaison(liaison)
-            return genererLiaison() : String
+            PumlDiagram -> Liaison ++ : genererLiaison(liaison) : String
+            return genererLiaison()
         end
         PumlDiagram -> PumlDiagram : endFile()
     return genererDiagramme()

@@ -1,131 +1,214 @@
 package pumlFromJava;
 
+import jdk.javadoc.doclet.DocletEnvironment;
+
+import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.TypeMirror;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class PumlDiagram {
-    private ArrayList<ClassContent> classes = new ArrayList<>();
+    private ArrayList<ElementContent> elements = new ArrayList<>();
     private String packageName;
-    private String classesContent = "";
     private String name;
     private String directory;
-    private ArrayList<Liaison> liaisons = new ArrayList<>();
-    public PumlDiagram(String name, String directory){
+    private DocletEnvironment docletEnvironment;
+    private boolean isDca;
+    private ArrayList<Association> associations = new ArrayList<>();
+    public PumlDiagram(String name, String directory, DocletEnvironment docletEnvironment, boolean isDCA){
         this.name = name;
         this.directory = directory;
+        this.docletEnvironment = docletEnvironment;
+        this.isDca = isDCA;
+        System.out.println("isDca = " + isDCA);
     }
-    public void setClasses(ArrayList<ClassContent> classes, ArrayList<Liaison> liaisons, String packageName){
-        this.classes = classes;
-        this.liaisons = liaisons;
-        this.packageName = packageName;
+    public void chercherClasses(){
+        for (Element element : docletEnvironment.getIncludedElements()){
+            if (element.getKind() == ElementKind.CLASS){
+                ClassContent classContent = new ClassContent(element);
+                this.elements.add(classContent);
+            }
+            else if(element.getKind() == ElementKind.ENUM){
+                EnumContent enumContent = new EnumContent(element);
+                this.elements.add(enumContent);
+            }
+            else if (element.getKind() == ElementKind.INTERFACE){
+                InterfaceContent interfaceContent = new InterfaceContent(element);
+                this.elements.add(interfaceContent);
+            }
+            else if (element.getKind() == ElementKind.PACKAGE) {
+                packageName = element.getSimpleName().toString();
+            }
+        }
+    }
+    public void chercherAssociations() {
+        //Recherche des agrégations
+        for (ElementContent elementContent : elements) {
+            Element element = findElementFromElementContent(elementContent);
 
-        for (Liaison liaison : liaisons){
-            System.out.println(liaison.element1 + " -> " + liaison.element2 + " : " + liaison.typeLiaison);
-        }
-    }
-    public void makeDiagram(){
-        initFile();
-        //Ajout du package dans classContent
-        classesContent += "\npackage " + packageName + "{\n";
-        //Traitement de chaque classe
-        for(int i = 0; i < classes.size(); i++){
-            //Création de la chaîne de caractères à placer dans le fichier
-            String classe;
-            if (classes.get(i).classType == ElementKind.INTERFACE) {
-                classe = "class " + classes.get(i).className + " <<interface>>{\n";
-            }
-            else if (classes.get(i).classType == ElementKind.ENUM) {
-                classe = "class " + classes.get(i).className + " <<enum>>{\n";
-            }
-            else {
-                classe = "class " + classes.get(i).className + "{\n";
-            }
-            //Ajout des attributs de la classe
-            for (Attribut attribut : classes.get(i).classAttributs){
-                classe += "\t" + attribut.nom;
-                if (attribut.type != null)
-                    classe += " : " + attribut.type.toString();
-                classe += "\n";
-            }
-            //Ajout des méthodes de la classe
-            for (Methode methode : classes.get(i).classMethods){
-                classe += "\t" + methode.nom;
-                if (methode.type != null)
-                    classe += " : " + methode.type.toString();
-                classe += "\n";
-            }
-            //Ajout du String dans classContent
-            classesContent += "\n" + classe + "\n}";
-        }
-        //Ajout des liaisons
-        int etage = 1;
-        for(Liaison liaison : liaisons){
-            if(liaison.typeLiaison == TypeLiaison.SIMPLE){
-                String stringEtage = "";
-                for (int i = 0; i < etage; i++){
-                    if (i % 4 == 0)
-                        stringEtage += "-";
+            //Recherche d'agrégation/composition
+            if (elementContent.classType == ElementKind.CLASS) {
+                ClassContent classContent = (ClassContent) elementContent;
+                for(Attribut attribut : classContent.getAttributs()) {
+                    if(!attribut.getType().toString().equals("void")){
+                        for(ElementContent elementContentCompar : elements){
+                            if(SubstringType(attribut.getType().toString()).equals(elementContentCompar.className)) {
+                                attribut.setToInvisible();
+                                Association associationAgreg = new Association(elementContent, elementContentCompar, TypeAssociation.AGREGATION);
+                                associationAgreg.setAttributLié(attribut);
+                                associationAgreg.setMult1("1");
+                                if(attribut.getType().toString().contains("java.util"))
+                                    associationAgreg.setMult2("*");
+                                else
+                                    associationAgreg.setMult2("1");
+                                this.ajoutAssociation(associationAgreg);
+                            }
+                        }
+                    }
                 }
-                classesContent += "\n" + liaison.element1 + stringEtage + liaison.element2;
-                etage++;
             }
-            else if (liaison.typeLiaison == TypeLiaison.HERITAGE){
-                String stringEtage = "";
-                for (int i = 0; i < etage; i++){
-                    if (i % 2 == 0)
-                        stringEtage += "-";
+
+            //Recherche d'héritage
+            if (((TypeElement) element).getSuperclass() != null) {
+                ElementContent superElement = findElementContentFromTypeMirror(((TypeElement) element).getSuperclass());
+                if (superElement != null && superElement != elementContent) {
+                    Association associationSuperElement = new Association(elementContent, superElement, TypeAssociation.HERITAGE);
+                    associations.add(associationSuperElement);
+                    this.ajoutAssociation(associationSuperElement);
                 }
-                classesContent += "\n" + liaison.element1 + stringEtage + "|>" + liaison.element2;
-                etage++;
             }
-            else if (liaison.typeLiaison == TypeLiaison.IMPLEMENT){
-                String stringEtage = "";
-                for (int i = 0; i < etage; i++){
-                    if (i % 2 == 0)
-                        stringEtage += ".";
+
+            //Recherche d'interface
+            for (TypeMirror typeInterface : ((TypeElement) element).getInterfaces()) {
+                //Ajout de l'association
+                Association associationInterface = new Association(findElementContentFromElement(element), findElementContentFromTypeMirror(typeInterface), TypeAssociation.IMPLEMENT);
+                associations.add(associationInterface);
+                this.ajoutAssociation(associationInterface);
+            }
+
+            //Recherche de dépendances
+            if (elementContent.getType() == ElementKind.CLASS || elementContent.getType() == ElementKind.METHOD) {
+                for (Methode methode : ((ClassContent) elementContent).getMethodes()) {
+                    //Traitement du type de la méthode
+                    if (!methode.getType().toString().equals("void")) {
+                        String methodeType = methode.SubstringType(methode.getType().toString());
+                        for (ElementContent elementContentCompar : elements) {
+                            if (methodeType.equals(elementContentCompar.className)) {
+                                //Ajout de la dépendance
+                                Association associationDependance = new Association(elementContent, elementContentCompar, TypeAssociation.DEPENDANCE);
+                                this.ajoutAssociation(associationDependance);
+                            }
+                        }
+                    }
+
+                    //Traitement de ses paramètres
+                    for (Attribut attribut : methode.getParameters()) {
+                        if (!attribut.getType().toString().equals("void")) {
+                            String attributType = methode.SubstringType(attribut.getType().toString());
+                            for (ElementContent elementContentCompar : elements) {
+                                if (attributType.equals(elementContentCompar.className)) {
+                                    //Ajout de la dépendance
+                                    Association associationDependance = new Association(elementContent, elementContentCompar, TypeAssociation.DEPENDANCE);
+                                    this.ajoutAssociation(associationDependance);
+                                }
+                            }
+                        }
+                    }
                 }
-                classesContent += "\n" + liaison.element1 + stringEtage + "|>" + liaison.element2;
-                etage++;
             }
         }
+    }
 
-        endFile();
+    private ElementContent findElementContentFromElement(Element element){
+        ElementContent rightElement = null;
+        for (ElementContent elementContent : elements){
+            if (elementContent.getNom().equals(element.getSimpleName().toString()) && elementContent.getType() == element.getKind())
+                return elementContent;
+        }
+        return null;
+    }
+    public void genererDiagramme(){
+        GenerateurDiagramme generateurDiagramme = new GenerateurDiagramme(name, directory, packageName, isDca);
+        generateurDiagramme.createFile();
+        generateurDiagramme.initFile();
+        generateurDiagramme.generateElementsForPuml(elements);
+        generateurDiagramme.generateLinksForPuml(associations);
+        generateurDiagramme.endFile();
+    }
+    private ElementContent findElementContentFromTypeMirror(TypeMirror typeMirror){
+        for(ElementContent elementContent : elements){
+            if (elementContent.getNom().equals(SubstringType(typeMirror.toString())))
+                return elementContent;
+        }
+        return null;
+    }
+    private Element findElementFromElementContent(ElementContent elementContent){
+        for(Element element : docletEnvironment.getIncludedElements()){
+            if(element.getSimpleName().toString().equals(elementContent.getNom()))
+                return element;
+        }
 
-        //Création du fichier
-        File file = new File(directory + "/" + name);
-        try {
-            if (file.createNewFile()){
-                FileOutputStream fos = new FileOutputStream(directory + "/" + name, true);
-                byte[] b = classesContent.getBytes();
-                fos.write(b);
+        return null;
+    }
+    private String SubstringType(String string) {
+        if (string.contains(".")){
+            int index = 0;
+            for(int i = 0; i< string.length(); i++){
+                if(string.charAt(i) == '.'){
+                    index = i;
+                }
             }
-            else{
-                BufferedWriter writer = Files.newBufferedWriter(Paths.get(directory + "/" + name));
-                writer.write("");
-                writer.flush();
-
-                FileOutputStream fos = new FileOutputStream(directory + "/" + name, true);
-                byte[] b = classesContent.getBytes();
-                fos.write(b);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            string = string.substring(index+1, string.length());
+            if (string.contains(">"))
+                string = string.substring(0, string.length()-1);
+            return string;
+        }
+        else{
+            return string;
         }
     }
-    private void initFile(){
-        classesContent = "@startuml\n" +
-                "'https://plantuml.com/class-diagram\n" +
-                "skinparam style strictuml\n" +
-                "skinparam classAttributeIconSize 0\n" +
-                "skinparam classFontStyle Bold\n" +
-                "\n" +
-                "hide empty members\n" +
-                "\n";
+    public void ajoutAssociation(Association associationCandidate){
+        //Traitement de toutes les associations
+        for (Association association : associations){
+            if (association.getElement1().getNom().equals(associationCandidate.getElement1().getNom()) && association.getElement2().getNom().equals(associationCandidate.getElement2().getNom()) && associationCandidate.getTypeAssociation() == association.getTypeAssociation())
+                return;
+            if (association.getElement1().getNom().equals(associationCandidate.getElement2().getNom()) && association.getElement2().getNom().equals(associationCandidate.getElement1().getNom()) && associationCandidate.getTypeAssociation() == association.getTypeAssociation())
+                return;
+        }
+        this.associations.add(associationCandidate);
     }
-    private void endFile(){
-        classesContent += "\n@enduml";
+    public void miseAJourMultiplicite(){
+        //Recherche de composition
+
+        //C'est beaucoup plus complexe que ce que je croyais
+
+        /*for(ElementContent elementContent : elements){
+            ArrayList<Association> occurence = new ArrayList<>();
+            for(Association association : associations){
+                if(association.getElement1() == elementContent || association.getElement2() == elementContent)
+                    occurence.add(association);
+            }
+            if(occurence.size() == 1)
+                occurence.get(1).setType(TypeAssociation.COMPOSITION);
+            else
+                occurence.get(1).setType(TypeAssociation.AGREGATION);
+        }*/
+
+        //Mise à jour des multiplicités
+        for(Association association : associations){
+            for(Association associationCompar : associations){
+                //Exclusion des associations similaires
+                if(association != associationCompar || associationCompar.getPumlVisibilite()){
+                    if(association.getElement1() == associationCompar.getElement1() && association.getElement2() == associationCompar.getElement2() && association.getTypeAssociation() == associationCompar.getTypeAssociation()){
+                        associationCompar.setToInvisible();
+                        association.IncrementationMult();
+                    }
+                }
+            }
+        }
     }
 }
