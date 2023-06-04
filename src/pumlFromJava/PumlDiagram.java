@@ -180,4 +180,34 @@ public class PumlDiagram {
         }
         this.associations.add(associationCandidate);
     }
+    public void miseAJourMultiplicite(){
+        //Recherche de composition
+
+        //C'est beaucoup plus complexe que ce que je croyais
+
+        /*for(ElementContent elementContent : elements){
+            ArrayList<Association> occurence = new ArrayList<>();
+            for(Association association : associations){
+                if(association.getElement1() == elementContent || association.getElement2() == elementContent)
+                    occurence.add(association);
+            }
+            if(occurence.size() == 1)
+                occurence.get(1).setType(TypeAssociation.COMPOSITION);
+            else
+                occurence.get(1).setType(TypeAssociation.AGREGATION);
+        }*/
+
+        //Mise à jour des multiplicités
+        for(Association association : associations){
+            for(Association associationCompar : associations){
+                //Exclusion des associations similaires
+                if(association != associationCompar || associationCompar.getPumlVisibilite()){
+                    if(association.getElement1() == associationCompar.getElement1() && association.getElement2() == associationCompar.getElement2() && association.getTypeAssociation() == associationCompar.getTypeAssociation()){
+                        associationCompar.setToInvisible();
+                        association.IncrementationMult();
+                    }
+                }
+            }
+        }
+    }
 }
