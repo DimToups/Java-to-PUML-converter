@@ -25,6 +25,7 @@ class InterfaceContent{
 }
 class Attribut{
     nom
+    isPumlVisible
 }
 class Methode{
     isConstructor
@@ -35,6 +36,9 @@ enum Modificateur <<enum>>{
     FINAL
 }
 class Association{
+    isPumlVisible
+    mult1
+    mult2
 }
 enum TypeAssociation <<enum>>{
     HERITAGE
@@ -71,5 +75,6 @@ Methode --  Modificateur
 Methode - Attribut
 Association - ElementContent
 Association -- TypeAssociation
+Association -- Attribut
 
 @enduml

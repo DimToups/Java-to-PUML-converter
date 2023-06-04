@@ -28,22 +28,28 @@ public class ClassContent extends ElementContent{
     @Override
     public String genererContenuElement(boolean isDca) {
         String contenu = "class " + this.className + "{\n";
+        //Génération type DCA
         if (isDca){
             for (Attribut attribut : classAttributs) {
                 if (!attribut.getType().toString().contains("."))
-                    contenu += attribut.getNom() + "\n";
+                    contenu += "\t" + attribut.getNom() + "\n";
             }
             return contenu += "}";
         }
+        //Génération type DCC
         else{
             for(Attribut attribut : classAttributs){
-                if (attribut.getType().toString().contains("."))
-                    contenu += attribut.getNom() + "\n";
+                if (attribut.getPumlVisibility())
+                    contenu += "\t" + attribut.getNom() + "\n";
             }
             for (Methode methode : classMethods){
-                contenu += methode.MethodetoString() + "\n";
+                contenu += "\t" + methode.MethodetoString() + "\n";
             }
             return contenu += "}\n";
         }
     }
+    public ArrayList<Methode> getMethodes(){
+        return this.classMethods;
+    }
+    public ArrayList<Attribut> getAttributs(){return this.classAttributs;}
 }
