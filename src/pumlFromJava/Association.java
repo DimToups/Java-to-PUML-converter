@@ -76,7 +76,9 @@ public class Association {
         }
 
         //ajout de la multiplicité du deuxième élément
-        if (mult2 != null)
+        if(isDca && mult2 != null)
+            associationString += " \"" + mult2 + "\" ";
+        else if (mult2 != null)
             associationString += " \"" + mult2 + "\\n " + attributLié.getPumlVisibilite() + " " + attributLié.getNom() + "\" ";
 
         //Ajout du nom du deuxième élément
