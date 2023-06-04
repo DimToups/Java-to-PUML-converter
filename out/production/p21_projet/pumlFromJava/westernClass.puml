@@ -8,7 +8,6 @@ hide empty members
 
 package western{
 class Boisson{
-substantif
 EAU
 + <<create>> Boisson(nom : String, genre : Genre)
 + getNom() : String
@@ -24,9 +23,6 @@ LOOK_PAR_DEFAUT
 look
 recompense
 estLibre
-captives
-gardien
-boissonParDefaut
 + <<create>> Brigand(nom : String)
 + <<create>> Brigand(nom : String, boisson : Boisson)
 + <<create>> Brigand(nom : String, boisson : Boisson, look : String)
@@ -45,8 +41,6 @@ boissonParDefaut
 
 class Cowboy{
 gains
-captures
-boissonParDefaut
 + <<create>> Cowboy(nom : String)
 + <<create>> Cowboy(nom : String, boisson : Boisson)
 + getPseudo() : String
@@ -61,9 +55,6 @@ boissonParDefaut
 
 class Dame{
 estLibre
-sauveur
-ravisseur
-boissonParDefaut
 + <<create>> Dame(nom : String)
 + <<create>> Dame(nom : String, boisson : Boisson)
 + getPseudo() : String
@@ -111,9 +102,7 @@ interface Nommable<<interface>>{
 }
 
 class Personnage{
-BOISSON_PAR_DEFAUT
 nom
-boisson
 + <<create>> Personnage(nom : String)
 + <<create>> Personnage(nom : String, boisson : Boisson)
 + dire(texte : String)
@@ -127,7 +116,6 @@ boisson
 }
 
 class Ripou{
-brigand
 + <<create>> Ripou(nom : String)
 + <<create>> Ripou(nom : String, boisson : Boisson)
 + <<create>> Ripou(nom : String, boisson : Boisson, look : String)
@@ -145,7 +133,6 @@ brigand
 
 class Substantif{
 nom
-genre
 + <<create>> Substantif(nom : String, genre : Genre)
 + getNom() : String
 + getGenre() : Genre
@@ -166,6 +153,14 @@ genre
 }
 
 
+Boisson o--> Substantif
+
+
+Brigand o--> Dame
+
+Brigand o--> Cowboy
+
+Brigand o--> Boisson
 
 Brigand --|> Personnage
 
@@ -174,10 +169,20 @@ Brigand ..|> HorsLaLoi
 
 
 
+Cowboy o--> HorsLaLoi
+
+Cowboy o--> Boisson
+
 Cowboy --|> Personnage
 
 
 
+
+Dame o--> Cowboy
+
+Dame o--> HorsLaLoi
+
+Dame o--> Boisson
 
 Dame --|> Personnage
 
@@ -188,8 +193,12 @@ HorsLaLoi ..|> Nommable
 Narrateur --|> Personnage
 
 
+Personnage o--> Boisson
+
 Personnage ..|> Nommable
 
+
+Ripou o--> Brigand
 
 Ripou --|> Cowboy
 
@@ -197,6 +206,8 @@ Ripou ..|> HorsLaLoi
 
 
 
+
+Substantif o--> Genre
 
 
 }

@@ -45,7 +45,7 @@ public class Association {
 
         //Ajout de la multiplicité du premier élément
         if (mult1 != null)
-            associationString += " " +  mult1 + " ";
+            associationString += " " + mult1 + " ";
 
         //Ajout du début de la flèche selon le type d'association
         if(!isDca) {

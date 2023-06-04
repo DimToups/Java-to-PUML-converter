@@ -51,4 +51,5 @@ public class ClassContent extends ElementContent{
     public ArrayList<Methode> getMethodes(){
         return this.classMethods;
     }
+    public ArrayList<Attribut> getAttributs(){return this.classAttributs;}
 }

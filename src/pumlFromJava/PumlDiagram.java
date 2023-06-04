@@ -50,8 +50,19 @@ public class PumlDiagram {
         for (ElementContent elementContent : elements) {
             Element element = findElementFromElementContent(elementContent);
             //Recherche d'agrégation/composition
-            if (true) {
-
+            if (elementContent.classType == ElementKind.CLASS) {
+                ClassContent classContent = (ClassContent) elementContent;
+                for(Attribut attribut : classContent.getAttributs()) {
+                    if(!attribut.getType().toString().equals("void")){
+                        for(ElementContent elementContentCompar : elements){
+                            if(!elementContentCompar.className.equals(classContent.className) && SubstringType(attribut.getType().toString()).equals(elementContentCompar.className)) {
+                                attribut.setToInvisible();
+                                Association associationAgreg = new Association(elementContent, elementContentCompar, TypeAssociation.AGREGATION);
+                                this.ajoutAssociation(associationAgreg);
+                            }
+                        }
+                    }
+                }
             }
 
             //Recherche d'héritage

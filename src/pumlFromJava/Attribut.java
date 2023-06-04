@@ -105,4 +105,10 @@ public class Attribut {
     public boolean getPumlVisibility(){
         return this.isPumlVisible;
     }
+    void setToInvisible(){
+        this.isPumlVisible = false;
+    }
+    void setToVisible(){
+        this.isPumlVisible = false;
+    }
 }
