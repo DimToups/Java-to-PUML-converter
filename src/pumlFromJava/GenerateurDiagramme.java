@@ -77,7 +77,7 @@ public class GenerateurDiagramme {
     public void generateLinksForPuml(ArrayList<Association> associations){
         for(Association association : associations){
             try {
-                String linkContent = association.genererAssociation(isDCA) + "\n";
+                String linkContent = association.genererAssociation(isDCA);
                 FileOutputStream fos = null;
                 fos = new FileOutputStream(path + "/" + name, true);
                 byte[] b = linkContent.getBytes();

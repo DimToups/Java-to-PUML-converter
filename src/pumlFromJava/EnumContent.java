@@ -19,18 +19,11 @@ public class EnumContent extends ElementContent{
     @Override
     public String genererContenuElement(boolean isDca){
         String contenu = "class " + this.className + "{\n";
-        if (isDca){
-            for (Attribut attribut : classAttributs) {
-                if (attribut.getType().toString().contains("."))
-                    contenu += attribut.getNom() + "\n";
-            }
-            return contenu += "}";
+
+        for(Attribut attribut : classAttributs){
+            contenu += "\t" + attribut.AttributtoString() + "\n";
         }
-        else{
-            for(Attribut attribut : classAttributs){
-                contenu += attribut.AttributtoString() + "\n";
-            }
-            return contenu += "}\n";
-        }
+
+        return contenu += "}\n";
     }
 }

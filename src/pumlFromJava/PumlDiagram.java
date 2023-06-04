@@ -49,6 +49,7 @@ public class PumlDiagram {
         //Recherche des agrégations
         for (ElementContent elementContent : elements) {
             Element element = findElementFromElementContent(elementContent);
+
             //Recherche d'agrégation/composition
             if (elementContent.classType == ElementKind.CLASS) {
                 ClassContent classContent = (ClassContent) elementContent;
@@ -173,9 +174,9 @@ public class PumlDiagram {
     public void ajoutAssociation(Association associationCandidate){
         //Traitement de toutes les associations
         for (Association association : associations){
-            if(association.getElement1().getNom().equals(associationCandidate.getElement1().getNom()) && association.getElement2().getNom().equals(associationCandidate.getElement2().getNom()) && associationCandidate.getTypeAssociation() == association.getTypeAssociation())
+            if (association.getElement1().getNom().equals(associationCandidate.getElement1().getNom()) && association.getElement2().getNom().equals(associationCandidate.getElement2().getNom()) && associationCandidate.getTypeAssociation() == association.getTypeAssociation())
                 return;
-            if(association.getElement1().getNom().equals(associationCandidate.getElement2().getNom()) && association.getElement2().getNom().equals(associationCandidate.getElement1().getNom()) && associationCandidate.getTypeAssociation() == association.getTypeAssociation())
+            if (association.getElement1().getNom().equals(associationCandidate.getElement2().getNom()) && association.getElement2().getNom().equals(associationCandidate.getElement1().getNom()) && associationCandidate.getTypeAssociation() == association.getTypeAssociation())
                 return;
         }
         this.associations.add(associationCandidate);

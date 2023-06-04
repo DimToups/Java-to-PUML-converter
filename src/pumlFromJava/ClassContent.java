@@ -32,7 +32,7 @@ public class ClassContent extends ElementContent{
         if (isDca){
             for (Attribut attribut : classAttributs) {
                 if (!attribut.getType().toString().contains("."))
-                    contenu += attribut.getNom() + "\n";
+                    contenu += "\t" + attribut.getNom() + "\n";
             }
             return contenu += "}";
         }
@@ -40,10 +40,10 @@ public class ClassContent extends ElementContent{
         else{
             for(Attribut attribut : classAttributs){
                 if (attribut.getPumlVisibility())
-                    contenu += attribut.getNom() + "\n";
+                    contenu += "\t" + attribut.getNom() + "\n";
             }
             for (Methode methode : classMethods){
-                contenu += methode.MethodetoString() + "\n";
+                contenu += "\t" + methode.MethodetoString() + "\n";
             }
             return contenu += "}\n";
         }

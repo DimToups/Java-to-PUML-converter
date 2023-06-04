@@ -10,7 +10,7 @@ public class Association {
     private String mult2;
     private Attribut attributLié;
     private TypeAssociation typeAssociation = TypeAssociation.SIMPLE;
-private boolean isPumlVisible = true;
+    private boolean isPumlVisible = true;
     public Association(ElementContent element1, ElementContent element2) {
         this.element1 = element1;
         this.element2 = element2;
@@ -37,7 +37,6 @@ private boolean isPumlVisible = true;
         return typeAssociation;
     }
     public String genererAssociation(boolean isDca) {
-        //La méthode entière sera à refaire pour rendre le tout plus agréable visuellement parlant
         if(this.isPumlVisible) {
             String associationString = "";
 
@@ -89,7 +88,7 @@ private boolean isPumlVisible = true;
             if (typeAssociation == TypeAssociation.DEPENDANCE && isDca)
                 associationString += " : <<uses>>";
 
-            return associationString;
+            return associationString + "\n";
         }
         return "";
     }
@@ -102,7 +101,10 @@ private boolean isPumlVisible = true;
     public void setAttributLié(Attribut attribut){this.attributLié = attribut;}
     public boolean getPumlVisibilite(){return this.isPumlVisible;}
     public void setToInvisible(){this.isPumlVisible = false;}
-    public void IncrementationMult(){this.mult2 = Integer.toString(Integer.valueOf(this.mult2)+1);}
+    public void IncrementationMult(){
+        if(!this.mult2.equals("*"))
+            this.mult2 = Integer.toString(Integer.valueOf(this.mult2)+1);
+    }
     public void setType(TypeAssociation typeAssociation){
         this.typeAssociation = typeAssociation;
     }

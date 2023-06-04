@@ -59,6 +59,7 @@ class InterfaceContent{
 class Attribut{
     - nom : String
     - type : TypeMirror
+    - isPumlVisible : Boolean
     + <<create>> Attribut(variableElement : VariableElement)
     + getNom() : String
     + getType() : TypeMirror
@@ -72,6 +73,9 @@ class Attribut{
     - SubstringType(string : String) : String
     + findModifier(element : Element)
     + findVisibility(element : Element)
+    + getPumlVisibilite() : Boolean
+    + setToInvisble()
+    + setToVisble()
 }
 class Methode{
     - nom : String
@@ -99,10 +103,23 @@ enum Modificateur <<enum>>{
     FINAL
 }
 class Association{
+    - mult1 : String
+    - mult2 : String
+    - isPumlVisible : Boolean
     + <<create>> Association(element1 : ClassContent, element2 : ClassContent)
     + <<create>> Association(element1 : ClassContent, element2 : ClassContent, typeLiaison : TypeLiaison)
-    + getTypeAssociation() : TypeAssociation
+    + <<create>> Association(element1 : ClassContent, element2 : ClassContent, typeLiaison : TypeLiaison, mult1 : String, mult2 : String)
     + genererAssociations() : String
+    + getElement1() : ElementContent
+    + getElement2() : ElementContent
+    + getTypeAssociation() : TypeAssociation
+    + setMult1(mult1 : String)
+    + setMult2(mult2 : String)
+    + setAttributLié(attribut : Attribut)
+    + getPumlVisibilite() : Boolean
+    + setToInvisble()
+    + IncrementationMult()
+    + setType(typeAssociation : TypeAssociation)
 }
 enum TypeAssociation <<enum>>{
     HERITAGE
@@ -150,5 +167,6 @@ Methode "1" *--> "1\n- modificateur" Modificateur : indique le modificateur\n >
 Methode "1" o-> "*\n- parametres" Attribut : Stocke les paramètres\nde la méthode\n >
 Association "1" o-> "2\n- element1\n- element2" ElementContent : Informe de la liaison entre\n >
 Association "1" *--> "1\n- TypeAssociation" TypeAssociation : Indique le type de liaison\n >
+Association "1" o--> "1\n - AttributLié" Attribut : Est lié à l'association\n >
 
 @enduml

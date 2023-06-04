@@ -59,11 +59,8 @@ public class Methode {
         if (this.modificateur == Modificateur.ABSTRACT)
             toString += " {abstract}";
 
-        if (!type.toString().equals("void")) {
-            if (this.nom.equals("getCaptives"))
-                System.out.println(this.nom);
+        if (!type.toString().equals("void"))
             toString += " : " + findUmlType(this.type);
-        }
 
         return toString;
     }

@@ -28,7 +28,7 @@ public class InterfaceContent extends ElementContent{
             return contenu += "}";
         else{
             for (Methode methode : classMethods){
-                contenu += methode.MethodetoString() + "\n";
+                contenu += "\t" + methode.MethodetoString() + "\n";
             }
             return contenu += "}\n";
         }

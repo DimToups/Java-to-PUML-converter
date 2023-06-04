@@ -14,7 +14,6 @@ public class Attribut {
     private Modificateur modificateur;
     private boolean isPumlVisible = true;
     public Attribut(VariableElement variableElement){
-        System.out.println("\t" + variableElement.toString());
         this.nom = variableElement.getSimpleName().toString();
         this.type = variableElement.asType();
         this.findModifier(variableElement);
@@ -115,10 +114,10 @@ public class Attribut {
     public boolean getPumlVisibility(){
         return this.isPumlVisible;
     }
-    void setToInvisible(){
+    public void setToInvisible(){
         this.isPumlVisible = false;
     }
-    void setToVisible(){
+    public void setToVisible(){
         this.isPumlVisible = false;
     }
 }
