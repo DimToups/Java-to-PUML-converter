@@ -37,15 +37,17 @@ public class Association {
         return typeAssociation;
     }
     public String genererAssociation(boolean isDca) {
-        if(this.isPumlVisible) {
+        if(this.isPumlVisible && (!isDca && this.typeAssociation != TypeAssociation.DEPENDANCE)) {
             String associationString = "";
 
-            if (isDca || !isDca && typeAssociation != TypeAssociation.DEPENDANCE)
-                associationString = "\n" + element1.getNom() + " ";
+            if (!isDca)
+                associationString = "\n" + element1.getNom();
 
             //Ajout de la multiplicité du premier élément
             if (mult1 != null)
                 associationString += " \"" + mult1 + "\" ";
+            else
+                associationString += " \"@PumlType\" ";
 
             //Ajout du début de la flèche selon le type d'association
             if (!isDca) {
@@ -56,14 +58,12 @@ public class Association {
             }
 
             //Ajout du corps de la flèche
-            if (isDca || !isDca && typeAssociation != TypeAssociation.DEPENDANCE) {
-                for (int i = 0; i < 2; i++) {
-                    if ((i & 2) == 0) {
-                        if (typeAssociation == TypeAssociation.IMPLEMENT)
-                            associationString += ".";
-                        else
-                            associationString += "-";
-                    }
+            for (int i = 0; i < 2; i++) {
+                if ((i & 2) == 0) {
+                    if (typeAssociation == TypeAssociation.IMPLEMENT)
+                        associationString += ".";
+                    else
+                        associationString += "-";
                 }
             }
 
@@ -76,13 +76,18 @@ public class Association {
             }
 
             //ajout de la multiplicité du deuxième élément
-            if (isDca && mult2 != null)
-                associationString += " \"" + mult2 + "\" ";
-            else if (mult2 != null)
-                associationString += " \"" + mult2 + "\\n " + attributLié.getPumlVisibilite() + " " + attributLié.getNom() + "\" ";
+            if (mult2 != null)
+                associationString += " \"" + mult2;
+            else
+                associationString += " \"@PumlType";
+
+            if (attributLié != null)
+                associationString += " \\n " + attributLié.getPumlVisibilite() + " " + attributLié.getNom() + "\"";
+            else
+                associationString += " \\n @PumlAssociation\"";
 
             //Ajout du nom du deuxième élément
-            if (isDca || !isDca && typeAssociation != TypeAssociation.DEPENDANCE)
+            if (!isDca)
                 associationString += " " + element2.getNom();
 
             if (typeAssociation == TypeAssociation.DEPENDANCE && isDca)

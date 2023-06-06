@@ -152,64 +152,49 @@ class Substantif{
 }
 
 
-Boisson  "1" o--> "1\n - substantif"  Substantif
+Boisson "1" o--> "1 \n - substantif" Substantif
 
-Boisson  "1" o--> "1\n + EAU"  Boisson
+Boisson "1" o--> "1 \n + EAU" Boisson
 
+Brigand "1" o--> "* \n - captives" Dame
 
-Brigand  "1" o--> "*\n - captives"  Dame
+Brigand "1" o--> "1 \n - gardien" Cowboy
 
-Brigand  "1" o--> "1\n - gardien"  Cowboy
+Brigand "1" o--> "1 \n - boissonParDefaut" Boisson
 
-Brigand  "1" o--> "1\n - boissonParDefaut"  Boisson
+Brigand "@PumlType" --|> "@PumlType \n @PumlAssociation" Personnage
 
-Brigand --|> Personnage
+Brigand "@PumlType" ..|> "@PumlType \n @PumlAssociation" HorsLaLoi
 
-Brigand ..|> HorsLaLoi
+Cowboy "1" o--> "* \n - captures" HorsLaLoi
 
+Cowboy "1" o--> "1 \n - boissonParDefaut" Boisson
 
+Cowboy "@PumlType" --|> "@PumlType \n @PumlAssociation" Personnage
 
+Dame "1" o--> "1 \n - sauveur" Cowboy
 
-Cowboy  "1" o--> "*\n - captures"  HorsLaLoi
+Dame "1" o--> "1 \n - ravisseur" HorsLaLoi
 
-Cowboy  "1" o--> "1\n - boissonParDefaut"  Boisson
+Dame "1" o--> "1 \n - boissonParDefaut" Boisson
 
-Cowboy --|> Personnage
+Dame "@PumlType" --|> "@PumlType \n @PumlAssociation" Personnage
 
+HorsLaLoi "@PumlType" ..|> "@PumlType \n @PumlAssociation" Nommable
 
+Narrateur "@PumlType" --|> "@PumlType \n @PumlAssociation" Personnage
 
+Personnage "1" o--> "1 \n - BOISSON_PAR_DEFAUT" Boisson
 
-Dame  "1" o--> "1\n - sauveur"  Cowboy
+Personnage "@PumlType" ..|> "@PumlType \n @PumlAssociation" Nommable
 
-Dame  "1" o--> "1\n - ravisseur"  HorsLaLoi
+Ripou "1" o--> "1 \n - brigand" Brigand
 
-Dame  "1" o--> "1\n - boissonParDefaut"  Boisson
+Ripou "@PumlType" --|> "@PumlType \n @PumlAssociation" Cowboy
 
-Dame --|> Personnage
+Ripou "@PumlType" ..|> "@PumlType \n @PumlAssociation" HorsLaLoi
 
-
-
-HorsLaLoi ..|> Nommable
-
-Narrateur --|> Personnage
-
-
-Personnage  "1" o--> "1\n - BOISSON_PAR_DEFAUT"  Boisson
-
-Personnage ..|> Nommable
-
-
-Ripou  "1" o--> "1\n - brigand"  Brigand
-
-Ripou --|> Cowboy
-
-Ripou ..|> HorsLaLoi
-
-
-
-
-Substantif  "1" o--> "1\n - genre"  Genre
-
+Substantif "1" o--> "1 \n - genre" Genre
 
 }
 @enduml
