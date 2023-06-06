@@ -37,17 +37,18 @@ public class Association {
         return typeAssociation;
     }
     public String genererAssociation(boolean isDca) {
-        if(this.isPumlVisible && (!isDca && this.typeAssociation != TypeAssociation.DEPENDANCE)) {
+        if(this.isPumlVisible && (isDca || this.typeAssociation != TypeAssociation.DEPENDANCE)) {
             String associationString = "";
 
-            if (!isDca)
-                associationString = "\n" + element1.getNom();
+            associationString = "\n" + element1.getNom() + " ";
 
             //Ajout de la multiplicité du premier élément
-            if (mult1 != null)
-                associationString += " \"" + mult1 + "\" ";
-            else
-                associationString += " \"@PumlType\" ";
+            if(typeAssociation == TypeAssociation.COMPOSITION || typeAssociation == TypeAssociation.AGREGATION) {
+                if (mult1 != null)
+                    associationString += "\"" + mult1 + "\" ";
+                else
+                    associationString += "\"@PumlType\" ";
+            }
 
             //Ajout du début de la flèche selon le type d'association
             if (!isDca) {
@@ -68,29 +69,30 @@ public class Association {
             }
 
             //Ajout de la pointe de la flèche
-            if (!isDca && (typeAssociation == TypeAssociation.AGREGATION || typeAssociation == TypeAssociation.COMPOSITION)) {
-                associationString += ">";
+            if (!isDca && (typeAssociation == TypeAssociation.AGREGATION || typeAssociation == TypeAssociation.COMPOSITION) || isDca && typeAssociation == TypeAssociation.DEPENDANCE) {
+                associationString += "> ";
             }
             if (typeAssociation == TypeAssociation.HERITAGE || typeAssociation == TypeAssociation.IMPLEMENT) {
-                associationString += "|>";
+                associationString += "|> ";
             }
 
             //ajout de la multiplicité du deuxième élément
-            if (mult2 != null)
-                associationString += " \"" + mult2;
-            else
-                associationString += " \"@PumlType";
+            if(typeAssociation == TypeAssociation.COMPOSITION || typeAssociation == TypeAssociation.AGREGATION) {
+                if (mult2 != null)
+                    associationString += "\"" + mult2;
+                else
+                    associationString += "\"@PumlType";
 
-            if (attributLié != null)
-                associationString += " \\n " + attributLié.getPumlVisibilite() + " " + attributLié.getNom() + "\"";
-            else
-                associationString += " \\n @PumlAssociation\"";
+                if (attributLié != null)
+                    associationString += "\\n " + attributLié.getPumlVisibilite() + " " + attributLié.getNom() + "\" ";
+                else
+                    associationString += "\\n @PumlAssociation\" ";
+            }
 
             //Ajout du nom du deuxième élément
-            if (!isDca)
-                associationString += " " + element2.getNom();
+            associationString += element2.getNom();
 
-            if (typeAssociation == TypeAssociation.DEPENDANCE && isDca)
+            if (typeAssociation == TypeAssociation.DEPENDANCE)
                 associationString += " : <<uses>>";
 
             return associationString + "\n";

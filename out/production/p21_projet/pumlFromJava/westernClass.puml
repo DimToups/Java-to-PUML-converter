@@ -8,193 +8,110 @@ hide empty members
 
 package western{
 class Boisson{
-	+ <<create>> Boisson(nom : String, genre : Genre)
-	+ getNom() : String
-	+ getGenre() : Genre
-	+ getNomAvecArticleIndefini() : String
-	+ getNomAvecArticlePartitif() : String
-	+ getNomAvecArticleDefini() : String
-	+ getNomAvecPreposition(preposition : String) : String
 }
-
 class Brigand{
-	LOOK_PAR_DEFAUT
-	look
 	recompense
 	estLibre
-	+ <<create>> Brigand(nom : String)
-	+ <<create>> Brigand(nom : String, boisson : Boisson)
-	+ <<create>> Brigand(nom : String, boisson : Boisson, look : String)
-	+ getLook() : String
-	+ getRecompense() : int
-	+ estLibre() : boolean
-	+ kidnapper(dame : Dame)
-	+ seFaireCapturer(cowBoy : Cowboy)
-	+ seFaireTirerDessus(cowBoy : Cowboy)
-	+ getPseudo() : String
-	+ getCaptives() : Dame *
-	+ sePresenter()
-	+ getBoissonParDefaut() {static} : Boisson
-	+ setBoissonParDefaut(boisson : Boisson) {static}
 }
-
 class Cowboy{
 	gains
-	+ <<create>> Cowboy(nom : String)
-	+ <<create>> Cowboy(nom : String, boisson : Boisson)
-	+ getPseudo() : String
-	+ liberer(dame : Dame)
-	+ liberer(captives : Dame *)
-	+ capturer(horsLaLoi : HorsLaLoi)
-	+ tirerSur(brigand : HorsLaLoi)
-	+ sePresenter()
-	+ getBoissonParDefaut() {static} : Boisson
-	+ setBoissonParDefaut(boisson : Boisson) {static}
 }
-
 class Dame{
 	estLibre
-	+ <<create>> Dame(nom : String)
-	+ <<create>> Dame(nom : String, boisson : Boisson)
-	+ getPseudo() : String
-	+ seFaireKidnapper(horsLaLoi : HorsLaLoi)
-	+ seFaireLiberer(cowBoy : Cowboy)
-	+ estLibre() : boolean
-	+ sePresenter()
-	+ getBoissonParDefaut() {static} : Boisson
-	+ setBoissonParDefaut(boisson : Boisson) {static}
-	+ getRavisseur() : HorsLaLoi
 }
-
 class Genre{
 	+ FEMININ : Genre
 	+ MASCULIN : Genre
 }
 
 class Histoire4{
-	+ <<create>> Histoire4()
-	+ main(args : String[]) {static}
 }
-
 interface HorsLaLoi<<interface>>{
-	+ estLibre() {abstract} : boolean
-	+ getRecompense() {abstract} : int
-	+ kidnapper(dame : Dame, dame : Dame) {abstract}
-	+ seFaireCapturer(cowBoy : Cowboy, cowBoy : Cowboy) {abstract}
-	+ seFaireTirerDessus(cowBoy : Cowboy, cowBoy : Cowboy) {abstract}
-	+ getLook() {abstract} : String
-	+ getCaptives() {abstract} : Dame *
 }
-
 class Narrateur{
-	+ <<create>> Narrateur()
-	+ <<create>> Narrateur(nom : String)
-	+ dire(texte : String)
-	+ boire(boisson : Boisson)
-	+ boire()
-	+ getPseudo() : String
 }
-
 interface Nommable<<interface>>{
-	+ getNom() {abstract} : String
-	+ getPseudo() {abstract} : String
 }
-
 class Personnage{
-	nom
-	+ <<create>> Personnage(nom : String)
-	+ <<create>> Personnage(nom : String, boisson : Boisson)
-	+ dire(texte : String)
-	+ sePresenter()
-	+ boire(boisson : Boisson)
-	+ boire()
-	+ getNom() : String
-	+ getBoisson() : Boisson
-	+ getPseudos(personnages : Nommable *) {static} : String
-	+ getBoissonParDefaut() {static} : Boisson
 }
-
 class Ripou{
-	+ <<create>> Ripou(nom : String)
-	+ <<create>> Ripou(nom : String, boisson : Boisson)
-	+ <<create>> Ripou(nom : String, boisson : Boisson, look : String)
-	+ getLook() : String
-	+ estLibre() : boolean
-	+ getRecompense() : int
-	+ kidnapper(dame : Dame)
-	+ getCaptives() : Dame *
-	+ seFaireCapturer(cowBoy : Cowboy)
-	+ seFaireTirerDessus(cowBoy : Cowboy)
-	+ getPseudo() : String
-	+ sePresenter()
-	+ liberer(dame : Dame)
 }
-
 class Substantif{
-	nom
-	+ <<create>> Substantif(nom : String, genre : Genre)
-	+ getNom() : String
-	+ getGenre() : Genre
-	+ toString() : String
-	+ isVowel(c : char) {static} : boolean
-	+ startsWithVowel(s : String) {static} : boolean
-	+ getArticleIndefini() : String
-	+ avecArticleIndefini() : String
-	+ getArticleDefini(genre : Genre) {static} : String
-	+ getArticleDefini() : String
-	+ avecArticleDefini() : String
-	+ faireElision(article : String) {static} : String
-	+ elision() : boolean
-	+ getArticlePartitif() : String
-	+ avecArticlePartitif() : String
-	+ avecElision(article : String) : String
-	+ avecPreposition(preposition : String) : String
 }
 
+Boisson "1" --"1\n - substantif" Substantif
 
-Boisson "1" o--> "1 \n - substantif" Substantif
+Boisson "1" --"1\n + EAU" Boisson
 
-Boisson "1" o--> "1 \n + EAU" Boisson
+Boisson --> Genre : <<uses>>
 
-Brigand "1" o--> "* \n - captives" Dame
+Brigand "1" --"*\n - captives" Dame
 
-Brigand "1" o--> "1 \n - gardien" Cowboy
+Brigand "1" --"1\n - gardien" Cowboy
 
-Brigand "1" o--> "1 \n - boissonParDefaut" Boisson
+Brigand "1" --"1\n - boissonParDefaut" Boisson
 
-Brigand "@PumlType" --|> "@PumlType \n @PumlAssociation" Personnage
+Brigand --|> Personnage
 
-Brigand "@PumlType" ..|> "@PumlType \n @PumlAssociation" HorsLaLoi
+Brigand ..|> HorsLaLoi
 
-Cowboy "1" o--> "* \n - captures" HorsLaLoi
+Brigand --> Boisson : <<uses>>
 
-Cowboy "1" o--> "1 \n - boissonParDefaut" Boisson
+Brigand --> Dame : <<uses>>
 
-Cowboy "@PumlType" --|> "@PumlType \n @PumlAssociation" Personnage
+Brigand --> Cowboy : <<uses>>
 
-Dame "1" o--> "1 \n - sauveur" Cowboy
+Cowboy "1" --"*\n - captures" HorsLaLoi
 
-Dame "1" o--> "1 \n - ravisseur" HorsLaLoi
+Cowboy "1" --"1\n - boissonParDefaut" Boisson
 
-Dame "1" o--> "1 \n - boissonParDefaut" Boisson
+Cowboy --|> Personnage
 
-Dame "@PumlType" --|> "@PumlType \n @PumlAssociation" Personnage
+Cowboy --> Boisson : <<uses>>
 
-HorsLaLoi "@PumlType" ..|> "@PumlType \n @PumlAssociation" Nommable
+Cowboy --> Dame : <<uses>>
 
-Narrateur "@PumlType" --|> "@PumlType \n @PumlAssociation" Personnage
+Cowboy --> HorsLaLoi : <<uses>>
 
-Personnage "1" o--> "1 \n - BOISSON_PAR_DEFAUT" Boisson
+Dame "1" --"1\n - sauveur" Cowboy
 
-Personnage "@PumlType" ..|> "@PumlType \n @PumlAssociation" Nommable
+Dame "1" --"1\n - ravisseur" HorsLaLoi
 
-Ripou "1" o--> "1 \n - brigand" Brigand
+Dame "1" --"1\n - boissonParDefaut" Boisson
 
-Ripou "@PumlType" --|> "@PumlType \n @PumlAssociation" Cowboy
+Dame --|> Personnage
 
-Ripou "@PumlType" ..|> "@PumlType \n @PumlAssociation" HorsLaLoi
+Dame --> Boisson : <<uses>>
 
-Substantif "1" o--> "1 \n - genre" Genre
+Dame --> HorsLaLoi : <<uses>>
+
+HorsLaLoi ..|> Nommable
+
+Narrateur --|> Personnage
+
+Narrateur --> Boisson : <<uses>>
+
+Personnage "1" --"1\n - BOISSON_PAR_DEFAUT" Boisson
+
+Personnage ..|> Nommable
+
+Personnage --> Boisson : <<uses>>
+
+Ripou "1" --"1\n - brigand" Brigand
+
+Ripou --|> Cowboy
+
+Ripou ..|> HorsLaLoi
+
+Ripou --> Boisson : <<uses>>
+
+Ripou --> Dame : <<uses>>
+
+Ripou --> Cowboy : <<uses>>
+
+Substantif "1" --"1\n - genre" Genre
+
+Substantif --> Genre : <<uses>>
 
 }
 @enduml
