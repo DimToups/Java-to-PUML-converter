@@ -37,10 +37,15 @@ public class Association {
         return typeAssociation;
     }
     public String genererAssociation(boolean isDca) {
-        if(this.isPumlVisible && (isDca || this.typeAssociation != TypeAssociation.DEPENDANCE)) {
+        if(this.isPumlVisible) {
             String associationString = "";
 
-            associationString = "\n" + element1.getNom() + " ";
+            if(typeAssociation == TypeAssociation.AGREGATION)
+                associationString += "\n'@PumlAggregation";
+            else if(typeAssociation == TypeAssociation.COMPOSITION)
+                associationString += "\n'@PumlComposition";
+
+            associationString += "\n" + element1.getNom() + " ";
 
             //Ajout de la multiplicité du premier élément
             if(typeAssociation == TypeAssociation.COMPOSITION || typeAssociation == TypeAssociation.AGREGATION) {
@@ -69,7 +74,7 @@ public class Association {
             }
 
             //Ajout de la pointe de la flèche
-            if (!isDca && (typeAssociation == TypeAssociation.AGREGATION || typeAssociation == TypeAssociation.COMPOSITION) || isDca && typeAssociation == TypeAssociation.DEPENDANCE) {
+            if (!isDca && (typeAssociation == TypeAssociation.AGREGATION || typeAssociation == TypeAssociation.COMPOSITION) || typeAssociation == TypeAssociation.DEPENDANCE) {
                 associationString += "> ";
             }
             if (typeAssociation == TypeAssociation.HERITAGE || typeAssociation == TypeAssociation.IMPLEMENT) {
@@ -109,7 +114,7 @@ public class Association {
     public boolean getPumlVisibilite(){return this.isPumlVisible;}
     public void setToInvisible(){this.isPumlVisible = false;}
     public void IncrementationMult(){
-        if(!this.mult2.equals("*"))
+        if(this.mult2 != null && !this.mult2.equals("*"))
             this.mult2 = Integer.toString(Integer.valueOf(this.mult2)+1);
     }
     public void setType(TypeAssociation typeAssociation){

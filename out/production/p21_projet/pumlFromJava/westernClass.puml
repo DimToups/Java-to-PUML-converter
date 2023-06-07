@@ -152,30 +152,42 @@ class Substantif{
 }
 
 
+'@PumlAggregation
 Boisson "1" o--> "1\n - substantif" Substantif
 
+'@PumlAggregation
 Boisson "1" o--> "1\n + EAU" Boisson
 
+Boisson --> Genre : <<uses>>
+
+'@PumlAggregation
 Brigand "1" o--> "*\n - captives" Dame
 
+'@PumlAggregation
 Brigand "1" o--> "1\n - gardien" Cowboy
 
+'@PumlAggregation
 Brigand "1" o--> "1\n - boissonParDefaut" Boisson
 
 Brigand --|> Personnage
 
 Brigand ..|> HorsLaLoi
 
+'@PumlAggregation
 Cowboy "1" o--> "*\n - captures" HorsLaLoi
 
+'@PumlAggregation
 Cowboy "1" o--> "1\n - boissonParDefaut" Boisson
 
 Cowboy --|> Personnage
 
+'@PumlAggregation
 Dame "1" o--> "1\n - sauveur" Cowboy
 
+'@PumlAggregation
 Dame "1" o--> "1\n - ravisseur" HorsLaLoi
 
+'@PumlAggregation
 Dame "1" o--> "1\n - boissonParDefaut" Boisson
 
 Dame --|> Personnage
@@ -184,16 +196,25 @@ HorsLaLoi ..|> Nommable
 
 Narrateur --|> Personnage
 
+Narrateur --> Boisson : <<uses>>
+
+'@PumlAggregation
 Personnage "1" o--> "1\n - BOISSON_PAR_DEFAUT" Boisson
 
 Personnage ..|> Nommable
 
+'@PumlAggregation
 Ripou "1" o--> "1\n - brigand" Brigand
 
 Ripou --|> Cowboy
 
 Ripou ..|> HorsLaLoi
 
+Ripou --> Boisson : <<uses>>
+
+Ripou --> Dame : <<uses>>
+
+'@PumlAggregation
 Substantif "1" o--> "1\n - genre" Genre
 
 }
