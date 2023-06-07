@@ -8,13 +8,13 @@ hide empty members
 
 package western{
 class Boisson{
-	+ <<create>> Boisson(nom : String, genre : Genre)
+	+ <<create>> Boisson(nom : String, genre : Genre, nom : String, genre : Genre)
 	+ getNom() : String
 	+ getGenre() : Genre
 	+ getNomAvecArticleIndefini() : String
 	+ getNomAvecArticlePartitif() : String
 	+ getNomAvecArticleDefini() : String
-	+ getNomAvecPreposition(preposition : String) : String
+	+ getNomAvecPreposition(preposition : String, preposition : String) : String
 }
 
 class Brigand{
@@ -22,47 +22,47 @@ class Brigand{
 	- look : String
 	- recompense : int
 	- estLibre : boolean
-	+ <<create>> Brigand(nom : String)
-	+ <<create>> Brigand(nom : String, boisson : Boisson)
-	+ <<create>> Brigand(nom : String, boisson : Boisson, look : String)
+	+ <<create>> Brigand(nom : String, nom : String)
+	+ <<create>> Brigand(nom : String, boisson : Boisson, nom : String, boisson : Boisson)
+	+ <<create>> Brigand(nom : String, boisson : Boisson, look : String, nom : String, boisson : Boisson, look : String)
 	+ getLook() : String
 	+ getRecompense() : int
 	+ estLibre() : boolean
-	+ kidnapper(dame : Dame)
-	+ seFaireCapturer(cowBoy : Cowboy)
-	+ seFaireTirerDessus(cowBoy : Cowboy)
+	+ kidnapper(dame : Dame, dame : Dame)
+	+ seFaireCapturer(cowBoy : Cowboy, cowBoy : Cowboy)
+	+ seFaireTirerDessus(cowBoy : Cowboy, cowBoy : Cowboy)
 	+ getPseudo() : String
 	+ getCaptives() : Dame *
 	
 	
-	+ setBoissonParDefaut(boisson : Boisson) {static}
+	+ setBoissonParDefaut(boisson : Boisson, boisson : Boisson) {static}
 }
 
 class Cowboy{
 	- gains : int
-	+ <<create>> Cowboy(nom : String)
-	+ <<create>> Cowboy(nom : String, boisson : Boisson)
+	+ <<create>> Cowboy(nom : String, nom : String)
+	+ <<create>> Cowboy(nom : String, boisson : Boisson, nom : String, boisson : Boisson)
 	+ getPseudo() : String
-	+ liberer(dame : Dame)
-	+ liberer(captives : Dame *)
-	+ capturer(horsLaLoi : HorsLaLoi)
-	+ tirerSur(brigand : HorsLaLoi)
+	+ liberer(dame : Dame, dame : Dame)
+	+ liberer(captives : Dame *, captives : Dame *)
+	+ capturer(horsLaLoi : HorsLaLoi, horsLaLoi : HorsLaLoi)
+	+ tirerSur(brigand : HorsLaLoi, brigand : HorsLaLoi)
 	
 	
-	+ setBoissonParDefaut(boisson : Boisson) {static}
+	+ setBoissonParDefaut(boisson : Boisson, boisson : Boisson) {static}
 }
 
 class Dame{
 	- estLibre : boolean
-	+ <<create>> Dame(nom : String)
-	+ <<create>> Dame(nom : String, boisson : Boisson)
+	+ <<create>> Dame(nom : String, nom : String)
+	+ <<create>> Dame(nom : String, boisson : Boisson, nom : String, boisson : Boisson)
 	+ getPseudo() : String
-	+ seFaireKidnapper(horsLaLoi : HorsLaLoi)
-	+ seFaireLiberer(cowBoy : Cowboy)
+	+ seFaireKidnapper(horsLaLoi : HorsLaLoi, horsLaLoi : HorsLaLoi)
+	+ seFaireLiberer(cowBoy : Cowboy, cowBoy : Cowboy)
 	+ estLibre() : boolean
 	
 	
-	+ setBoissonParDefaut(boisson : Boisson) {static}
+	+ setBoissonParDefaut(boisson : Boisson, boisson : Boisson) {static}
 	+ getRavisseur() : HorsLaLoi
 }
 
@@ -73,7 +73,7 @@ class Genre{
 
 class Histoire4{
 	+ <<create>> Histoire4()
-	+ main(args : String[]) {static}
+	+ main(args : String[], args : String[]) {static}
 }
 
 interface HorsLaLoi<<interface>>{
@@ -88,7 +88,7 @@ interface HorsLaLoi<<interface>>{
 
 class Narrateur{
 	+ <<create>> Narrateur()
-	+ <<create>> Narrateur(nom : String)
+	+ <<create>> Narrateur(nom : String, nom : String)
 	
 	
 	
@@ -102,29 +102,29 @@ interface Nommable<<interface>>{
 
 class Personnage{
 	- nom : String
-	+ <<create>> Personnage(nom : String)
-	+ <<create>> Personnage(nom : String, boisson : Boisson)
-	+ dire(texte : String)
+	+ <<create>> Personnage(nom : String, nom : String)
+	+ <<create>> Personnage(nom : String, boisson : Boisson, nom : String, boisson : Boisson)
+	+ dire(texte : String, texte : String)
 	+ sePresenter()
-	+ boire(boisson : Boisson)
+	+ boire(boisson : Boisson, boisson : Boisson)
 	+ boire()
 	+ getNom() : String
 	+ getBoisson() : Boisson
-	+ getPseudos(personnages : Nommable *) {static} : String
+	+ getPseudos(personnages : Nommable *, personnages : Nommable *) {static} : String
 	+ getBoissonParDefaut() {static} : Boisson
 }
 
 class Ripou{
-	+ <<create>> Ripou(nom : String)
-	+ <<create>> Ripou(nom : String, boisson : Boisson)
-	+ <<create>> Ripou(nom : String, boisson : Boisson, look : String)
+	+ <<create>> Ripou(nom : String, nom : String)
+	+ <<create>> Ripou(nom : String, boisson : Boisson, nom : String, boisson : Boisson)
+	+ <<create>> Ripou(nom : String, boisson : Boisson, look : String, nom : String, boisson : Boisson, look : String)
 	+ getLook() : String
 	+ estLibre() : boolean
 	+ getRecompense() : int
-	+ kidnapper(dame : Dame)
+	+ kidnapper(dame : Dame, dame : Dame)
 	+ getCaptives() : Dame *
-	+ seFaireCapturer(cowBoy : Cowboy)
-	+ seFaireTirerDessus(cowBoy : Cowboy)
+	+ seFaireCapturer(cowBoy : Cowboy, cowBoy : Cowboy)
+	+ seFaireTirerDessus(cowBoy : Cowboy, cowBoy : Cowboy)
 	
 	
 	
@@ -132,23 +132,23 @@ class Ripou{
 
 class Substantif{
 	- nom : String
-	+ <<create>> Substantif(nom : String, genre : Genre)
+	+ <<create>> Substantif(nom : String, genre : Genre, nom : String, genre : Genre)
 	+ getNom() : String
 	+ getGenre() : Genre
 	+ toString() : String
-	+ isVowel(c : char) {static} : boolean
-	+ startsWithVowel(s : String) {static} : boolean
+	+ isVowel(c : char, c : char) {static} : boolean
+	+ startsWithVowel(s : String, s : String) {static} : boolean
 	+ getArticleIndefini() : String
 	+ avecArticleIndefini() : String
-	+ getArticleDefini(genre : Genre) {static} : String
+	+ getArticleDefini(genre : Genre, genre : Genre) {static} : String
 	+ getArticleDefini() : String
 	+ avecArticleDefini() : String
-	+ faireElision(article : String) {static} : String
+	+ faireElision(article : String, article : String) {static} : String
 	+ elision() : boolean
 	+ getArticlePartitif() : String
 	+ avecArticlePartitif() : String
-	+ avecElision(article : String) : String
-	+ avecPreposition(preposition : String) : String
+	+ avecElision(article : String, article : String) : String
+	+ avecPreposition(preposition : String, preposition : String) : String
 }
 
 
