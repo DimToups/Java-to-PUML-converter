@@ -38,6 +38,7 @@ public class Methode {
             this.parametres.add(attribut);
         }
     }
+    public void setToPumlInvisible(){this.isPumlVisible = false;}
     public String MethodetoString(){
         //Integer fullstop = this.type.toString().indexOf(".");
         String toString = "";

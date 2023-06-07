@@ -45,8 +45,7 @@ public class Association {
             else if(typeAssociation == TypeAssociation.COMPOSITION)
                 associationString += "\n'@PumlComposition";
 
-            if(!isSwapped)
-                associationString += element1.getNom() + " ";
+            associationString += element1.getNom() + " ";
 
             //Ajout de la multiplicité du premier élément
             if (typeAssociation == TypeAssociation.COMPOSITION || typeAssociation == TypeAssociation.AGREGATION) {
