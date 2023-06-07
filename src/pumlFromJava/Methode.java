@@ -10,7 +10,7 @@ public class Methode {
     private Visibilite visibilite;
     private Modificateur modificateur;
     private boolean isConstructor = false;
-    private boolean isPumlVisible = false;
+    private boolean isPumlVisible = true;
     private ArrayList<Attribut> parametres = new ArrayList<>();
     public Methode(ExecutableElement executableElement){
         this.nom = executableElement.getSimpleName().toString();
@@ -42,29 +42,32 @@ public class Methode {
     public void setToPumlInvisible(){this.isPumlVisible = false;}
     public String MethodetoString(){
         //Integer fullstop = this.type.toString().indexOf(".");
-        String toString = "";
-        if (this.getVisibilite().equals(Visibilite.PUBLIC))
-            toString += "+ ";
-        else if (this.getVisibilite().equals(Visibilite.PRIVATE))
-            toString += "- ";
-        else if (this.getVisibilite().equals(Visibilite.PROTECTED))
-            toString += "# ";
+        if(this.isPumlVisible) {
+            String toString = "";
+            if (this.getVisibilite().equals(Visibilite.PUBLIC))
+                toString += "+ ";
+            else if (this.getVisibilite().equals(Visibilite.PRIVATE))
+                toString += "- ";
+            else if (this.getVisibilite().equals(Visibilite.PROTECTED))
+                toString += "# ";
 
-        if (isConstructor)
-            toString += "<<create>> ";
+            if (isConstructor)
+                toString += "<<create>> ";
 
-        toString += this.nom + "(" + this.getStringParameters() + ")";
+            toString += this.nom + "(" + this.getStringParameters() + ")";
 
-        //Ajout de son éventuel modificateur static
-        if(this.modificateur == Modificateur.STATIC)
-            toString += " {static}";
-        if (this.modificateur == Modificateur.ABSTRACT)
-            toString += " {abstract}";
+            //Ajout de son éventuel modificateur static
+            if (this.modificateur == Modificateur.STATIC)
+                toString += " {static}";
+            if (this.modificateur == Modificateur.ABSTRACT)
+                toString += " {abstract}";
 
-        if (!type.toString().equals("void"))
-            toString += " : " + findUmlType(this.type);
+            if (!type.toString().equals("void"))
+                toString += " : " + findUmlType(this.type);
 
-        return toString;
+            return toString;
+        }
+        return "";
     }
     private String findUmlType(TypeMirror typeMirror){
         boolean isUmlMulti = false;

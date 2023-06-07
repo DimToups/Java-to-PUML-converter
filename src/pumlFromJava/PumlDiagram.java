@@ -31,19 +31,19 @@ public class PumlDiagram {
         for (Element element : docletEnvironment.getIncludedElements()){
             if (element.getKind() == ElementKind.CLASS){
                 ClassContent classContent = new ClassContent(element);
-                classContent.setEtagePuml(etagePumlAttribue%3);
+                classContent.setEtagePuml(etagePumlAttribue%5);
                 this.elements.add(classContent);
                 etagePumlAttribue++;
             }
             else if(element.getKind() == ElementKind.ENUM){
                 EnumContent enumContent = new EnumContent(element);
-                enumContent.setEtagePuml(etagePumlAttribue%3);
+                enumContent.setEtagePuml(etagePumlAttribue%4);
                 this.elements.add(enumContent);
                 etagePumlAttribue++;
             }
             else if (element.getKind() == ElementKind.INTERFACE){
                 InterfaceContent interfaceContent = new InterfaceContent(element);
-                interfaceContent.setEtagePuml(etagePumlAttribue%3);
+                interfaceContent.setEtagePuml(etagePumlAttribue%5);
                 this.elements.add(interfaceContent);
                 etagePumlAttribue++;
             }

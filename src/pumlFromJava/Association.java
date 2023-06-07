@@ -41,9 +41,9 @@ public class Association {
             String associationString = "";
 
             if(typeAssociation == TypeAssociation.AGREGATION)
-                associationString += "\n'@PumlAggregation";
+                associationString += "\n'@PumlAggregation\n";
             else if(typeAssociation == TypeAssociation.COMPOSITION)
-                associationString += "\n'@PumlComposition";
+                associationString += "\n'@PumlComposition\n";
 
             associationString += element1.getNom() + " ";
 
@@ -100,7 +100,7 @@ public class Association {
             if (typeAssociation == TypeAssociation.DEPENDANCE)
                 associationString += " : <<uses>>";
 
-            return associationString + "\n";
+            return associationString + " : \"          \\n >\"\n";
         }
         return "";
     }
