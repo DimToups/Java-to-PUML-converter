@@ -40,52 +40,64 @@ public class Association {
         if(this.isPumlVisible) {
             String associationString = "";
 
-            if (isDca || !isDca && typeAssociation != TypeAssociation.DEPENDANCE)
-                associationString = "\n" + element1.getNom() + " ";
+            if(typeAssociation == TypeAssociation.AGREGATION)
+                associationString += "\n'@PumlAggregation";
+            else if(typeAssociation == TypeAssociation.COMPOSITION)
+                associationString += "\n'@PumlComposition";
+
+            associationString += element1.getNom() + " ";
 
             //Ajout de la multiplicité du premier élément
-            if (mult1 != null)
-                associationString += " \"" + mult1 + "\" ";
-
-            //Ajout du début de la flèche selon le type d'association
-            if (!isDca) {
-                if (typeAssociation == TypeAssociation.AGREGATION)
-                    associationString += "o";
-                else if (typeAssociation == TypeAssociation.COMPOSITION)
-                    associationString += "*";
+            if (typeAssociation == TypeAssociation.COMPOSITION || typeAssociation == TypeAssociation.AGREGATION) {
+                if (mult1 != null)
+                    associationString += "\"" + mult1 + "\" ";
+                else
+                    associationString += "\"@PumlType\" ";
             }
 
+            //Ajout du début de la flèche selon le type d'association
+            if (typeAssociation == TypeAssociation.AGREGATION)
+                associationString += "o";
+            else if (typeAssociation == TypeAssociation.COMPOSITION)
+                associationString += "*";
+
             //Ajout du corps de la flèche
-            if (isDca || !isDca && typeAssociation != TypeAssociation.DEPENDANCE) {
-                for (int i = 0; i < 2; i++) {
-                    if ((i & 2) == 0) {
-                        if (typeAssociation == TypeAssociation.IMPLEMENT)
-                            associationString += ".";
-                        else
-                            associationString += "-";
-                    }
-                }
+            if (typeAssociation == TypeAssociation.IMPLEMENT)
+                associationString += ".";
+            else
+                associationString += "-";
+            for (int i = element1.getPumlEtage(); i < element2.getPumlEtage(); i++) {
+                if (typeAssociation == TypeAssociation.IMPLEMENT)
+                    associationString += ".";
+                else
+                    associationString += "-";
             }
 
             //Ajout de la pointe de la flèche
-            if (!isDca && (typeAssociation == TypeAssociation.AGREGATION || typeAssociation == TypeAssociation.COMPOSITION)) {
-                associationString += ">";
+            if (!isDca && (typeAssociation == TypeAssociation.AGREGATION || typeAssociation == TypeAssociation.COMPOSITION) || typeAssociation == TypeAssociation.DEPENDANCE) {
+                associationString += "> ";
             }
             if (typeAssociation == TypeAssociation.HERITAGE || typeAssociation == TypeAssociation.IMPLEMENT) {
-                associationString += "|>";
+                associationString += "|> ";
             }
 
             //ajout de la multiplicité du deuxième élément
-            if (isDca && mult2 != null)
-                associationString += " \"" + mult2 + "\" ";
-            else if (mult2 != null)
-                associationString += " \"" + mult2 + "\\n " + attributLié.getPumlVisibilite() + " " + attributLié.getNom() + "\" ";
+            if(typeAssociation == TypeAssociation.COMPOSITION || typeAssociation == TypeAssociation.AGREGATION) {
+                if (mult2 != null)
+                    associationString += "\"" + mult2;
+                else
+                    associationString += "\"@PumlType";
+
+                if (attributLié != null)
+                    associationString += "\\n " + attributLié.getPumlVisibilite() + " " + attributLié.getNom() + "\" ";
+                else
+                    associationString += "\\n @PumlAssociation\" ";
+            }
 
             //Ajout du nom du deuxième élément
-            if (isDca || !isDca && typeAssociation != TypeAssociation.DEPENDANCE)
-                associationString += " " + element2.getNom();
+            associationString += element2.getNom();
 
-            if (typeAssociation == TypeAssociation.DEPENDANCE && isDca)
+            if (typeAssociation == TypeAssociation.DEPENDANCE)
                 associationString += " : <<uses>>";
 
             return associationString + "\n";
@@ -102,7 +114,7 @@ public class Association {
     public boolean getPumlVisibilite(){return this.isPumlVisible;}
     public void setToInvisible(){this.isPumlVisible = false;}
     public void IncrementationMult(){
-        if(!this.mult2.equals("*"))
+        if(this.mult2 != null && !this.mult2.equals("*"))
             this.mult2 = Integer.toString(Integer.valueOf(this.mult2)+1);
     }
     public void setType(TypeAssociation typeAssociation){

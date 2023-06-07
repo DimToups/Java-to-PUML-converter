@@ -135,6 +135,8 @@ public class PumlDoclet implements Doclet{
         PumlDiagram diagram = new PumlDiagram(name, directory, docletEnvironment, isDca);
         diagram.chercherClasses();
         diagram.chercherAssociations();
+        //diagram.miseAJourMultiplicite();
+        diagram.triDépendances();
         diagram.genererDiagramme();
         return true;
     }

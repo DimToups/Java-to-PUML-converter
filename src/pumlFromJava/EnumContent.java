@@ -21,7 +21,7 @@ public class EnumContent extends ElementContent{
         String contenu = "class " + this.className + "{\n";
 
         for(Attribut attribut : classAttributs){
-            contenu += "\t" + attribut.AttributtoString() + "\n";
+            contenu += "\t" + attribut.getNom() + "\n";
         }
 
         return contenu += "}\n";

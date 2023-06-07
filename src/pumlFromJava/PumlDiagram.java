@@ -27,18 +27,25 @@ public class PumlDiagram {
         System.out.println("isDca = " + isDCA);
     }
     public void chercherClasses(){
+        int etagePumlAttribue = 0;
         for (Element element : docletEnvironment.getIncludedElements()){
             if (element.getKind() == ElementKind.CLASS){
                 ClassContent classContent = new ClassContent(element);
+                classContent.setEtagePuml(etagePumlAttribue%3);
                 this.elements.add(classContent);
+                etagePumlAttribue++;
             }
             else if(element.getKind() == ElementKind.ENUM){
                 EnumContent enumContent = new EnumContent(element);
+                enumContent.setEtagePuml(etagePumlAttribue%3);
                 this.elements.add(enumContent);
+                etagePumlAttribue++;
             }
             else if (element.getKind() == ElementKind.INTERFACE){
                 InterfaceContent interfaceContent = new InterfaceContent(element);
+                interfaceContent.setEtagePuml(etagePumlAttribue%3);
                 this.elements.add(interfaceContent);
+                etagePumlAttribue++;
             }
             else if (element.getKind() == ElementKind.PACKAGE) {
                 packageName = element.getSimpleName().toString();
@@ -197,31 +204,28 @@ public class PumlDiagram {
         this.associations.add(associationCandidate);
     }
     public void miseAJourMultiplicite(){
-        //Recherche de composition
-
-        //C'est beaucoup plus complexe que ce que je croyais
-
-        /*for(ElementContent elementContent : elements){
-            ArrayList<Association> occurence = new ArrayList<>();
-            for(Association association : associations){
-                if(association.getElement1() == elementContent || association.getElement2() == elementContent)
-                    occurence.add(association);
-            }
-            if(occurence.size() == 1)
-                occurence.get(1).setType(TypeAssociation.COMPOSITION);
-            else
-                occurence.get(1).setType(TypeAssociation.AGREGATION);
-        }*/
-
-        //Mise à jour des multiplicités
         for(Association association : associations){
             for(Association associationCompar : associations){
                 //Exclusion des associations similaires
                 if(association != associationCompar || associationCompar.getPumlVisibilite()){
-                    if(association.getElement1() == associationCompar.getElement1() && association.getElement2() == associationCompar.getElement2() && association.getTypeAssociation() == associationCompar.getTypeAssociation()){
+                    if(association.getElement1() == associationCompar.getElement1() && association.getElement2() == associationCompar.getElement2() || association.getTypeAssociation() == associationCompar.getTypeAssociation()){
                         associationCompar.setToInvisible();
                         association.IncrementationMult();
                     }
+                }
+            }
+        }
+    }
+    public void triDépendances(){
+        //Traitement de toutes les associations du diagramme
+        for(Association association : associations){
+            //Supression des dépendances entre les deux éléments de l'association
+            if(association.getTypeAssociation() != TypeAssociation.DEPENDANCE) {
+                for (Association associationCompar : associations){
+                    if(association.getElement1() == associationCompar.getElement1() && association.getElement2() == associationCompar.getElement2() && associationCompar.getTypeAssociation() == TypeAssociation.DEPENDANCE)
+                        associationCompar.setToInvisible();
+                    else if(association.getElement2() == associationCompar.getElement1() && association.getElement1() == associationCompar.getElement2() && associationCompar.getTypeAssociation() == TypeAssociation.DEPENDANCE)
+                        associationCompar.setToInvisible();
                 }
             }
         }
