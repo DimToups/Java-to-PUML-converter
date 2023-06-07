@@ -123,6 +123,21 @@ public class PumlDiagram {
         }
     }
 
+    // Méthode pour afficher ou non une méthode
+    public boolean afficheMethodHeritage(ElementContent elementContent){
+        for (Association association : associations){
+            if (association.getTypeAssociation() == TypeAssociation.HERITAGE){
+                for (Methode methods1 : ((ClassContent)association.getElement1()).getMethodes()){
+                    for (Methode methods2 : ((ClassContent)association.getElement2()).getMethodes()){
+                        if (methods1 == methods2){
+                            methods1
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private ElementContent findElementContentFromElement(Element element){
         ElementContent rightElement = null;
         for (ElementContent elementContent : elements){

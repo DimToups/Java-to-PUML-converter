@@ -10,6 +10,7 @@ public class Methode {
     private Visibilite visibilite;
     private Modificateur modificateur;
     private boolean isConstructor = false;
+    private boolean isPumlVisible = false;
     private ArrayList<Attribut> parametres = new ArrayList<>();
     public Methode(ExecutableElement executableElement){
         this.nom = executableElement.getSimpleName().toString();
@@ -131,4 +132,29 @@ public class Methode {
                 this.visibilite = Visibilite.PRIVATE;
         }
     }
+
+    /*public void findOverrideMethods(ElementContent elementContent) {
+        // Parcourir les classes
+        for (ClassContent childClass : elementContent) {
+            // Si cette classe a une class parent
+            if (childClass.getClass().getSuperclass() != null) {
+                // Parcourir les méthodes de la class enfant
+                for (Methode childMethod : childClass.getMethodes()) {
+                    // Parcourir les éléments méthodes de la class parent
+                    for (ClassContent parentClass : elementContent) {
+                        if (parentClass.getClass().equals(childClass.getClass().getSuperclass())) {
+                            for (Methode parentMethod : parentClass.getMethodes()) {
+                                // Si le nom de la méthode de la class enfant est le même que celle de la class parent comparée
+                                // Alors mettre le boolean "isPumlVisible" à true
+                                if (childMethod.getNom().equals(parentMethod.getNom())) {
+                                    isPumlVisible = true;
+                                }
+                            }
+                            break; // Sortir de la boucle dès qu'on a trouvé la class parent
+                        }
+                    }
+                }
+            }
+        }
+    }*/
 }
