@@ -131,13 +131,13 @@ public class PumlDiagram {
     }
 
     // Méthode pour afficher ou non une méthode
-    public boolean afficheMethodHeritage(ElementContent elementContent){
+    public void afficheMethodeHeritage(){
         for (Association association : associations){
             if (association.getTypeAssociation() == TypeAssociation.HERITAGE){
                 for (Methode methods1 : ((ClassContent)association.getElement1()).getMethodes()){
                     for (Methode methods2 : ((ClassContent)association.getElement2()).getMethodes()){
-                        if (methods1 == methods2){
-                            methods1
+                        if (methods1.getNom().equals(methods2.getNom())){
+                            methods1.setToPumlInvisible();
                         }
                     }
                 }

@@ -137,6 +137,7 @@ public class PumlDoclet implements Doclet{
         diagram.chercherAssociations();
         //diagram.miseAJourMultiplicite();
         diagram.triDépendances();
+        diagram.afficheMethodeHeritage();
         diagram.genererDiagramme();
         return true;
     }
