@@ -152,70 +152,44 @@ class Substantif{
 }
 
 
-'@PumlAggregation
-Boisson "1" o--> "1\n - substantif" Substantif
+'@PumlAggregationBoisson "1" o---> "1\n - substantif" Substantif
 
-'@PumlAggregation
-Boisson "1" o--> "1\n + EAU" Boisson
-
+'@PumlAggregationBoisson "1" o-> "1\n + EAU" Boisson
 Boisson --> Genre : <<uses>>
 
-'@PumlAggregation
-Brigand "1" o--> "*\n - captives" Dame
+'@PumlAggregationBrigand "1" o-> "*\n - captives" Dame
 
-'@PumlAggregation
-Brigand "1" o--> "1\n - gardien" Cowboy
+'@PumlAggregationBrigand "1" o--> "1\n - gardien" Cowboy
 
-'@PumlAggregation
-Brigand "1" o--> "1\n - boissonParDefaut" Boisson
+'@PumlAggregationBrigand "1" o-> "1\n - boissonParDefaut" Boisson
+Brigand -|> Personnage
+Brigand .|> HorsLaLoi
 
-Brigand --|> Personnage
+'@PumlAggregationCowboy "1" o-> "*\n - captures" HorsLaLoi
 
-Brigand ..|> HorsLaLoi
+'@PumlAggregationCowboy "1" o-> "1\n - boissonParDefaut" Boisson
+Cowboy -|> Personnage
 
-'@PumlAggregation
-Cowboy "1" o--> "*\n - captures" HorsLaLoi
+'@PumlAggregationDame "1" o---> "1\n - sauveur" Cowboy
 
-'@PumlAggregation
-Cowboy "1" o--> "1\n - boissonParDefaut" Boisson
+'@PumlAggregationDame "1" o-> "1\n - ravisseur" HorsLaLoi
 
-Cowboy --|> Personnage
+'@PumlAggregationDame "1" o-> "1\n - boissonParDefaut" Boisson
+Dame -|> Personnage
+HorsLaLoi ...|> Nommable
+Narrateur -|> Personnage
+Narrateur -> Boisson : <<uses>>
 
-'@PumlAggregation
-Dame "1" o--> "1\n - sauveur" Cowboy
+'@PumlAggregationPersonnage "1" o-> "1\n - BOISSON_PAR_DEFAUT" Boisson
+Personnage ...|> Nommable
 
-'@PumlAggregation
-Dame "1" o--> "1\n - ravisseur" HorsLaLoi
-
-'@PumlAggregation
-Dame "1" o--> "1\n - boissonParDefaut" Boisson
-
-Dame --|> Personnage
-
-HorsLaLoi ..|> Nommable
-
-Narrateur --|> Personnage
-
-Narrateur --> Boisson : <<uses>>
-
-'@PumlAggregation
-Personnage "1" o--> "1\n - BOISSON_PAR_DEFAUT" Boisson
-
-Personnage ..|> Nommable
-
-'@PumlAggregation
-Ripou "1" o--> "1\n - brigand" Brigand
-
+'@PumlAggregationRipou "1" o-> "1\n - brigand" Brigand
 Ripou --|> Cowboy
+Ripou .|> HorsLaLoi
+Ripou -> Boisson : <<uses>>
+Ripou -> Dame : <<uses>>
 
-Ripou ..|> HorsLaLoi
-
-Ripou --> Boisson : <<uses>>
-
-Ripou --> Dame : <<uses>>
-
-'@PumlAggregation
-Substantif "1" o--> "1\n - genre" Genre
+'@PumlAggregationSubstantif "1" o-> "1\n - genre" Genre
 
 }
 @enduml

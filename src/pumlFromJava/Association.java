@@ -45,10 +45,11 @@ public class Association {
             else if(typeAssociation == TypeAssociation.COMPOSITION)
                 associationString += "\n'@PumlComposition";
 
-            associationString += "\n" + element1.getNom() + " ";
+            if(!isSwapped)
+                associationString += element1.getNom() + " ";
 
             //Ajout de la multiplicité du premier élément
-            if(typeAssociation == TypeAssociation.COMPOSITION || typeAssociation == TypeAssociation.AGREGATION) {
+            if (typeAssociation == TypeAssociation.COMPOSITION || typeAssociation == TypeAssociation.AGREGATION) {
                 if (mult1 != null)
                     associationString += "\"" + mult1 + "\" ";
                 else
@@ -56,21 +57,21 @@ public class Association {
             }
 
             //Ajout du début de la flèche selon le type d'association
-            if (!isDca) {
-                if (typeAssociation == TypeAssociation.AGREGATION)
-                    associationString += "o";
-                else if (typeAssociation == TypeAssociation.COMPOSITION)
-                    associationString += "*";
-            }
+            if (typeAssociation == TypeAssociation.AGREGATION)
+                associationString += "o";
+            else if (typeAssociation == TypeAssociation.COMPOSITION)
+                associationString += "*";
 
             //Ajout du corps de la flèche
-            for (int i = 0; i < 2; i++) {
-                if ((i & 2) == 0) {
-                    if (typeAssociation == TypeAssociation.IMPLEMENT)
-                        associationString += ".";
-                    else
-                        associationString += "-";
-                }
+            if (typeAssociation == TypeAssociation.IMPLEMENT)
+                associationString += ".";
+            else
+                associationString += "-";
+            for (int i = element1.getPumlEtage(); i < element2.getPumlEtage(); i++) {
+                if (typeAssociation == TypeAssociation.IMPLEMENT)
+                    associationString += ".";
+                else
+                    associationString += "-";
             }
 
             //Ajout de la pointe de la flèche
