@@ -14,7 +14,6 @@ public class InterfaceContent extends ElementContent{
             if (enclosedElement.getKind() == ElementKind.METHOD ||enclosedElement.getKind() == ElementKind.CONSTRUCTOR){
                 ExecutableElement executableElement = (ExecutableElement)enclosedElement;
                 Methode methode = new Methode(executableElement);
-                methode.setParameters(enclosedElement);
                 methode.findModifier(enclosedElement);
                 methode.findVisibility(enclosedElement);
                 classMethods.add(methode);
