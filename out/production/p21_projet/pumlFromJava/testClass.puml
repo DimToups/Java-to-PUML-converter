@@ -1,0 +1,73 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam style strictuml
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+
+hide empty members
+
+package test{
+class Java2PumlTest1{
+	+ <<create>> Java2PumlTest1()
+}
+
+class A{
+	- anInt : int
+	# aShort : short
+	aLong : long
+	+ aByte : byte
+	- aFloat : float
+	# aDouble : double {static}
+	aChar : char
+	+ aBoolean : boolean
+	<<create>> A()
+	- anIntFunction(anIntParam : int, anIntParam : int) : int
+	# aShortFunction(aShortParam : short, aShortParam : short) : short
+	aLongFunction(aLongParam : long, aLongParam : long) : long
+	+ aByteFunction(aByteParam : byte, aByteParam : byte) : byte
+	- aFloatFunction(aFloatParam : float, aFloatParam : float) {static} : float
+	# aDoubleFunction(aDoubleParam : double, aDoubleParam : double) {static} : double
+	aCharFunction(aCharParam : char, aCharParam : char) {static} : char
+	+ aBooleanFunction(aBooleanParam : boolean, aBooleanParam : boolean) {static} : boolean
+}
+
+class B{
+	- anInteger : Integer
+	# aShort : Short
+	aLong : Long
+	+ aByte : Byte
+	- aFloat : Float
+	# aDouble : Double {static}
+	aCharacter : Character
+	+ aBoolean : Boolean
+	<<create>> B()
+	- anIntFunction(anIntParam : Integer, anIntParam : Integer) : Integer
+	# aShortFunction(aShortParam : Short, aShortParam : Short) : Short
+	aLongFunction(aLongParam : Long, aLongParam : Long) : Long
+	+ aByteFunction(aByteParam : Byte, aByteParam : Byte) : Byte
+	- aFloatFunction(aFloatParam : Float, aFloatParam : Float) : Float
+	# aDoubleFunction(aDoubleParam : Double, aDoubleParam : Double) {abstract} : Double
+	aCharacterFunction(aCharacterParam : Character, aCharacterParam : Character) {static} : Character
+	+ aBooleanFunction(aBooleanParam : Boolean, aBooleanParam : Boolean) {static} : Boolean
+}
+
+class C{
+	- anIntArray : int[]
+	# aShortArray : Short[]
+	anArrayOfLongArray : long[][]
+	+ anArrayOfByteArray : Byte[][]
+	- aFloatList : Float *
+	# aListOfDoubleList : Double * {static}
+	aSetOfCharacter : Character *
+	+ aSetOfBooleanList : Boolean *
+	<<create>> C()
+	- anIntArrayFunction(anIntArrayParam : int[], anIntArrayParam : int[]) : int[]
+	# aShortArrayFunction(aShortArrayParam : Short[], aShortArrayParam : Short[]) : Short[]
+	aLong3DArrayFunction(someLongs : long[][][][], someLongs : long[][][][]) : long[][][]
+	+ aByte5DArrayFunction(someBytes : Byte[][][][][][], someBytes : Byte[][][][][][]) : Byte[][][][][]
+	- aFloatListFunction(aFloatListParam : Float *, aFloatListParam : Float *) : Float *
+	# aListOfDoubleListFunction(someDoubles : Double> *, someDoubles : Double> *) : Double> *
+	aCharacterSetFunction(aCharacterSetParam : Character *, aCharacterSetParam : Character *) : Character *
+	+ aSetOfBooleanListFunction(someBooleans : Boolean[][]>[] *, someBooleans : Boolean[][]>[] *) : Boolean> *
+}
+

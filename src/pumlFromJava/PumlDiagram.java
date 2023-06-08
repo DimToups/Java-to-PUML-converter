@@ -69,7 +69,7 @@ public class PumlDiagram {
                                 associationAgreg.setAttributLié(attribut);
                                 associationAgreg.setMult1("1");
                                 if(attribut.getType().toString().contains("java.util"))
-                                    associationAgreg.setMult2("*");
+                                    associationAgreg.setMult2("[*]");
                                 else
                                     associationAgreg.setMult2("1");
                                 this.ajoutAssociation(associationAgreg);

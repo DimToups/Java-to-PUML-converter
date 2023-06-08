@@ -44,12 +44,14 @@ public class Methode {
         //Integer fullstop = this.type.toString().indexOf(".");
         if(this.isPumlVisible) {
             String toString = "";
-            if (this.getVisibilite().equals(Visibilite.PUBLIC))
-                toString += "+ ";
-            else if (this.getVisibilite().equals(Visibilite.PRIVATE))
-                toString += "- ";
-            else if (this.getVisibilite().equals(Visibilite.PROTECTED))
-                toString += "# ";
+            if(this.getVisibilite() != null){
+                if (this.getVisibilite().equals(Visibilite.PUBLIC))
+                    toString += "+ ";
+                else if (this.getVisibilite().equals(Visibilite.PRIVATE))
+                    toString += "- ";
+                else if (this.getVisibilite().equals(Visibilite.PROTECTED))
+                    toString += "# ";
+            }
 
             if (isConstructor)
                 toString += "<<create>> ";
@@ -83,7 +85,7 @@ public class Methode {
             umlType = SubstringType(typeMirror.toString());
         }
         if (isUmlMulti)
-            umlType += " *";
+            umlType += " [*]";
         return umlType;
     }
     public String SubstringType(String string) {

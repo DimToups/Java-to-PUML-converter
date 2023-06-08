@@ -114,7 +114,7 @@ public class Association {
     public boolean getPumlVisibilite(){return this.isPumlVisible;}
     public void setToInvisible(){this.isPumlVisible = false;}
     public void IncrementationMult(){
-        if(this.mult2 != null && !this.mult2.equals("*"))
+        if(this.mult2 != null && !this.mult2.equals("[*]"))
             this.mult2 = Integer.toString(Integer.valueOf(this.mult2)+1);
     }
     public void setType(TypeAssociation typeAssociation){

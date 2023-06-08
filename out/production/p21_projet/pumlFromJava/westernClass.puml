@@ -32,7 +32,7 @@ class Brigand{
 	+ seFaireCapturer(cowBoy : Cowboy, cowBoy : Cowboy)
 	+ seFaireTirerDessus(cowBoy : Cowboy, cowBoy : Cowboy)
 	+ getPseudo() : String
-	+ getCaptives() : Dame *
+	+ getCaptives() : Dame [*]
 	
 	
 	+ setBoissonParDefaut(boisson : Boisson, boisson : Boisson) {static}
@@ -83,7 +83,7 @@ interface HorsLaLoi<<interface>>{
 	+ seFaireCapturer(cowBoy : Cowboy, cowBoy : Cowboy) {abstract}
 	+ seFaireTirerDessus(cowBoy : Cowboy, cowBoy : Cowboy) {abstract}
 	+ getLook() {abstract} : String
-	+ getCaptives() {abstract} : Dame *
+	+ getCaptives() {abstract} : Dame [*]
 }
 
 class Narrateur{
@@ -122,7 +122,7 @@ class Ripou{
 	+ estLibre() : boolean
 	+ getRecompense() : int
 	+ kidnapper(dame : Dame, dame : Dame)
-	+ getCaptives() : Dame *
+	+ getCaptives() : Dame [*]
 	+ seFaireCapturer(cowBoy : Cowboy, cowBoy : Cowboy)
 	+ seFaireTirerDessus(cowBoy : Cowboy, cowBoy : Cowboy)
 	
@@ -160,7 +160,7 @@ Boisson "1" o-> "1\n + EAU" Boisson : "          \n >"
 Boisson -> Genre : <<uses>> : "          \n >"
 
 '@PumlAggregation
-Brigand "1" o---> "*\n - captives" Dame : "          \n >"
+Brigand "1" o---> "[*]\n - captives" Dame : "          \n >"
 
 '@PumlAggregation
 Brigand "1" o--> "1\n - gardien" Cowboy : "          \n >"
@@ -171,7 +171,7 @@ Brigand ----|> Personnage : "          \n >"
 Brigand .|> HorsLaLoi : "          \n >"
 
 '@PumlAggregation
-Cowboy "1" o-> "*\n - captures" HorsLaLoi : "          \n >"
+Cowboy "1" o-> "[*]\n - captures" HorsLaLoi : "          \n >"
 
 '@PumlAggregation
 Cowboy "1" o-> "1\n - boissonParDefaut" Boisson : "          \n >"
