@@ -157,7 +157,7 @@ Boisson o--> "1\n - substantif" Substantif : "          \n >"
 
 '@PumlAggregation
 Boisson o-> "1\n + EAU" Boisson : "          \n >"
-Boisson -> Genre : <<uses>>\n >
+Boisson -> Genre : "<<uses>>"\n >
 
 '@PumlAggregation
 Brigand o---> "[*]\n - captives" Dame : "          \n >"
@@ -188,7 +188,7 @@ Dame o-> "1\n - boissonParDefaut" Boisson : "          \n >"
 Dame --|> Personnage : "          \n >"
 HorsLaLoi ...|> Nommable : "          \n >"
 Narrateur ---|> Personnage : "          \n >"
-Narrateur -> Boisson : <<uses>>\n >
+Narrateur -> Boisson : "<<uses>>"\n >
 
 '@PumlAggregation
 Personnage o-> "1\n - BOISSON_PAR_DEFAUT" Boisson : "          \n >"
@@ -198,8 +198,8 @@ Personnage .|> Nommable : "          \n >"
 Ripou o--> "1\n - brigand" Brigand : "          \n >"
 Ripou ---|> Cowboy : "          \n >"
 Ripou ..|> HorsLaLoi : "          \n >"
-Ripou -> Boisson : <<uses>>\n >
-Ripou ----> Dame : <<uses>>\n >
+Ripou -> Boisson : "<<uses>>"\n >
+Ripou ----> Dame : "<<uses>>"\n >
 
 '@PumlAggregation
 Substantif o-> "1\n - genre" Genre : "          \n >"

@@ -56,9 +56,9 @@ public class Association {
             }
 
             //Ajout du début de la flèche selon le type d'association
-            if (typeAssociation == TypeAssociation.AGREGATION)
+            if (typeAssociation == TypeAssociation.AGREGATION && !isDca)
                 associationString += "o";
-            else if (typeAssociation == TypeAssociation.COMPOSITION)
+            else if (typeAssociation == TypeAssociation.COMPOSITION && !isDca)
                 associationString += "*";
 
             //Ajout du corps de la flèche
@@ -88,17 +88,18 @@ public class Association {
                 else
                     associationString += "\"@PumlType";
 
-                if (attributLié != null)
-                    associationString += "\\n " + attributLié.getPumlVisibilite() + " " + attributLié.getNom() + "\" ";
-                else
-                    associationString += "\\n @PumlAssociation\" ";
+                if (attributLié != null && !isDca)
+                    associationString += "\\n " + attributLié.getPumlVisibilite() + " " + attributLié.getNom();
+                else if(!isDca)
+                    associationString += "\\n @PumlAssociation";
+                associationString += "\" ";
             }
 
             //Ajout du nom du deuxième élément
             associationString += element2.getNom();
 
             if (typeAssociation == TypeAssociation.DEPENDANCE)
-                return associationString += " : <<uses>>\\n >\n";
+                return associationString += " : \"<<uses>>\"\\n >\n";
             else
                 return associationString + " : \"          \\n >\"\n";
         }
@@ -114,7 +115,7 @@ public class Association {
     public boolean getPumlVisibilite(){return this.isPumlVisible;}
     public void setToInvisible(){this.isPumlVisible = false;}
     public void IncrementationMult(){
-        if(this.mult2 != null && !this.mult2.equals("[*]"))
+        if(this.mult2 != null && !this.mult2.equals("[*]") && !this.mult2.equals("*"))
             this.mult2 = Integer.toString(Integer.valueOf(this.mult2)+1);
     }
     public void setType(TypeAssociation typeAssociation){
