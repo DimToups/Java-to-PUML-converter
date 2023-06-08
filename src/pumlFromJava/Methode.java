@@ -29,9 +29,6 @@ public class Methode {
         return this.parametres;
     }
     public void setName(String string) {this.nom = string;}
-    public void setType(TypeMirror type) {this.type = type;}
-    public void setVisibilite(Visibilite visibilite) {this.visibilite = visibilite;}
-    public void setModificateur(Modificateur modificateur) {this.modificateur = modificateur;}
     public void setParameters(Element element){
         ExecutableElement executableElement = (ExecutableElement) element;
         for(VariableElement variableElement : executableElement.getParameters()){

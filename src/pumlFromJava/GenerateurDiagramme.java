@@ -13,7 +13,6 @@ public class GenerateurDiagramme {
     private String path;
     private String packageName;
     private boolean isDCA = false;
-    public GenerateurDiagramme(){}
     public GenerateurDiagramme(String name, String path, String packageName){
         this.name = name;
         this.path = path;
