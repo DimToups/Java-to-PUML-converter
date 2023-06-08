@@ -47,7 +47,7 @@ Boisson -"1" Boisson : "          \n >"
 Boisson -> Genre : <<uses>>\n >
 
 '@PumlAggregation
-Brigand ---"[*]" Dame : "          \n >"
+Brigand ---"*" Dame : "          \n >"
 
 '@PumlAggregation
 Brigand --"1" Cowboy : "          \n >"
@@ -58,7 +58,7 @@ Brigand ----|> Personnage : "          \n >"
 Brigand .|> HorsLaLoi : "          \n >"
 
 '@PumlAggregation
-Cowboy -"[*]" HorsLaLoi : "          \n >"
+Cowboy -"*" HorsLaLoi : "          \n >"
 
 '@PumlAggregation
 Cowboy -"1" Boisson : "          \n >"
