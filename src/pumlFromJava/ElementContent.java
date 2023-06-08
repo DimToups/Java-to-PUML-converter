@@ -6,7 +6,7 @@ import javax.lang.model.element.ElementKind;
 public abstract class ElementContent {
     protected String className;
     protected ElementKind classType;
-    private int etagePuml;
+    private Integer etagePuml;
     public ElementContent(Element element){
         this.className = element.getSimpleName().toString();
         this.classType = element.getKind();
@@ -18,6 +18,6 @@ public abstract class ElementContent {
     public ElementKind getType(){
         return this.classType;
     }
-    public void setEtagePuml(int etage){this.etagePuml = etage;}
-    public int getPumlEtage(){return this.etagePuml;}
+    public void setEtagePuml(Integer etage){this.etagePuml = etage;}
+    public Integer getPumlEtage(){return this.etagePuml;}
 }

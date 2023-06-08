@@ -29,32 +29,42 @@ class PumlDiagram{
     + <<create>> PumlDiagram(name: String, directory : String, docletEnvironment : DocletEnvironment, isDca : Boolean)
     + chercherClasses()
     + chercherAssociations()
-    - findClass(element : Element) : ClassContent
+    + afficheMethodeHeritage()
+    - findElementContentFromElement(element : Element) : ElementContent
     + genererDiagramme()
+    - findElementContentFromTypeMirror(typeMirror : TypeMirror) : ElementContent
+    - findElementFromElementContent(elementContent : ElementContent) : Element
+    - SubstringType(string : String) : String
+    + ajoutAssociation(associationCandidate : Association)
+    + miseAJourMultiplicite()
+    + triDependances()
+
 }
 abstract class ElementContent{
-    - className : String
-    - classType : ElementKind
+    # className : String
+    # classType : ElementKind
+    - etagePuml : Integer
     + <<create>> ElementContent(element : Element)
     + genererContenuElement(isDca : Boolean) : String {abstract}
     + getNom() : String
     + getType() : ElementKind
+    + setEtagePuml(etage : Integer)
+    + getPumlEtage() : Integer
 }
 class EnumContent{
-    - attributs : Attribut *
     + <<create>> EnumContent(element : Element)
-    + genererContenuElement(isDca : Boolean) : String
+    + genererContenuElement(isDca : Boolean) : String {redefines ElementContent::genererContenuElement}
 }
 class ClassContent{
-    - attributs : Attribut *
-    - methodes : Methodes *
     + <<create>> ClassContent(element : Element)
-    + genererContenuElement(isDca : Boolean) : String
+    + genererContenuElement(isDca : Boolean) : String {redefines ElementContent::genererContenuElement}
+    + getMethodes() : ArrayList<Methode>
+    + getAttributs() : ArrayList<Attribut>
 }
 class InterfaceContent{
-    - methodes : Methodes *
     + <<create>> InterfaceContent(element : Element)
-    + genererContenuElement(isDca : Boolean) : String
+    + genererContenuElement(isDca : Boolean) : String {redefines ElementContent::genererContenuElement}
+    + getMethodes() : ArrayList<Methode>
 }
 class Attribut{
     - nom : String
@@ -64,36 +74,41 @@ class Attribut{
     + getNom() : String
     + getType() : TypeMirror
     + getVisibilite() : Visibilite
+    + getPumlVisibilite() : String
     + getModificateur() : Modificateur
     + setType(type : TypeMirror)
     + setVisibilite(visibiilite : Visibilite)
     + setModificateur(modificateur : Modificateur)
     + AttributtoString() : String
-    - findUmlType(typeMirror : TypeMirror)
-    - SubstringType(string : String) : String
+    - findUmlType(typeMirror : TypeMirror) : String
+    - SubstringType(string: String) : String
     + findModifier(element : Element)
-    + findVisibility(element : Element)
-    + getPumlVisibilite() : Boolean
-    + setToInvisble()
-    + setToVisble()
+    + findVisibility(element Element)
+    + getPumlVisibility() : Boolean
+    + setToInvisible()
+    + setToVisible()
 }
 class Methode{
     - nom : String
     - type : TypeMirror
     - isConstructor : Boolean
+    - isPumlVisible : Boolean
     + <<create>> Methode(executableElement : ExecutableElement)
     + getNom() : String
     + getType() : TypeMirror
     + getVisibilite() : Visibilite
     + getModificateur() : Modificateur
-    + getParameters() : String
+    + getParameters() : ArrayList<Attribut>
+    + setName(string: String)
     + setType(type : TypeMirror)
     + setVisibilite(visibiilite : Visibilite)
     + setModificateur(modificateur : Modificateur)
     + setParameters(element : Element)
+    + setToPumlInvisible()
     + MethodetoString() : String
-    - findUmlType(typeMirror : TypeMirror) String
-    - SubstringType(string : String) : String
+    - findUmlType(typeMirror : TypeMirror) :  String
+    + SubstringType(string : String) : String
+    + getStringParameters() : String
     + findModifier(element : Element)
     + findVisibility(element : Element)
 }
@@ -109,15 +124,15 @@ class Association{
     + <<create>> Association(element1 : ClassContent, element2 : ClassContent)
     + <<create>> Association(element1 : ClassContent, element2 : ClassContent, typeLiaison : TypeLiaison)
     + <<create>> Association(element1 : ClassContent, element2 : ClassContent, typeLiaison : TypeLiaison, mult1 : String, mult2 : String)
-    + genererAssociations() : String
     + getElement1() : ElementContent
     + getElement2() : ElementContent
     + getTypeAssociation() : TypeAssociation
+    + genererAssociation(isDca : Boolean) : String
     + setMult1(mult1 : String)
     + setMult2(mult2 : String)
     + setAttributLié(attribut : Attribut)
     + getPumlVisibilite() : Boolean
-    + setToInvisble()
+    + setToInvisible()
     + IncrementationMult()
     + setType(typeAssociation : TypeAssociation)
 }
@@ -127,11 +142,13 @@ enum TypeAssociation <<enum>>{
     IMPLEMENT
     AGREGATION
     COMPOSITION
+    DEPENDANCE
 }
 enum Visibilite <<enum>>{
     PUBLIC
     PROTECTED
     PRIVATE
+    NONE
 }
 class GenerateurDiagramme{
     - name : String
@@ -140,11 +157,12 @@ class GenerateurDiagramme{
     - isDCA : Boolean
     + <<create>> GenerateurDiagramme()
     + <<create>> GenerateurDiagramme(name : String, path : String, packageName : String, isDCA : Boolean)
-    + setDCA(isDCA : Boolean*)
+    + <<create>> GenerateurDiagramme(name : String, path : String, packageName : String)
+    + setDCA(DCA : Boolean)
     + createFile()
     + initFile()
-    + generateElementForPuml(elements : ElementContent*)
-    + generateLinkstForPuml(liaisons : Liaison*)
+    + generateElementForPuml(elements : ArrayList<ElementContent>)
+    + generateLinkstForPuml(associations : ArrayList<Association>)
     + endFile()
 }
 
