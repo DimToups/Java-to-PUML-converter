@@ -98,9 +98,9 @@ public class Association {
             associationString += element2.getNom();
 
             if (typeAssociation == TypeAssociation.DEPENDANCE)
-                associationString += " : <<uses>>";
-
-            return associationString + " : \"          \\n >\"\n";
+                return associationString += " : <<uses>>\\n >\n";
+            else
+                return associationString + " : \"          \\n >\"\n";
         }
         return "";
     }
