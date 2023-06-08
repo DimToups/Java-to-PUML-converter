@@ -206,8 +206,8 @@ public class PumlDiagram {
         for(Association association : associations){
             for(Association associationCompar : associations){
                 //Exclusion des associations similaires
-                if(association != associationCompar || associationCompar.getPumlVisibilite()){
-                    if(association.getElement1() == associationCompar.getElement1() && association.getElement2() == associationCompar.getElement2() || association.getTypeAssociation() == associationCompar.getTypeAssociation()){
+                if(association != associationCompar && associationCompar.getPumlVisibilite()){
+                    if(association.getElement1() == associationCompar.getElement1() && association.getElement2() == associationCompar.getElement2() && association.getTypeAssociation() == associationCompar.getTypeAssociation()){
                         associationCompar.setToInvisible();
                         association.IncrementationMult();
                     }
