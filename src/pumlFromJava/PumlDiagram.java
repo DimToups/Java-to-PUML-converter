@@ -67,7 +67,6 @@ public class PumlDiagram {
                                 attribut.setToInvisible();
                                 Association associationAgreg = new Association(elementContent, elementContentCompar, TypeAssociation.AGREGATION);
                                 associationAgreg.setAttributLié(attribut);
-                                associationAgreg.setMult1("1");
                                 if(attribut.getType().toString().contains("java.util"))
                                     associationAgreg.setMult2("[*]");
                                 else

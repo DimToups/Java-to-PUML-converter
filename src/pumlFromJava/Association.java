@@ -51,7 +51,7 @@ public class Association {
             if (typeAssociation == TypeAssociation.COMPOSITION || typeAssociation == TypeAssociation.AGREGATION) {
                 if (mult1 != null)
                     associationString += "\"" + mult1 + "\" ";
-                else
+                else if (mult1 == null && (typeAssociation != TypeAssociation.COMPOSITION && typeAssociation != TypeAssociation.AGREGATION))
                     associationString += "\"@PumlType\" ";
             }
 
