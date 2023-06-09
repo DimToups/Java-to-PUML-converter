@@ -17,8 +17,9 @@ public class PumlDiagram {
     private String name;
     private String directory;
     private DocletEnvironment docletEnvironment;
-    private boolean isDca;
+    private boolean isDca; // Pour savoir si on va générer un DCA ou un DCC
     private ArrayList<Association> associations = new ArrayList<>();
+
     public PumlDiagram(String name, String directory, DocletEnvironment docletEnvironment, boolean isDCA){
         this.name = name;
         this.directory = directory;
@@ -26,6 +27,7 @@ public class PumlDiagram {
         this.isDca = isDCA;
         System.out.println("isDca = " + isDCA);
     }
+
     public void chercherClasses(){
         int etagePumlAttribue = 0;
         for (Element element : docletEnvironment.getIncludedElements()){
@@ -52,6 +54,7 @@ public class PumlDiagram {
             }
         }
     }
+
     public void chercherAssociations() {
         //Recherche des agrégations
         for (ElementContent elementContent : elements) {
@@ -156,6 +159,7 @@ public class PumlDiagram {
         }
         return null;
     }
+
     public void genererDiagramme(){
         GenerateurDiagramme generateurDiagramme = new GenerateurDiagramme(name, directory, packageName, isDca);
         generateurDiagramme.createFile();
@@ -164,6 +168,7 @@ public class PumlDiagram {
         generateurDiagramme.generateLinksForPuml(associations);
         generateurDiagramme.endFile();
     }
+
     private ElementContent findElementContentFromTypeMirror(TypeMirror typeMirror){
         for(ElementContent elementContent : elements){
             if (elementContent.getNom().equals(SubstringType(typeMirror.toString())))
@@ -171,6 +176,7 @@ public class PumlDiagram {
         }
         return null;
     }
+
     private Element findElementFromElementContent(ElementContent elementContent){
         for(Element element : docletEnvironment.getIncludedElements()){
             if(element.getSimpleName().toString().equals(elementContent.getNom()))
@@ -179,6 +185,7 @@ public class PumlDiagram {
 
         return null;
     }
+
     private String SubstringType(String string) {
         if (string.contains(".")){
             int index = 0;
@@ -196,6 +203,7 @@ public class PumlDiagram {
             return string;
         }
     }
+
     public void ajoutAssociation(Association associationCandidate){
         //Traitement de toutes les associations
         for (Association association : associations){
@@ -206,6 +214,7 @@ public class PumlDiagram {
         }
         this.associations.add(associationCandidate);
     }
+
     public void miseAJourMultiplicite(){
         for(Association association : associations){
             for(Association associationCompar : associations){
@@ -219,6 +228,7 @@ public class PumlDiagram {
             }
         }
     }
+
     public void triDépendances(){
         //Traitement de toutes les associations du diagramme
         for(Association association : associations){

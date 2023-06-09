@@ -10,7 +10,7 @@ public class Association {
     private String mult2;
     private Attribut attributLié;
     private TypeAssociation typeAssociation = TypeAssociation.SIMPLE;
-    private boolean isPumlVisible = true;
+    private boolean isPumlVisible = true; // Pour afficher ou non dans le diagramme
     public Association(ElementContent element1, ElementContent element2) {
         this.element1 = element1;
         this.element2 = element2;
@@ -33,9 +33,29 @@ public class Association {
     public ElementContent getElement2(){
         return element2;
     }
+
     public TypeAssociation getTypeAssociation() {
         return typeAssociation;
     }
+
+    public boolean getPumlVisibilite(){return this.isPumlVisible;}
+
+    public void setMult1(String mult1){
+        this.mult1 = mult1;
+    }
+
+    public void setMult2(String mult2){
+        this.mult2 = mult2;
+    }
+
+    public void setAttributLié(Attribut attribut){this.attributLié = attribut;}
+
+    public void setToInvisible(){this.isPumlVisible = false;}
+
+    public void setType(TypeAssociation typeAssociation){
+        this.typeAssociation = typeAssociation;
+    }
+
     public String genererAssociation(boolean isDca) {
         if(this.isPumlVisible) {
             String associationString = "";
@@ -105,20 +125,9 @@ public class Association {
         }
         return "";
     }
-    public void setMult1(String mult1){
-        this.mult1 = mult1;
-    }
-    public void setMult2(String mult2){
-        this.mult2 = mult2;
-    }
-    public void setAttributLié(Attribut attribut){this.attributLié = attribut;}
-    public boolean getPumlVisibilite(){return this.isPumlVisible;}
-    public void setToInvisible(){this.isPumlVisible = false;}
+
     public void IncrementationMult(){
         if(this.mult2 != null && !this.mult2.equals("[*]") && !this.mult2.equals("*"))
             this.mult2 = Integer.toString(Integer.valueOf(this.mult2)+1);
-    }
-    public void setType(TypeAssociation typeAssociation){
-        this.typeAssociation = typeAssociation;
     }
 }

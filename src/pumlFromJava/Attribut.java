@@ -13,16 +13,35 @@ public class Attribut {
     private TypeMirror type;
     private Visibilite visibilite;
     private Modificateur modificateur;
-    private boolean isPumlVisible = true;
+    private boolean isPumlVisible = true; // Pour afficher ou non dans le diagramme
+
     public Attribut(VariableElement variableElement){
         this.nom = variableElement.getSimpleName().toString();
         this.type = variableElement.asType();
         this.findModifier(variableElement);
         this.findVisibility(variableElement);
     }
+
     public String getNom(){return this.nom;}
+
     public TypeMirror getType(){return this.type;}
+
     public Visibilite getVisibilite(){return this.visibilite;}
+
+    public Modificateur getModificateur(){return this.modificateur;}
+
+    public boolean getPumlVisibility(){
+        return this.isPumlVisible;
+    }
+
+    public void setToInvisible(){
+        this.isPumlVisible = false;
+    }
+
+    public void setToVisible(){
+        this.isPumlVisible = false;
+    }
+
     public String getPumlVisibilite(){
         if(this.visibilite == Visibilite.PUBLIC)
             return "+";
@@ -33,7 +52,7 @@ public class Attribut {
         else
             return "";
     }
-    public Modificateur getModificateur(){return this.modificateur;}
+
     public String AttributtoString(){
         String toString = "";
 
@@ -55,15 +74,15 @@ public class Attribut {
 
         return toString;
     }
+
+    // Pour trouver tout ce qui est liste, dictionnaire, tableau, etc
     private String findUmlType(TypeMirror typeMirror){
         boolean isUmlMulti = false;
         String umlType = "";
         if (typeMirror.getKind() == TypeKind.DECLARED){
             isUmlMulti = true;
             DeclaredType declaredType = (DeclaredType) typeMirror;
-            System.out.println(declaredType.toString());
             for (TypeMirror typeMirrorCompar : declaredType.getTypeArguments()){
-                System.out.println("\t" + typeMirrorCompar.toString());
                 umlType = SubstringType(typeMirrorCompar.toString());
             }
         }
@@ -74,6 +93,7 @@ public class Attribut {
             umlType += " [*]";
         return umlType;
     }
+
     private String SubstringType(String string) {
         if (string.contains(".") || string.contains("<") || string.contains(">") || string.contains("[") || string.contains("]")){
             int index = 0;
@@ -94,6 +114,7 @@ public class Attribut {
             return string;
         }
     }
+
     public void findModifier(Element element){
         for (Modifier modifier : element.getModifiers()){
             if (modifier == Modifier.ABSTRACT)
@@ -104,6 +125,7 @@ public class Attribut {
                 this.modificateur = Modificateur.STATIC;
         }
     }
+
     public void findVisibility(Element element){
         for (Modifier modifier : element.getModifiers()){
             if (modifier == Modifier.PUBLIC)
@@ -113,14 +135,5 @@ public class Attribut {
             else if (modifier == Modifier.PRIVATE)
                 this.visibilite = Visibilite.PRIVATE;
         }
-    }
-    public boolean getPumlVisibility(){
-        return this.isPumlVisible;
-    }
-    public void setToInvisible(){
-        this.isPumlVisible = false;
-    }
-    public void setToVisible(){
-        this.isPumlVisible = false;
     }
 }
