@@ -52,7 +52,7 @@ public class ClassContent extends ElementContent{
         else{
             for(Attribut attribut : classAttributs){
                 if (attribut.getPumlVisibility())
-                    contenu += "\t" + attribut.AttributtoString() + "\n";
+                    contenu += "\t" + attribut.AttributtoString(false) + "\n";
             }
             for (Methode methode : classMethods){
                 contenu += "\t" + methode.MethodetoString() + "\n";

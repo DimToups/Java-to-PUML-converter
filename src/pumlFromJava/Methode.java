@@ -139,9 +139,9 @@ public class Methode {
         int i = 0;
         for (Attribut attribut : parametres) {
             if (i == 0)
-                parameters += attribut.AttributtoString();
+                parameters += attribut.AttributtoString(true);
             else
-                parameters += ", " + attribut.AttributtoString();
+                parameters += ", " + attribut.AttributtoString(true);
             i++;
         }
 

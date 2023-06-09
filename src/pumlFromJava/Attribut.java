@@ -53,18 +53,20 @@ public class Attribut {
             return "~";
     }
 
-    public String AttributtoString(){
+    public String AttributtoString(boolean isParameter){
         String toString = "";
 
         //Gestion de la visibilité
-        if (this.getVisibilite().equals(Visibilite.PUBLIC))
-            toString += "+ ";
-        else if (this.getVisibilite().equals(Visibilite.PRIVATE))
-            toString += "- ";
-        else if (this.getVisibilite().equals(Visibilite.PROTECTED))
-            toString += "# ";
-        else
-            toString += "~ ";
+        if(!isParameter){
+            if (this.getVisibilite().equals(Visibilite.PUBLIC))
+                toString += "+ ";
+            else if (this.getVisibilite().equals(Visibilite.PRIVATE))
+                toString += "- ";
+            else if (this.getVisibilite().equals(Visibilite.PROTECTED))
+                toString += "# ";
+            else
+                toString += "~ ";
+        }
         //Ajout du nom de l'attribut
         toString += this.getNom() + " : " + findUmlType(this.getType());
 
