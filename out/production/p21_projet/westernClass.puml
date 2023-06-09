@@ -1,0 +1,95 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam style strictuml
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+
+hide empty members
+
+package western{
+class Boisson{
+}
+class Brigand{
+	recompense
+	estLibre
+}
+class Cowboy{
+	gains
+}
+class Dame{
+	estLibre
+}
+class Genre{
+	FEMININ
+	MASCULIN
+}
+
+class Histoire4{
+}
+interface HorsLaLoi<<interface>>{
+}
+class Narrateur{
+}
+interface Nommable<<interface>>{
+}
+class Personnage{
+}
+class Ripou{
+}
+class Substantif{
+}
+
+'@PumlAggregation
+Boisson --Substantif
+
+'@PumlAggregation
+Boisson -Boisson
+Boisson -> Genre : "<<uses>>"\n >
+
+'@PumlAggregation
+Brigand ---Dame
+
+'@PumlAggregation
+Brigand --Cowboy
+
+'@PumlAggregation
+Brigand -Boisson
+Brigand ----|> Personnage
+Brigand .|> HorsLaLoi
+
+'@PumlAggregation
+Cowboy -HorsLaLoi
+
+'@PumlAggregation
+Cowboy -Boisson
+Cowboy ---|> Personnage
+
+'@PumlAggregation
+Dame -Cowboy
+
+'@PumlAggregation
+Dame -HorsLaLoi
+
+'@PumlAggregation
+Dame -Boisson
+Dame --|> Personnage
+HorsLaLoi ...|> Nommable
+Narrateur ---|> Personnage
+Narrateur -> Boisson : "<<uses>>"\n >
+
+'@PumlAggregation
+Personnage -Boisson
+Personnage .|> Nommable
+
+'@PumlAggregation
+Ripou --Brigand
+Ripou ---|> Cowboy
+Ripou ..|> HorsLaLoi
+Ripou -> Boisson : "<<uses>>"\n >
+Ripou ----> Dame : "<<uses>>"\n >
+
+'@PumlAggregation
+Substantif -Genre
+
+}
+@enduml

@@ -126,8 +126,10 @@ public class Association {
 
             if (typeAssociation == TypeAssociation.DEPENDANCE)
                 return associationString += " : \"<<uses>>\"\\n >\n";
-            else
+            else if (!isDca)
                 return associationString + " : \"          \\n >\"\n";
+            else
+                return associationString + "\n";
         }
         return "";
     }
