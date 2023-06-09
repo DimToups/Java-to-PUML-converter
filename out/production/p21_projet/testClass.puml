@@ -94,15 +94,15 @@ class E{
 
 
 '@PumlAggregation
-D o-> "1\n - " A : "          \n >"
+D o-> "1\n - a" A : "          \n >"
 
 '@PumlAggregation
-D o-> "*\n # " C : "          \n >"
+D o-> "*\n # cs" C : "          \n >"
 D -> B : "<<uses>>"\n >
 D -> D : "<<uses>>"\n >
 
 '@PumlAggregation
-E o--> "*\n # " A : "          \n >"
+E o--> "*\n # mapOfA" A : "          \n >"
 
 }
 @enduml
