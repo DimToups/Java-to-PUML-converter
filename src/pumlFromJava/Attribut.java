@@ -11,7 +11,7 @@ import javax.lang.model.type.TypeMirror;
 public class Attribut {
     private String nom;
     private TypeMirror type;
-    private Visibilite visibilite;
+    private Visibilite visibilite = Visibilite.NONE;
     private Modificateur modificateur;
     private boolean isPumlVisible = true; // Pour afficher ou non dans le diagramme
 
@@ -50,21 +50,21 @@ public class Attribut {
         else if(this.visibilite == Visibilite.PRIVATE)
             return "-";
         else
-            return "";
+            return "~";
     }
 
     public String AttributtoString(){
         String toString = "";
 
         //Gestion de la visibilité
-        if (this.getVisibilite() != null){
-            if (this.getVisibilite().equals(Visibilite.PUBLIC))
-                toString += "+ ";
-            else if (this.getVisibilite().equals(Visibilite.PRIVATE))
-                toString += "- ";
-            else if (this.getVisibilite().equals(Visibilite.PROTECTED))
-                toString += "# ";
-        }
+        if (this.getVisibilite().equals(Visibilite.PUBLIC))
+            toString += "+ ";
+        else if (this.getVisibilite().equals(Visibilite.PRIVATE))
+            toString += "- ";
+        else if (this.getVisibilite().equals(Visibilite.PROTECTED))
+            toString += "# ";
+        else
+            toString += "~ ";
         //Ajout du nom de l'attribut
         toString += this.getNom() + " : " + findUmlType(this.getType());
 

@@ -71,10 +71,7 @@ public class PumlDiagram {
                                 Association associationAgreg = new Association(elementContent, elementContentCompar, TypeAssociation.AGREGATION);
                                 associationAgreg.setAttributLié(attribut);
                                 if(attribut.getType().toString().contains("java.util")) {
-                                    if(!isDca)
-                                        associationAgreg.setMult2("[*]");
-                                    else
-                                        associationAgreg.setMult2("*");
+                                    associationAgreg.setMult2("*");
                                 }
                                 else
                                     associationAgreg.setMult2("1");

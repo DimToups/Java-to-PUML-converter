@@ -108,8 +108,14 @@ public class Association {
                 else
                     associationString += "\"@PumlType";
 
-                if (attributLié != null && !isDca)
-                    associationString += "\\n " + attributLié.getPumlVisibilite() + " " + attributLié.getNom();
+                if (attributLié != null && !isDca) {
+                    associationString += "\\n ";
+                    if(attributLié.getVisibilite() != null || attributLié.getVisibilite() == Visibilite.NONE)
+                        associationString += attributLié.getPumlVisibilite() + " ";
+                    else
+                        associationString += "~ ";
+                    attributLié.getNom();
+                }
                 else if(!isDca)
                     associationString += "\\n @PumlAssociation";
                 associationString += "\" ";

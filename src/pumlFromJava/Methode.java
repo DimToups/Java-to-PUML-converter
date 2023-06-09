@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Methode {
     private String nom;
     private TypeMirror type;
-    private Visibilite visibilite;
+    private Visibilite visibilite = Visibilite.NONE;
     private Modificateur modificateur;
     private boolean isConstructor = false;
     private boolean isPumlVisible = true; // Pour afficher ou non dans le diagramme
@@ -63,14 +63,14 @@ public class Methode {
 
         if (this.isPumlVisible) {
             String toString = "";
-            if (this.getVisibilite() != null) {
-                if (this.getVisibilite().equals(Visibilite.PUBLIC))
-                    toString += "+ ";
-                else if (this.getVisibilite().equals(Visibilite.PRIVATE))
-                    toString += "- ";
-                else if (this.getVisibilite().equals(Visibilite.PROTECTED))
-                    toString += "# ";
-            }
+            if (this.getVisibilite().equals(Visibilite.PUBLIC))
+                toString += "+ ";
+            else if (this.getVisibilite().equals(Visibilite.PRIVATE))
+                toString += "- ";
+            else if (this.getVisibilite().equals(Visibilite.PROTECTED))
+                toString += "# ";
+            else
+                toString += "~ ";
 
             if (isConstructor)
                 toString += "<<create>> ";

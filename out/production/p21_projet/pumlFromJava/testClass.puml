@@ -14,95 +14,95 @@ class Java2PumlTest1{
 class A{
 	- anInt : int
 	# aShort : short
-	aLong : long
+	~ aLong : long
 	+ aByte : byte
 	- aFloat : float
 	# aDouble : double {static}
-	aChar : char
+	~ aChar : char
 	+ aBoolean : boolean
-	<<create>> A()
-	- anIntFunction(anIntParam : int) : int
-	# aShortFunction(aShortParam : short) : short
-	aLongFunction(aLongParam : long) : long
-	+ aByteFunction(aByteParam : byte) : byte
-	- aFloatFunction(aFloatParam : float) {static} : float
-	# aDoubleFunction(aDoubleParam : double) {static} : double
-	aCharFunction(aCharParam : char) {static} : char
-	+ aBooleanFunction(aBooleanParam : boolean) {static} : boolean
+	~ <<create>> A()
+	- anIntFunction(~ anIntParam : int) : int
+	# aShortFunction(~ aShortParam : short) : short
+	~ aLongFunction(~ aLongParam : long) : long
+	+ aByteFunction(~ aByteParam : byte) : byte
+	- aFloatFunction(~ aFloatParam : float) {static} : float
+	# aDoubleFunction(~ aDoubleParam : double) {static} : double
+	~ aCharFunction(~ aCharParam : char) {static} : char
+	+ aBooleanFunction(~ aBooleanParam : boolean) {static} : boolean
 }
 
 class B{
 	- anInteger :  [*]
 	# aShort :  [*]
-	aLong :  [*]
+	~ aLong :  [*]
 	+ aByte :  [*]
 	- aFloat :  [*]
 	# aDouble :  [*] {static}
-	aCharacter :  [*]
+	~ aCharacter :  [*]
 	+ aBoolean :  [*]
-	<<create>> B()
-	- anIntFunction(anIntParam :  [*]) : Integer
-	# aShortFunction(aShortParam :  [*]) : Short
-	aLongFunction(aLongParam :  [*]) : Long
-	+ aByteFunction(aByteParam :  [*]) : Byte
-	- aFloatFunction(aFloatParam :  [*]) : Float
-	# aDoubleFunction(aDoubleParam :  [*]) {abstract} : Double
-	aCharacterFunction(aCharacterParam :  [*]) {static} : Character
-	+ aBooleanFunction(aBooleanParam :  [*]) {static} : Boolean
+	~ <<create>> B()
+	- anIntFunction(~ anIntParam :  [*]) : Integer
+	# aShortFunction(~ aShortParam :  [*]) : Short
+	~ aLongFunction(~ aLongParam :  [*]) : Long
+	+ aByteFunction(~ aByteParam :  [*]) : Byte
+	- aFloatFunction(~ aFloatParam :  [*]) : Float
+	# aDoubleFunction(~ aDoubleParam :  [*]) {abstract} : Double
+	~ aCharacterFunction(~ aCharacterParam :  [*]) {static} : Character
+	+ aBooleanFunction(~ aBooleanParam :  [*]) {static} : Boolean
 }
 
 class C{
 	- anIntArray : int
 	# aShortArray : Short
-	anArrayOfLongArray : long
+	~ anArrayOfLongArray : long
 	+ anArrayOfByteArray : Byte
 	- aFloatList : Float [*]
 	# aListOfDoubleList : Double [*] {static}
-	aSetOfCharacter : Character [*]
+	~ aSetOfCharacter : Character [*]
 	+ aSetOfBooleanList : Boolean [*]
-	<<create>> C()
-	- anIntArrayFunction(anIntArrayParam : int) : int
-	# aShortArrayFunction(aShortArrayParam : Short) : Short
-	aLong3DArrayFunction(someLongs : long) : long
-	+ aByte5DArrayFunction(someBytes : Byte) : Byte
-	- aFloatListFunction(aFloatListParam : Float [*]) : Float [*]
-	# aListOfDoubleListFunction(someDoubles : Double [*]) : Double [*]
-	aCharacterSetFunction(aCharacterSetParam : Character [*]) : Character [*]
-	+ aSetOfBooleanListFunction(someBooleans : Boolean [*]) : Boolean [*]
+	~ <<create>> C()
+	- anIntArrayFunction(~ anIntArrayParam : int) : int
+	# aShortArrayFunction(~ aShortArrayParam : Short) : Short
+	~ aLong3DArrayFunction(~ someLongs : long) : long
+	+ aByte5DArrayFunction(~ someBytes : Byte) : Byte
+	- aFloatListFunction(~ aFloatListParam : Float [*]) : Float [*]
+	# aListOfDoubleListFunction(~ someDoubles : Double [*]) : Double [*]
+	~ aCharacterSetFunction(~ aCharacterSetParam : Character [*]) : Character [*]
+	+ aSetOfBooleanListFunction(~ someBooleans : Boolean [*]) : Boolean [*]
 }
 
 class D{
-	bs : B
+	~ bs : B
 	+ ds : D [*] {static}
-	<<create>> D()
-	- aFunction(a0 :  [*], a1 : A, a2 : A, a3 : A) : A
-	bFunction(b0 :  [*], b1 : B, b2 : B, b3 : B) : B
-	# cFunction(c0 :  [*], c1 : C [*], c2 : C [*], c3 : C [*]) {abstract} : C [*]
-	+ dFunction(d0 :  [*], d1 : D [*], d2 : D [*], d3 : D [*], d4 : D [*]) {static} : D [*]
+	~ <<create>> D()
+	- aFunction(~ a0 :  [*], ~ a1 : A, ~ a2 : A, ~ a3 : A) : A
+	~ bFunction(~ b0 :  [*], ~ b1 : B, ~ b2 : B, ~ b3 : B) : B
+	# cFunction(~ c0 :  [*], ~ c1 : C [*], ~ c2 : C [*], ~ c3 : C [*]) {abstract} : C [*]
+	+ dFunction(~ d0 :  [*], ~ d1 : D [*], ~ d2 : D [*], ~ d3 : D [*], ~ d4 : D [*]) {static} : D [*]
 }
 
 class E{
 	- mapOfInt : Integer [*]
-	mapOfDoubleArray : Double [*]
+	~ mapOfDoubleArray : Double [*]
 	+ mapOfArrayOfA : A [*]
-	<<create>> E()
-	- mapOfIntFunction(a0 : Integer [*], a1 : Integer [*], a2 : Integer [*], a3 : Integer [*]) : Integer [*]
-	mapOfDoubleArrayFunction(a0 : Double [*], a1 : Double [*], a2 : Double [*], a3 : Double [*]) {abstract} : Double [*]
-	# mapOfAFunction(a0 : A [*], a1 : A [*], a2 : A [*], a3 : A [*]) : A [*]
-	+ mapOfArrayOfAFunction(a0 : A [*], a1 : A [*], a2 : A [*], a3 : A [*]) {static} : A [*]
+	~ <<create>> E()
+	- mapOfIntFunction(~ a0 : Integer [*], ~ a1 : Integer [*], ~ a2 : Integer [*], ~ a3 : Integer [*]) : Integer [*]
+	~ mapOfDoubleArrayFunction(~ a0 : Double [*], ~ a1 : Double [*], ~ a2 : Double [*], ~ a3 : Double [*]) {abstract} : Double [*]
+	# mapOfAFunction(~ a0 : A [*], ~ a1 : A [*], ~ a2 : A [*], ~ a3 : A [*]) : A [*]
+	+ mapOfArrayOfAFunction(~ a0 : A [*], ~ a1 : A [*], ~ a2 : A [*], ~ a3 : A [*]) {static} : A [*]
 }
 
 
 '@PumlAggregation
-D o-> "1\n - a" A : "          \n >"
+D o-> "1\n - " A : "          \n >"
 
 '@PumlAggregation
-D o-> "[*]\n # cs" C : "          \n >"
+D o-> "*\n # " C : "          \n >"
 D -> B : "<<uses>>"\n >
 D -> D : "<<uses>>"\n >
 
 '@PumlAggregation
-E o--> "[*]\n # mapOfA" A : "          \n >"
+E o--> "*\n # " A : "          \n >"
 
 }
 @enduml
