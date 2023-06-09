@@ -111,7 +111,7 @@ public class Methode {
     }
 
     // Pour enlever tout ce qui a devant le nom du type
-    // Ex : java.xxxx.xxxx.type
+    // Ex : java.xxxx.xxxx.type<>[[]]
     // -> type
     public String SubstringType(String string) {
         if (string.contains(".") || string.contains("<") || string.contains(">") || string.contains("[") || string.contains("]")){

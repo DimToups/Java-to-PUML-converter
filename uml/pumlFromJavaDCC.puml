@@ -102,7 +102,6 @@ class Methode{
     + setName(string: String)
     + setType(type : TypeMirror)
     + setVisibilite(visibiilite : Visibilite)
-    + setModificateur(modificateur : Modificateur)
     + setParameters(element : Element)
     + setToPumlInvisible()
     + MethodetoString() : String
@@ -168,23 +167,23 @@ class GenerateurDiagramme{
 
 Java2Puml *-> PumlDoclet : > exécute le doclet
 PumlDoclet o-> PumlDiagram : > génère le diagramme à l'aide de
-PumlDiagram "1" o-> "1\n -generateur" GenerateurDiagramme : Génère le diagramme\n
-PumlDiagram "1" o-> "*\n- elements" ElementContent : Stocke le contenu des élements\n >
-PumlDiagram "1" o--> "*\n- liaisons" Association : Stocke les liaisons entre les classes\n >
+PumlDiagram o-> "1\n -generateur" GenerateurDiagramme : Génère le diagramme\n
+PumlDiagram o-> "*\n- elements" ElementContent : Stocke le contenu des élements\n >
+PumlDiagram o--> "*\n- liaisons" Association : Stocke les liaisons entre les classes\n >
 ElementContent --|> ClassContent
 ElementContent --|> EnumContent
 ElementContent --|> InterfaceContent
-ClassContent "1" *--> "*\n- classAttributs" Attribut : Liste les attributs de\n >
-ClassContent "1" *--> "*\n- classMethods" Methode : Liste les méthodes de\n >
-EnumContent "1" *--> "*\n- classAttributs" Attribut : Liste les attributs de\n >
-InterfaceContent "1" *--> "*\n- classMethods" Methode : Liste les méthodes de\n >
-Attribut "1" *--> "1\n- visibilite" Visibilite : indique la visibilité\n >
-Methode "1" *--> "1\n- visibilite" Visibilite : indique la visibilité\n >
-Attribut "1" *--> "1\n- modificateur" Modificateur : indique le modificateur\n >
-Methode "1" *--> "1\n- modificateur" Modificateur : indique le modificateur\n >
-Methode "1" o-> "*\n- parametres" Attribut : Stocke les paramètres\nde la méthode\n >
-Association "1" o-> "2\n- element1\n- element2" ElementContent : Informe de la liaison entre\n >
-Association "1" *--> "1\n- TypeAssociation" TypeAssociation : Indique le type de liaison\n >
-Association "1" o--> "1\n - AttributLié" Attribut : Est lié à l'association\n >
+ClassContent o--> "*\n- classAttributs" Attribut : Liste les attributs de\n >
+ClassContent o--> "*\n- classMethods" Methode : Liste les méthodes de\n >
+EnumContent o--> "*\n- classAttributs" Attribut : Liste les attributs de\n >
+InterfaceContent o--> "*\n- classMethods" Methode : Liste les méthodes de\n >
+Attribut o--> "1\n- visibilite" Visibilite : indique la visibilité\n >
+Methode o--> "1\n- visibilite" Visibilite : indique la visibilité\n >
+Attribut o--> "1\n- modificateur" Modificateur : indique le modificateur\n >
+Methode o--> "1\n- modificateur" Modificateur : indique le modificateur\n >
+Methode o-> "*\n- parametres" Attribut : Stocke les paramètres\nde la méthode\n >
+Association o-> "2\n- element1\n- element2" ElementContent : Informe de la liaison entre\n >
+Association *--> "1\n- TypeAssociation" TypeAssociation : Indique le type de liaison\n >
+Association o--> "1\n - AttributLié" Attribut : Est lié à l'association\n >
 
 @enduml

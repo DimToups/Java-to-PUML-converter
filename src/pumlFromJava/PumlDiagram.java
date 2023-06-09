@@ -25,7 +25,6 @@ public class PumlDiagram {
         this.directory = directory;
         this.docletEnvironment = docletEnvironment;
         this.isDca = isDCA;
-        System.out.println("isDca = " + isDCA);
     }
 
     public void chercherClasses(){
