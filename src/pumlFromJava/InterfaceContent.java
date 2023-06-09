@@ -6,7 +6,13 @@ import javax.lang.model.element.ExecutableElement;
 import java.util.ArrayList;
 
 public class InterfaceContent extends ElementContent{
+
     private ArrayList<Methode> classMethods = new ArrayList<>();
+
+    public ArrayList<Methode> getMethodes(){
+        return this.classMethods;
+    }
+
     public InterfaceContent(Element element){
         super(element);
         for (Element enclosedElement : element.getEnclosedElements()){
@@ -20,6 +26,7 @@ public class InterfaceContent extends ElementContent{
             }
         }
     }
+
     @Override
     public String genererContenuElement(boolean isDca){
         String contenu = "interface " + this.className + "<<interface>>{\n";
@@ -31,8 +38,5 @@ public class InterfaceContent extends ElementContent{
             }
             return contenu += "}\n";
         }
-    }
-    public ArrayList<Methode> getMethodes(){
-        return this.classMethods;
     }
 }

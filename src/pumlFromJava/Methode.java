@@ -10,9 +10,10 @@ public class Methode {
     private Visibilite visibilite;
     private Modificateur modificateur;
     private boolean isConstructor = false;
-    private boolean isPumlVisible = true;
+    private boolean isPumlVisible = true; // Pour afficher ou non dans le diagramme
     private ArrayList<Attribut> parametres = new ArrayList<>();
-    public Methode(ExecutableElement executableElement){
+
+    public Methode(ExecutableElement executableElement) {
         this.nom = executableElement.getSimpleName().toString();
         this.type = executableElement.getReturnType();
         this.findModifier(executableElement);
@@ -21,27 +22,48 @@ public class Methode {
         if (executableElement.getKind() == ElementKind.CONSTRUCTOR)
             isConstructor = true;
     }
-    public String getNom(){ return this.nom;}
-    public TypeMirror getType(){return this.type;}
-    public Visibilite getVisibilite(){return this.visibilite;}
-    public Modificateur getModificateur(){return this.modificateur;}
-    public ArrayList<Attribut> getParameters(){
+
+    public String getNom() {
+        return this.nom;
+    }
+
+    public TypeMirror getType() {
+        return this.type;
+    }
+
+    public Visibilite getVisibilite() {
+        return this.visibilite;
+    }
+
+    public Modificateur getModificateur() {
+        return this.modificateur;
+    }
+
+    public ArrayList<Attribut> getParameters() {
         return this.parametres;
     }
-    public void setName(String string) {this.nom = string;}
-    public void setParameters(Element element){
+
+    public void setName(String string) {
+        this.nom = string;
+    }
+
+    public void setParameters(Element element) {
         ExecutableElement executableElement = (ExecutableElement) element;
-        for(VariableElement variableElement : executableElement.getParameters()){
+        for (VariableElement variableElement : executableElement.getParameters()) {
             Attribut attribut = new Attribut(variableElement);
             this.parametres.add(attribut);
         }
     }
-    public void setToPumlInvisible(){this.isPumlVisible = false;}
-    public String MethodetoString(){
-        //Integer fullstop = this.type.toString().indexOf(".");
-        if(this.isPumlVisible) {
+
+    public void setToPumlInvisible() {
+        this.isPumlVisible = false;
+    }
+
+    public String MethodetoString() {
+
+        if (this.isPumlVisible) {
             String toString = "";
-            if(this.getVisibilite() != null){
+            if (this.getVisibilite() != null) {
                 if (this.getVisibilite().equals(Visibilite.PUBLIC))
                     toString += "+ ";
                 else if (this.getVisibilite().equals(Visibilite.PRIVATE))
@@ -66,46 +88,50 @@ public class Methode {
 
             return toString;
         }
+        // Pour les méthodes qu'on ne va pas afficher telles que les méthodes enfants déclarées dans une class parent
         return "";
     }
-    private String findUmlType(TypeMirror typeMirror){
+
+    private String findUmlType(TypeMirror typeMirror) {
         boolean isUmlMulti = false;
         String umlType = "";
-        if (typeMirror.toString().contains("java.util")){
+        if (typeMirror.toString().contains("java.util")) {
             isUmlMulti = true;
             DeclaredType declaredType = (DeclaredType) typeMirror;
-            for (TypeMirror typeMirrorCompar : declaredType.getTypeArguments()){
+            for (TypeMirror typeMirrorCompar : declaredType.getTypeArguments()) {
                 umlType = SubstringType(typeMirrorCompar.toString());
             }
-        }
-        else{
+        } else {
             umlType = SubstringType(typeMirror.toString());
         }
         if (isUmlMulti)
             umlType += " [*]";
         return umlType;
     }
+
+    // Pour enlever tout ce qui a devant le nom du type
+    // Ex : java.xxxx.xxxx.type
+    // -> type
     public String SubstringType(String string) {
-        if (string.contains(".")){
+        if (string.contains(".")) {
             int index = 0;
-            for(int i = 0; i< string.length(); i++){
-                if(string.charAt(i) == '.'){
+            for (int i = 0; i < string.length(); i++) {
+                if (string.charAt(i) == '.') {
                     index = i;
                 }
             }
-            string = string.substring(index+1, string.length());
+            string = string.substring(index + 1, string.length());
             return string;
-        }
-        else{
+        } else {
             return string;
         }
     }
 
-    public String getStringParameters(){
+    public String getStringParameters() {
         String parameters = "";
 
         int i = 0;
-        for (Attribut attribut : parametres){
+        for (Attribut attribut : parametres) {
             if (i == 0)
                 parameters += attribut.AttributtoString();
             else
@@ -115,8 +141,9 @@ public class Methode {
 
         return parameters;
     }
-    public void findModifier(Element element){
-        for (Modifier modifier : element.getModifiers()){
+
+    public void findModifier(Element element) {
+        for (Modifier modifier : element.getModifiers()) {
             if (modifier == Modifier.ABSTRACT)
                 this.modificateur = Modificateur.ABSTRACT;
             else if (modifier == Modifier.FINAL)
@@ -125,8 +152,9 @@ public class Methode {
                 this.modificateur = Modificateur.STATIC;
         }
     }
-    public void findVisibility(Element element){
-        for (Modifier modifier : element.getModifiers()){
+
+    public void findVisibility(Element element) {
+        for (Modifier modifier : element.getModifiers()) {
             if (modifier == Modifier.PUBLIC)
                 this.visibilite = Visibilite.PUBLIC;
             else if (modifier == Modifier.PROTECTED)
@@ -135,29 +163,4 @@ public class Methode {
                 this.visibilite = Visibilite.PRIVATE;
         }
     }
-
-    /*public void findOverrideMethods(ElementContent elementContent) {
-        // Parcourir les classes
-        for (ClassContent childClass : elementContent) {
-            // Si cette classe a une class parent
-            if (childClass.getClass().getSuperclass() != null) {
-                // Parcourir les méthodes de la class enfant
-                for (Methode childMethod : childClass.getMethodes()) {
-                    // Parcourir les éléments méthodes de la class parent
-                    for (ClassContent parentClass : elementContent) {
-                        if (parentClass.getClass().equals(childClass.getClass().getSuperclass())) {
-                            for (Methode parentMethod : parentClass.getMethodes()) {
-                                // Si le nom de la méthode de la class enfant est le même que celle de la class parent comparée
-                                // Alors mettre le boolean "isPumlVisible" à true
-                                if (childMethod.getNom().equals(parentMethod.getNom())) {
-                                    isPumlVisible = true;
-                                }
-                            }
-                            break; // Sortir de la boucle dès qu'on a trouvé la class parent
-                        }
-                    }
-                }
-            }
-        }
-    }*/
 }

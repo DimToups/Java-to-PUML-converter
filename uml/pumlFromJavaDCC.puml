@@ -45,11 +45,11 @@ abstract class ElementContent{
     # classType : ElementKind
     - etagePuml : Integer
     + <<create>> ElementContent(element : Element)
-    + genererContenuElement(isDca : Boolean) : String {abstract}
     + getNom() : String
     + getType() : ElementKind
     + setEtagePuml(etage : Integer)
     + getPumlEtage() : Integer
+    + genererContenuElement(isDca : Boolean) : String {abstract}
 }
 class EnumContent{
     + <<create>> EnumContent(element : Element)
@@ -57,9 +57,9 @@ class EnumContent{
 }
 class ClassContent{
     + <<create>> ClassContent(element : Element)
-    + genererContenuElement(isDca : Boolean) : String {redefines ElementContent::genererContenuElement}
     + getMethodes() : ArrayList<Methode>
     + getAttributs() : ArrayList<Attribut>
+    + genererContenuElement(isDca : Boolean) : String {redefines ElementContent::genererContenuElement}
 }
 class InterfaceContent{
     + <<create>> InterfaceContent(element : Element)
@@ -76,6 +76,9 @@ class Attribut{
     + getVisibilite() : Visibilite
     + getPumlVisibilite() : String
     + getModificateur() : Modificateur
+    + getPumlVisibility() : Boolean
+    + setToInvisible()
+    + setToVisible()
     + setType(type : TypeMirror)
     + setVisibilite(visibiilite : Visibilite)
     + setModificateur(modificateur : Modificateur)
@@ -84,9 +87,6 @@ class Attribut{
     - SubstringType(string: String) : String
     + findModifier(element : Element)
     + findVisibility(element Element)
-    + getPumlVisibility() : Boolean
-    + setToInvisible()
-    + setToVisible()
 }
 class Methode{
     - nom : String
@@ -127,14 +127,14 @@ class Association{
     + getElement1() : ElementContent
     + getElement2() : ElementContent
     + getTypeAssociation() : TypeAssociation
-    + genererAssociation(isDca : Boolean) : String
+    + getPumlVisibilite() : Boolean
     + setMult1(mult1 : String)
     + setMult2(mult2 : String)
     + setAttributLié(attribut : Attribut)
-    + getPumlVisibilite() : Boolean
     + setToInvisible()
-    + IncrementationMult()
     + setType(typeAssociation : TypeAssociation)
+    + genererAssociation(isDca : Boolean) : String
+    + IncrementationMult()
 }
 enum TypeAssociation <<enum>>{
     HERITAGE

@@ -11,13 +11,19 @@ public abstract class ElementContent {
         this.className = element.getSimpleName().toString();
         this.classType = element.getKind();
     }
-    public abstract String genererContenuElement(boolean isDca);
+
     public String getNom(){
         return this.className;
     }
+
     public ElementKind getType(){
         return this.classType;
     }
-    public void setEtagePuml(Integer etage){this.etagePuml = etage;}
+
     public Integer getPumlEtage(){return this.etagePuml;}
+
+    public void setEtagePuml(Integer etage){this.etagePuml = etage;}
+
+    // Qu'on va override selon si c'est une classe, une énum ou une interfance
+    public abstract String genererContenuElement(boolean isDca);
 }

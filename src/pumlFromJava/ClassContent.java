@@ -4,8 +4,17 @@ import javax.lang.model.element.*;
 import java.util.ArrayList;
 
 public class ClassContent extends ElementContent{
+
     private ArrayList<Attribut> classAttributs = new ArrayList<>();
+
     private ArrayList<Methode> classMethods = new ArrayList<>();
+
+    public ArrayList<Methode> getMethodes(){
+        return this.classMethods;
+    }
+
+    public ArrayList<Attribut> getAttributs(){return this.classAttributs;}
+
     public ClassContent(Element element) {
         super(element);
         for (Element enclosedElement : element.getEnclosedElements()){
@@ -27,6 +36,7 @@ public class ClassContent extends ElementContent{
             }
         }
     }
+
     @Override
     public String genererContenuElement(boolean isDca) {
         String contenu = "class " + this.className + "{\n";
@@ -50,8 +60,4 @@ public class ClassContent extends ElementContent{
             return contenu += "}\n";
         }
     }
-    public ArrayList<Methode> getMethodes(){
-        return this.classMethods;
-    }
-    public ArrayList<Attribut> getAttributs(){return this.classAttributs;}
 }
