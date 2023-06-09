@@ -7,11 +7,13 @@ import java.util.ArrayList;
 public class Methode {
     private String nom;
     private TypeMirror type;
-    private Visibilite visibilite;
+    private Visibilite visibilite = Visibilite.NONE;
     private Modificateur modificateur;
     private boolean isConstructor = false;
+    private boolean isPumlVisible = true; // Pour afficher ou non dans le diagramme
     private ArrayList<Attribut> parametres = new ArrayList<>();
-    public Methode(ExecutableElement executableElement){
+
+    public Methode(ExecutableElement executableElement) {
         this.nom = executableElement.getSimpleName().toString();
         this.type = executableElement.getReturnType();
         this.findModifier(executableElement);
@@ -20,99 +22,134 @@ public class Methode {
         if (executableElement.getKind() == ElementKind.CONSTRUCTOR)
             isConstructor = true;
     }
-    public String getNom(){ return this.nom;}
-    public TypeMirror getType(){return this.type;}
-    public Visibilite getVisibilite(){return this.visibilite;}
-    public Modificateur getModificateur(){return this.modificateur;}
-    public ArrayList<Attribut> getParameters(){
+
+    public String getNom() {
+        return this.nom;
+    }
+
+    public TypeMirror getType() {
+        return this.type;
+    }
+
+    public Visibilite getVisibilite() {
+        return this.visibilite;
+    }
+
+    public Modificateur getModificateur() {
+        return this.modificateur;
+    }
+
+    public ArrayList<Attribut> getParameters() {
         return this.parametres;
     }
-    public void setName(String string) {this.nom = string;}
-    public void setType(TypeMirror type) {this.type = type;}
-    public void setVisibilite(Visibilite visibilite) {this.visibilite = visibilite;}
-    public void setModificateur(Modificateur modificateur) {this.modificateur = modificateur;}
-    public void setParameters(Element element){
+
+    public void setName(String string) {
+        this.nom = string;
+    }
+
+    public void setParameters(Element element) {
         ExecutableElement executableElement = (ExecutableElement) element;
-        for(VariableElement variableElement : executableElement.getParameters()){
+        for (VariableElement variableElement : executableElement.getParameters()) {
             Attribut attribut = new Attribut(variableElement);
             this.parametres.add(attribut);
         }
     }
-    public String MethodetoString(){
-        //Integer fullstop = this.type.toString().indexOf(".");
-        String toString = "";
-        if (this.getVisibilite().equals(Visibilite.PUBLIC))
-            toString += "+ ";
-        else if (this.getVisibilite().equals(Visibilite.PRIVATE))
-            toString += "- ";
-        else if (this.getVisibilite().equals(Visibilite.PROTECTED))
-            toString += "# ";
 
-        if (isConstructor)
-            toString += "<<create>> ";
-
-        toString += this.nom + "(" + this.getStringParameters() + ")";
-
-        //Ajout de son éventuel modificateur static
-        if(this.modificateur == Modificateur.STATIC)
-            toString += " {static}";
-        if (this.modificateur == Modificateur.ABSTRACT)
-            toString += " {abstract}";
-
-        if (!type.toString().equals("void"))
-            toString += " : " + findUmlType(this.type);
-
-        return toString;
+    public void setToPumlInvisible() {
+        this.isPumlVisible = false;
     }
-    private String findUmlType(TypeMirror typeMirror){
+
+    public String MethodetoString() {
+
+        if (this.isPumlVisible) {
+            String toString = "";
+            if (this.getVisibilite().equals(Visibilite.PUBLIC))
+                toString += "+ ";
+            else if (this.getVisibilite().equals(Visibilite.PRIVATE))
+                toString += "- ";
+            else if (this.getVisibilite().equals(Visibilite.PROTECTED))
+                toString += "# ";
+            else
+                toString += "~ ";
+
+            if (isConstructor)
+                toString += "<<create>> ";
+
+            toString += this.nom + "(" + this.getStringParameters() + ")";
+
+            //Ajout de son éventuel modificateur static
+            if (this.modificateur == Modificateur.STATIC)
+                toString += " {static}";
+            if (this.modificateur == Modificateur.ABSTRACT)
+                toString += " {abstract}";
+
+            if (!type.toString().equals("void"))
+                toString += " : " + findUmlType(this.type);
+
+            return toString;
+        }
+        // Pour les méthodes qu'on ne va pas afficher telles que les méthodes enfants déclarées dans une class parent
+        return "";
+    }
+
+    private String findUmlType(TypeMirror typeMirror) {
         boolean isUmlMulti = false;
         String umlType = "";
-        if (typeMirror.toString().contains("java.util")){
-            isUmlMulti = true;
+        if (typeMirror.toString().contains("java.util")) {
             DeclaredType declaredType = (DeclaredType) typeMirror;
-            for (TypeMirror typeMirrorCompar : declaredType.getTypeArguments()){
+            if(declaredType.getTypeArguments().size() > 0)
+                isUmlMulti = true;
+            for (TypeMirror typeMirrorCompar : declaredType.getTypeArguments()) {
                 umlType = SubstringType(typeMirrorCompar.toString());
             }
-        }
-        else{
+        } else {
             umlType = SubstringType(typeMirror.toString());
         }
         if (isUmlMulti)
-            umlType += " *";
+            umlType += " [*]";
         return umlType;
     }
+
+    // Pour enlever tout ce qui a devant le nom du type
+    // Ex : java.xxxx.xxxx.type<>[[]]
+    // -> type
     public String SubstringType(String string) {
-        if (string.contains(".")){
+        if (string.contains(".") || string.contains("<") || string.contains(">") || string.contains("[") || string.contains("]")){
             int index = 0;
-            for(int i = 0; i< string.length(); i++){
-                if(string.charAt(i) == '.'){
+            for (int i = 0; i < string.length(); i++) {
+                if (string.charAt(i) == '.') {
                     index = i;
                 }
             }
-            string = string.substring(index+1, string.length());
+            if(index != 0)
+                string = string.substring(index+1, string.length());
+            if (string.charAt(string.length() -1) == '>' || string.charAt(string.length() -1) == '<' || string.charAt(string.length() -1) == ']' || string.charAt(string.length() -1) == '[') {
+                string = string.substring(0, string.length()-1);
+                string = this.SubstringType(string);
+            }
             return string;
-        }
-        else{
+        } else {
             return string;
         }
     }
 
-    public String getStringParameters(){
+    public String getStringParameters() {
         String parameters = "";
 
         int i = 0;
-        for (Attribut attribut : parametres){
+        for (Attribut attribut : parametres) {
             if (i == 0)
-                parameters += attribut.AttributtoString();
+                parameters += attribut.AttributtoString(true);
             else
-                parameters += ", " + attribut.AttributtoString();
+                parameters += ", " + attribut.AttributtoString(true);
             i++;
         }
 
         return parameters;
     }
-    public void findModifier(Element element){
-        for (Modifier modifier : element.getModifiers()){
+
+    public void findModifier(Element element) {
+        for (Modifier modifier : element.getModifiers()) {
             if (modifier == Modifier.ABSTRACT)
                 this.modificateur = Modificateur.ABSTRACT;
             else if (modifier == Modifier.FINAL)
@@ -121,8 +158,9 @@ public class Methode {
                 this.modificateur = Modificateur.STATIC;
         }
     }
-    public void findVisibility(Element element){
-        for (Modifier modifier : element.getModifiers()){
+
+    public void findVisibility(Element element) {
+        for (Modifier modifier : element.getModifiers()) {
             if (modifier == Modifier.PUBLIC)
                 this.visibilite = Visibilite.PUBLIC;
             else if (modifier == Modifier.PROTECTED)

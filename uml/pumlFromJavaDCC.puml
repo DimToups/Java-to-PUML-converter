@@ -29,32 +29,42 @@ class PumlDiagram{
     + <<create>> PumlDiagram(name: String, directory : String, docletEnvironment : DocletEnvironment, isDca : Boolean)
     + chercherClasses()
     + chercherAssociations()
-    - findClass(element : Element) : ClassContent
+    + afficheMethodeHeritage()
+    - findElementContentFromElement(element : Element) : ElementContent
     + genererDiagramme()
+    - findElementContentFromTypeMirror(typeMirror : TypeMirror) : ElementContent
+    - findElementFromElementContent(elementContent : ElementContent) : Element
+    - SubstringType(string : String) : String
+    + ajoutAssociation(associationCandidate : Association)
+    + miseAJourMultiplicite()
+    + triDependances()
+
 }
 abstract class ElementContent{
-    - className : String
-    - classType : ElementKind
+    # className : String
+    # classType : ElementKind
+    - etagePuml : Integer
     + <<create>> ElementContent(element : Element)
-    + genererContenuElement(isDca : Boolean) : String {abstract}
     + getNom() : String
     + getType() : ElementKind
+    + setEtagePuml(etage : Integer)
+    + getPumlEtage() : Integer
+    + genererContenuElement(isDca : Boolean) : String {abstract}
 }
 class EnumContent{
-    - attributs : Attribut *
     + <<create>> EnumContent(element : Element)
-    + genererContenuElement(isDca : Boolean) : String
+    + genererContenuElement(isDca : Boolean) : String {redefines ElementContent::genererContenuElement}
 }
 class ClassContent{
-    - attributs : Attribut *
-    - methodes : Methodes *
     + <<create>> ClassContent(element : Element)
-    + genererContenuElement(isDca : Boolean) : String
+    + getMethodes() : ArrayList<Methode>
+    + getAttributs() : ArrayList<Attribut>
+    + genererContenuElement(isDca : Boolean) : String {redefines ElementContent::genererContenuElement}
 }
 class InterfaceContent{
-    - methodes : Methodes *
     + <<create>> InterfaceContent(element : Element)
-    + genererContenuElement(isDca : Boolean) : String
+    + genererContenuElement(isDca : Boolean) : String {redefines ElementContent::genererContenuElement}
+    + getMethodes() : ArrayList<Methode>
 }
 class Attribut{
     - nom : String
@@ -64,36 +74,40 @@ class Attribut{
     + getNom() : String
     + getType() : TypeMirror
     + getVisibilite() : Visibilite
+    + getPumlVisibilite() : String
     + getModificateur() : Modificateur
+    + getPumlVisibility() : Boolean
+    + setToInvisible()
+    + setToVisible()
     + setType(type : TypeMirror)
     + setVisibilite(visibiilite : Visibilite)
     + setModificateur(modificateur : Modificateur)
     + AttributtoString() : String
-    - findUmlType(typeMirror : TypeMirror)
-    - SubstringType(string : String) : String
+    - findUmlType(typeMirror : TypeMirror) : String
+    - SubstringType(string: String) : String
     + findModifier(element : Element)
-    + findVisibility(element : Element)
-    + getPumlVisibilite() : Boolean
-    + setToInvisble()
-    + setToVisble()
+    + findVisibility(element Element)
 }
 class Methode{
     - nom : String
     - type : TypeMirror
     - isConstructor : Boolean
+    - isPumlVisible : Boolean
     + <<create>> Methode(executableElement : ExecutableElement)
     + getNom() : String
     + getType() : TypeMirror
     + getVisibilite() : Visibilite
     + getModificateur() : Modificateur
-    + getParameters() : String
+    + getParameters() : ArrayList<Attribut>
+    + setName(string: String)
     + setType(type : TypeMirror)
     + setVisibilite(visibiilite : Visibilite)
-    + setModificateur(modificateur : Modificateur)
     + setParameters(element : Element)
+    + setToPumlInvisible()
     + MethodetoString() : String
-    - findUmlType(typeMirror : TypeMirror) String
-    - SubstringType(string : String) : String
+    - findUmlType(typeMirror : TypeMirror) :  String
+    + SubstringType(string : String) : String
+    + getStringParameters() : String
     + findModifier(element : Element)
     + findVisibility(element : Element)
 }
@@ -109,17 +123,17 @@ class Association{
     + <<create>> Association(element1 : ClassContent, element2 : ClassContent)
     + <<create>> Association(element1 : ClassContent, element2 : ClassContent, typeLiaison : TypeLiaison)
     + <<create>> Association(element1 : ClassContent, element2 : ClassContent, typeLiaison : TypeLiaison, mult1 : String, mult2 : String)
-    + genererAssociations() : String
     + getElement1() : ElementContent
     + getElement2() : ElementContent
     + getTypeAssociation() : TypeAssociation
+    + getPumlVisibilite() : Boolean
     + setMult1(mult1 : String)
     + setMult2(mult2 : String)
     + setAttributLié(attribut : Attribut)
-    + getPumlVisibilite() : Boolean
-    + setToInvisble()
-    + IncrementationMult()
+    + setToInvisible()
     + setType(typeAssociation : TypeAssociation)
+    + genererAssociation(isDca : Boolean) : String
+    + IncrementationMult()
 }
 enum TypeAssociation <<enum>>{
     HERITAGE
@@ -127,11 +141,13 @@ enum TypeAssociation <<enum>>{
     IMPLEMENT
     AGREGATION
     COMPOSITION
+    DEPENDANCE
 }
 enum Visibilite <<enum>>{
     PUBLIC
     PROTECTED
     PRIVATE
+    NONE
 }
 class GenerateurDiagramme{
     - name : String
@@ -140,33 +156,34 @@ class GenerateurDiagramme{
     - isDCA : Boolean
     + <<create>> GenerateurDiagramme()
     + <<create>> GenerateurDiagramme(name : String, path : String, packageName : String, isDCA : Boolean)
-    + setDCA(isDCA : Boolean*)
+    + <<create>> GenerateurDiagramme(name : String, path : String, packageName : String)
+    + setDCA(DCA : Boolean)
     + createFile()
     + initFile()
-    + generateElementForPuml(elements : ElementContent*)
-    + generateLinkstForPuml(liaisons : Liaison*)
+    + generateElementForPuml(elements : ArrayList<ElementContent>)
+    + generateLinkstForPuml(associations : ArrayList<Association>)
     + endFile()
 }
 
 Java2Puml *-> PumlDoclet : > exécute le doclet
 PumlDoclet o-> PumlDiagram : > génère le diagramme à l'aide de
-PumlDiagram "1" o-> "1\n -generateur" GenerateurDiagramme : Génère le diagramme\n
-PumlDiagram "1" o-> "*\n- elements" ElementContent : Stocke le contenu des élements\n >
-PumlDiagram "1" o--> "*\n- liaisons" Association : Stocke les liaisons entre les classes\n >
+PumlDiagram o-> "1\n -generateur" GenerateurDiagramme : Génère le diagramme\n
+PumlDiagram o-> "*\n- elements" ElementContent : Stocke le contenu des élements\n >
+PumlDiagram o--> "*\n- liaisons" Association : Stocke les liaisons entre les classes\n >
 ElementContent --|> ClassContent
 ElementContent --|> EnumContent
 ElementContent --|> InterfaceContent
-ClassContent "1" *--> "*\n- classAttributs" Attribut : Liste les attributs de\n >
-ClassContent "1" *--> "*\n- classMethods" Methode : Liste les méthodes de\n >
-EnumContent "1" *--> "*\n- classAttributs" Attribut : Liste les attributs de\n >
-InterfaceContent "1" *--> "*\n- classMethods" Methode : Liste les méthodes de\n >
-Attribut "1" *--> "1\n- visibilite" Visibilite : indique la visibilité\n >
-Methode "1" *--> "1\n- visibilite" Visibilite : indique la visibilité\n >
-Attribut "1" *--> "1\n- modificateur" Modificateur : indique le modificateur\n >
-Methode "1" *--> "1\n- modificateur" Modificateur : indique le modificateur\n >
-Methode "1" o-> "*\n- parametres" Attribut : Stocke les paramètres\nde la méthode\n >
-Association "1" o-> "2\n- element1\n- element2" ElementContent : Informe de la liaison entre\n >
-Association "1" *--> "1\n- TypeAssociation" TypeAssociation : Indique le type de liaison\n >
-Association "1" o--> "1\n - AttributLié" Attribut : Est lié à l'association\n >
+ClassContent o--> "*\n- classAttributs" Attribut : Liste les attributs de\n >
+ClassContent o--> "*\n- classMethods" Methode : Liste les méthodes de\n >
+EnumContent o--> "*\n- classAttributs" Attribut : Liste les attributs de\n >
+InterfaceContent o--> "*\n- classMethods" Methode : Liste les méthodes de\n >
+Attribut o--> "1\n- visibilite" Visibilite : indique la visibilité\n >
+Methode o--> "1\n- visibilite" Visibilite : indique la visibilité\n >
+Attribut o--> "1\n- modificateur" Modificateur : indique le modificateur\n >
+Methode o--> "1\n- modificateur" Modificateur : indique le modificateur\n >
+Methode o-> "*\n- parametres" Attribut : Stocke les paramètres\nde la méthode\n >
+Association o-> "2\n- element1\n- element2" ElementContent : Informe de la liaison entre\n >
+Association *--> "1\n- TypeAssociation" TypeAssociation : Indique le type de liaison\n >
+Association o--> "1\n - AttributLié" Attribut : Est lié à l'association\n >
 
 @enduml

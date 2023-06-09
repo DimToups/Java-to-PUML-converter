@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class EnumContent extends ElementContent{
     private ArrayList<Attribut> classAttributs = new ArrayList<>();
+
     public EnumContent(Element element){
         super(element);
         for (Element enclosedElement : element.getEnclosedElements()){
@@ -16,12 +17,13 @@ public class EnumContent extends ElementContent{
             }
         }
     }
+
     @Override
     public String genererContenuElement(boolean isDca){
         String contenu = "class " + this.className + "{\n";
 
         for(Attribut attribut : classAttributs){
-            contenu += "\t" + attribut.AttributtoString() + "\n";
+            contenu += "\t" + attribut.getNom() + "\n";
         }
 
         return contenu += "}\n";

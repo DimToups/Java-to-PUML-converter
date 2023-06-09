@@ -13,21 +13,24 @@ public class GenerateurDiagramme {
     private String path;
     private String packageName;
     private boolean isDCA = false;
-    public GenerateurDiagramme(){}
+
     public GenerateurDiagramme(String name, String path, String packageName){
         this.name = name;
         this.path = path;
         this.packageName = packageName;
     }
+
     public GenerateurDiagramme(String name, String path, String packageName, boolean isDCA){
         this.name = name;
         this.path = path;
         this.packageName = packageName;
         this.isDCA = isDCA;
     }
+
     public void setDCA(boolean DCA) {
         isDCA = DCA;
     }
+
     public void createFile(){
         File file = new File(path + "/" + name);
         try {
@@ -40,6 +43,7 @@ public class GenerateurDiagramme {
             throw new RuntimeException(e);
         }
     }
+
     public void initFile(){
         try {
             String initFile = "@startuml\n" +
@@ -60,6 +64,7 @@ public class GenerateurDiagramme {
             throw new RuntimeException(e);
         }
     }
+
     public void generateElementsForPuml(ArrayList<ElementContent> elements){
         for(ElementContent element : elements){
             try {
@@ -74,6 +79,7 @@ public class GenerateurDiagramme {
             }
         }
     }
+
     public void generateLinksForPuml(ArrayList<Association> associations){
         for(Association association : associations){
             try {
@@ -88,6 +94,7 @@ public class GenerateurDiagramme {
             }
         }
     }
+
     public void endFile(){
         try {
             String endFile = "\n}\n@enduml";

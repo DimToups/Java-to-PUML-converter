@@ -17,34 +17,43 @@ public class PumlDiagram {
     private String name;
     private String directory;
     private DocletEnvironment docletEnvironment;
-    private boolean isDca;
+    private boolean isDca; // Pour savoir si on va générer un DCA ou un DCC
     private ArrayList<Association> associations = new ArrayList<>();
+
     public PumlDiagram(String name, String directory, DocletEnvironment docletEnvironment, boolean isDCA){
         this.name = name;
         this.directory = directory;
         this.docletEnvironment = docletEnvironment;
         this.isDca = isDCA;
-        System.out.println("isDca = " + isDCA);
     }
+
     public void chercherClasses(){
+        int etagePumlAttribue = 0;
         for (Element element : docletEnvironment.getIncludedElements()){
             if (element.getKind() == ElementKind.CLASS){
                 ClassContent classContent = new ClassContent(element);
+                classContent.setEtagePuml(etagePumlAttribue%5);
                 this.elements.add(classContent);
+                etagePumlAttribue++;
             }
             else if(element.getKind() == ElementKind.ENUM){
                 EnumContent enumContent = new EnumContent(element);
+                enumContent.setEtagePuml(etagePumlAttribue%4);
                 this.elements.add(enumContent);
+                etagePumlAttribue++;
             }
             else if (element.getKind() == ElementKind.INTERFACE){
                 InterfaceContent interfaceContent = new InterfaceContent(element);
+                interfaceContent.setEtagePuml(etagePumlAttribue%5);
                 this.elements.add(interfaceContent);
+                etagePumlAttribue++;
             }
             else if (element.getKind() == ElementKind.PACKAGE) {
                 packageName = element.getSimpleName().toString();
             }
         }
     }
+
     public void chercherAssociations() {
         //Recherche des agrégations
         for (ElementContent elementContent : elements) {
@@ -60,9 +69,9 @@ public class PumlDiagram {
                                 attribut.setToInvisible();
                                 Association associationAgreg = new Association(elementContent, elementContentCompar, TypeAssociation.AGREGATION);
                                 associationAgreg.setAttributLié(attribut);
-                                associationAgreg.setMult1("1");
-                                if(attribut.getType().toString().contains("java.util"))
+                                if(attribut.getType().toString().contains("java.util")) {
                                     associationAgreg.setMult2("*");
+                                }
                                 else
                                     associationAgreg.setMult2("1");
                                 this.ajoutAssociation(associationAgreg);
@@ -123,6 +132,21 @@ public class PumlDiagram {
         }
     }
 
+    // Méthode pour afficher ou non une méthode
+    public void afficheMethodeHeritage(){
+        for (Association association : associations){
+            if (association.getTypeAssociation() == TypeAssociation.HERITAGE){
+                for (Methode methods1 : ((ClassContent)association.getElement1()).getMethodes()){
+                    for (Methode methods2 : ((ClassContent)association.getElement2()).getMethodes()){
+                        if (methods1.getNom().equals(methods2.getNom()) && methods1.getType() == methods2.getType()){
+                            methods1.setToPumlInvisible();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private ElementContent findElementContentFromElement(Element element){
         ElementContent rightElement = null;
         for (ElementContent elementContent : elements){
@@ -131,6 +155,7 @@ public class PumlDiagram {
         }
         return null;
     }
+
     public void genererDiagramme(){
         GenerateurDiagramme generateurDiagramme = new GenerateurDiagramme(name, directory, packageName, isDca);
         generateurDiagramme.createFile();
@@ -139,6 +164,7 @@ public class PumlDiagram {
         generateurDiagramme.generateLinksForPuml(associations);
         generateurDiagramme.endFile();
     }
+
     private ElementContent findElementContentFromTypeMirror(TypeMirror typeMirror){
         for(ElementContent elementContent : elements){
             if (elementContent.getNom().equals(SubstringType(typeMirror.toString())))
@@ -146,6 +172,7 @@ public class PumlDiagram {
         }
         return null;
     }
+
     private Element findElementFromElementContent(ElementContent elementContent){
         for(Element element : docletEnvironment.getIncludedElements()){
             if(element.getSimpleName().toString().equals(elementContent.getNom()))
@@ -154,6 +181,7 @@ public class PumlDiagram {
 
         return null;
     }
+
     private String SubstringType(String string) {
         if (string.contains(".")){
             int index = 0;
@@ -171,6 +199,7 @@ public class PumlDiagram {
             return string;
         }
     }
+
     public void ajoutAssociation(Association associationCandidate){
         //Traitement de toutes les associations
         for (Association association : associations){
@@ -181,32 +210,31 @@ public class PumlDiagram {
         }
         this.associations.add(associationCandidate);
     }
+
     public void miseAJourMultiplicite(){
-        //Recherche de composition
-
-        //C'est beaucoup plus complexe que ce que je croyais
-
-        /*for(ElementContent elementContent : elements){
-            ArrayList<Association> occurence = new ArrayList<>();
-            for(Association association : associations){
-                if(association.getElement1() == elementContent || association.getElement2() == elementContent)
-                    occurence.add(association);
-            }
-            if(occurence.size() == 1)
-                occurence.get(1).setType(TypeAssociation.COMPOSITION);
-            else
-                occurence.get(1).setType(TypeAssociation.AGREGATION);
-        }*/
-
-        //Mise à jour des multiplicités
         for(Association association : associations){
             for(Association associationCompar : associations){
                 //Exclusion des associations similaires
-                if(association != associationCompar || associationCompar.getPumlVisibilite()){
+                if(association != associationCompar && associationCompar.getPumlVisibilite()){
                     if(association.getElement1() == associationCompar.getElement1() && association.getElement2() == associationCompar.getElement2() && association.getTypeAssociation() == associationCompar.getTypeAssociation()){
                         associationCompar.setToInvisible();
                         association.IncrementationMult();
                     }
+                }
+            }
+        }
+    }
+
+    public void triDépendances(){
+        //Traitement de toutes les associations du diagramme
+        for(Association association : associations){
+            //Supression des dépendances entre les deux éléments de l'association
+            if(association.getTypeAssociation() != TypeAssociation.DEPENDANCE) {
+                for (Association associationCompar : associations){
+                    if(association.getElement1() == associationCompar.getElement1() && association.getElement2() == associationCompar.getElement2() && associationCompar.getTypeAssociation() == TypeAssociation.DEPENDANCE)
+                        associationCompar.setToInvisible();
+                    else if(association.getElement2() == associationCompar.getElement1() && association.getElement1() == associationCompar.getElement2() && associationCompar.getTypeAssociation() == TypeAssociation.DEPENDANCE)
+                        associationCompar.setToInvisible();
                 }
             }
         }

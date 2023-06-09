@@ -5,23 +5,43 @@ import javax.lang.model.element.Modifier;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.PrimitiveType;
+import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 
 public class Attribut {
     private String nom;
     private TypeMirror type;
-    private Visibilite visibilite;
+    private Visibilite visibilite = Visibilite.NONE;
     private Modificateur modificateur;
-    private boolean isPumlVisible = true;
+    private boolean isPumlVisible = true; // Pour afficher ou non dans le diagramme
+
     public Attribut(VariableElement variableElement){
         this.nom = variableElement.getSimpleName().toString();
         this.type = variableElement.asType();
         this.findModifier(variableElement);
         this.findVisibility(variableElement);
     }
+
     public String getNom(){return this.nom;}
+
     public TypeMirror getType(){return this.type;}
+
     public Visibilite getVisibilite(){return this.visibilite;}
+
+    public Modificateur getModificateur(){return this.modificateur;}
+
+    public boolean getPumlVisibility(){
+        return this.isPumlVisible;
+    }
+
+    public void setToInvisible(){
+        this.isPumlVisible = false;
+    }
+
+    public void setToVisible(){
+        this.isPumlVisible = false;
+    }
+
     public String getPumlVisibilite(){
         if(this.visibilite == Visibilite.PUBLIC)
             return "+";
@@ -30,23 +50,22 @@ public class Attribut {
         else if(this.visibilite == Visibilite.PRIVATE)
             return "-";
         else
-            return "";
+            return "~";
     }
-    public Modificateur getModificateur(){return this.modificateur;}
-    public void setType(TypeMirror type) {this.type = type;}
-    public void setVisibilite(Visibilite visibilite) {this.visibilite = visibilite;}
-    public void setModificateur(Modificateur modificateur) {this.modificateur = modificateur;}
-    public String AttributtoString(){
+
+    public String AttributtoString(boolean isParameter){
         String toString = "";
 
         //Gestion de la visibilité
-        if (this.getVisibilite() != null){
+        if(!isParameter){
             if (this.getVisibilite().equals(Visibilite.PUBLIC))
                 toString += "+ ";
             else if (this.getVisibilite().equals(Visibilite.PRIVATE))
                 toString += "- ";
             else if (this.getVisibilite().equals(Visibilite.PROTECTED))
                 toString += "# ";
+            else
+                toString += "~ ";
         }
         //Ajout du nom de l'attribut
         toString += this.getNom() + " : " + findUmlType(this.getType());
@@ -57,12 +76,15 @@ public class Attribut {
 
         return toString;
     }
+
+    // Pour trouver tout ce qui est liste, dictionnaire, tableau, etc
     private String findUmlType(TypeMirror typeMirror){
         boolean isUmlMulti = false;
         String umlType = "";
-        if (typeMirror.toString().contains("java.util")){
-            isUmlMulti = true;
+        if (typeMirror.getKind() == TypeKind.DECLARED){
             DeclaredType declaredType = (DeclaredType) typeMirror;
+            if(declaredType.getTypeArguments().size() > 0)
+                isUmlMulti = true;
             for (TypeMirror typeMirrorCompar : declaredType.getTypeArguments()){
                 umlType = SubstringType(typeMirrorCompar.toString());
             }
@@ -71,26 +93,31 @@ public class Attribut {
             umlType = SubstringType(typeMirror.toString());
         }
         if (isUmlMulti)
-            umlType += " *";
+            umlType += " [*]";
         return umlType;
     }
+
     private String SubstringType(String string) {
-        if (string.contains(".")){
+        if (string.contains(".") || string.contains("<") || string.contains(">") || string.contains("[") || string.contains("]")){
             int index = 0;
             for(int i = 0; i< string.length(); i++){
                 if(string.charAt(i) == '.'){
                     index = i;
                 }
             }
-            string = string.substring(index+1, string.length());
-            if (string.contains(">"))
+            if(index != 0)
+                string = string.substring(index+1, string.length());
+            if (string.charAt(string.length() -1) == '>' || string.charAt(string.length() -1) == '<' || string.charAt(string.length() -1) == ']' || string.charAt(string.length() -1) == '[') {
                 string = string.substring(0, string.length()-1);
+                string = this.SubstringType(string);
+            }
             return string;
         }
         else{
             return string;
         }
     }
+
     public void findModifier(Element element){
         for (Modifier modifier : element.getModifiers()){
             if (modifier == Modifier.ABSTRACT)
@@ -101,6 +128,7 @@ public class Attribut {
                 this.modificateur = Modificateur.STATIC;
         }
     }
+
     public void findVisibility(Element element){
         for (Modifier modifier : element.getModifiers()){
             if (modifier == Modifier.PUBLIC)
@@ -110,14 +138,5 @@ public class Attribut {
             else if (modifier == Modifier.PRIVATE)
                 this.visibilite = Visibilite.PRIVATE;
         }
-    }
-    public boolean getPumlVisibility(){
-        return this.isPumlVisible;
-    }
-    public void setToInvisible(){
-        this.isPumlVisible = false;
-    }
-    public void setToVisible(){
-        this.isPumlVisible = false;
     }
 }
