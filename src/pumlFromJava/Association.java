@@ -102,7 +102,7 @@ public class Association {
             }
 
             //ajout de la multiplicité du deuxième élément
-            if(typeAssociation == TypeAssociation.COMPOSITION || typeAssociation == TypeAssociation.AGREGATION) {
+            if((typeAssociation == TypeAssociation.COMPOSITION || typeAssociation == TypeAssociation.AGREGATION) && !isDca) {
                 if (mult2 != null)
                     associationString += "\"" + mult2;
                 else
