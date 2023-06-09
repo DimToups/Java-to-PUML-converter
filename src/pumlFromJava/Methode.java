@@ -86,14 +86,19 @@ public class Methode {
         return umlType;
     }
     public String SubstringType(String string) {
-        if (string.contains(".")){
+        if (string.contains(".") || string.contains("<") || string.contains(">") || string.contains("[") || string.contains("]")){
             int index = 0;
             for(int i = 0; i< string.length(); i++){
                 if(string.charAt(i) == '.'){
                     index = i;
                 }
             }
-            string = string.substring(index+1, string.length());
+            if(index != 0)
+                string = string.substring(index+1, string.length());
+            if (string.charAt(string.length() -1) == '>' || string.charAt(string.length() -1) == '<' || string.charAt(string.length() -1) == ']' || string.charAt(string.length() -1) == '[') {
+                string = string.substring(0, string.length()-1);
+                string = this.SubstringType(string);
+            }
             return string;
         }
         else{

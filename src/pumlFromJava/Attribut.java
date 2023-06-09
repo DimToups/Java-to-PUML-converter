@@ -5,6 +5,7 @@ import javax.lang.model.element.Modifier;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.PrimitiveType;
+import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 
 public class Attribut {
@@ -57,10 +58,12 @@ public class Attribut {
     private String findUmlType(TypeMirror typeMirror){
         boolean isUmlMulti = false;
         String umlType = "";
-        if (typeMirror.toString().contains("java.util")){
+        if (typeMirror.getKind() == TypeKind.DECLARED){
             isUmlMulti = true;
             DeclaredType declaredType = (DeclaredType) typeMirror;
+            System.out.println(declaredType.toString());
             for (TypeMirror typeMirrorCompar : declaredType.getTypeArguments()){
+                System.out.println("\t" + typeMirrorCompar.toString());
                 umlType = SubstringType(typeMirrorCompar.toString());
             }
         }
@@ -68,20 +71,23 @@ public class Attribut {
             umlType = SubstringType(typeMirror.toString());
         }
         if (isUmlMulti)
-            umlType += " *";
+            umlType += " [*]";
         return umlType;
     }
     private String SubstringType(String string) {
-        if (string.contains(".")){
+        if (string.contains(".") || string.contains("<") || string.contains(">") || string.contains("[") || string.contains("]")){
             int index = 0;
             for(int i = 0; i< string.length(); i++){
                 if(string.charAt(i) == '.'){
                     index = i;
                 }
             }
-            string = string.substring(index+1, string.length());
-            if (string.contains(">"))
+            if(index != 0)
+                string = string.substring(index+1, string.length());
+            if (string.charAt(string.length() -1) == '>' || string.charAt(string.length() -1) == '<' || string.charAt(string.length() -1) == ']' || string.charAt(string.length() -1) == '[') {
                 string = string.substring(0, string.length()-1);
+                string = this.SubstringType(string);
+            }
             return string;
         }
         else{
