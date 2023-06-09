@@ -32,23 +32,23 @@ class A{
 }
 
 class B{
-	- anInteger :  [*]
-	# aShort :  [*]
-	~ aLong :  [*]
-	+ aByte :  [*]
-	- aFloat :  [*]
-	# aDouble :  [*] {static}
-	~ aCharacter :  [*]
-	+ aBoolean :  [*]
+	- anInteger : 
+	# aShort : 
+	~ aLong : 
+	+ aByte : 
+	- aFloat : 
+	# aDouble :  {static}
+	~ aCharacter : 
+	+ aBoolean : 
 	~ <<create>> B()
-	- anIntFunction(~ anIntParam :  [*]) : Integer
-	# aShortFunction(~ aShortParam :  [*]) : Short
-	~ aLongFunction(~ aLongParam :  [*]) : Long
-	+ aByteFunction(~ aByteParam :  [*]) : Byte
-	- aFloatFunction(~ aFloatParam :  [*]) : Float
-	# aDoubleFunction(~ aDoubleParam :  [*]) {abstract} : Double
-	~ aCharacterFunction(~ aCharacterParam :  [*]) {static} : Character
-	+ aBooleanFunction(~ aBooleanParam :  [*]) {static} : Boolean
+	- anIntFunction(~ anIntParam : ) : Integer
+	# aShortFunction(~ aShortParam : ) : Short
+	~ aLongFunction(~ aLongParam : ) : Long
+	+ aByteFunction(~ aByteParam : ) : Byte
+	- aFloatFunction(~ aFloatParam : ) : Float
+	# aDoubleFunction(~ aDoubleParam : ) {abstract} : Double
+	~ aCharacterFunction(~ aCharacterParam : ) {static} : Character
+	+ aBooleanFunction(~ aBooleanParam : ) {static} : Boolean
 }
 
 class C{
@@ -75,10 +75,10 @@ class D{
 	~ bs : B
 	+ ds : D [*] {static}
 	~ <<create>> D()
-	- aFunction(~ a0 :  [*], ~ a1 : A, ~ a2 : A, ~ a3 : A) : A
-	~ bFunction(~ b0 :  [*], ~ b1 : B, ~ b2 : B, ~ b3 : B) : B
-	# cFunction(~ c0 :  [*], ~ c1 : C [*], ~ c2 : C [*], ~ c3 : C [*]) {abstract} : C [*]
-	+ dFunction(~ d0 :  [*], ~ d1 : D [*], ~ d2 : D [*], ~ d3 : D [*], ~ d4 : D [*]) {static} : D [*]
+	- aFunction(~ a0 : , ~ a1 : A, ~ a2 : A, ~ a3 : A) : A
+	~ bFunction(~ b0 : , ~ b1 : B, ~ b2 : B, ~ b3 : B) : B
+	# cFunction(~ c0 : , ~ c1 : C [*], ~ c2 : C [*], ~ c3 : C [*]) {abstract} : C [*]
+	+ dFunction(~ d0 : , ~ d1 : D [*], ~ d2 : D [*], ~ d3 : D [*], ~ d4 : D [*]) {static} : D [*]
 }
 
 class E{

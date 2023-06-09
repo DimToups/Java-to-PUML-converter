@@ -139,7 +139,7 @@ public class PumlDiagram {
             if (association.getTypeAssociation() == TypeAssociation.HERITAGE){
                 for (Methode methods1 : ((ClassContent)association.getElement1()).getMethodes()){
                     for (Methode methods2 : ((ClassContent)association.getElement2()).getMethodes()){
-                        if (methods1.getNom().equals(methods2.getNom())){
+                        if (methods1.getNom().equals(methods2.getNom()) && methods1.getType() == methods2.getType()){
                             methods1.setToPumlInvisible();
                         }
                     }

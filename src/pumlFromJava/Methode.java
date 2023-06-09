@@ -96,8 +96,9 @@ public class Methode {
         boolean isUmlMulti = false;
         String umlType = "";
         if (typeMirror.toString().contains("java.util")) {
-            isUmlMulti = true;
             DeclaredType declaredType = (DeclaredType) typeMirror;
+            if(declaredType.getTypeArguments().size() > 0)
+                isUmlMulti = true;
             for (TypeMirror typeMirrorCompar : declaredType.getTypeArguments()) {
                 umlType = SubstringType(typeMirrorCompar.toString());
             }
